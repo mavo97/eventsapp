@@ -13,7 +13,7 @@
     <table class="table table-striped">
         <thead>
             <tr>
-                <th scope="col">ID</th>
+                <th scope="col">#</th>
                 <th scope="col">Nombre</th>
                 <th scope="col">Fecha Inicio</th>
                 <th scope="col">Fecha Fin</th>
@@ -22,20 +22,20 @@
                 <th scope="col">Eliminar</th>
             </tr>
         </thead>
-        <tbody *ngFor="let evento of eventsarray let i = index;">
+        <tbody *ngFor="let evento of eventsarray.records let i = index;">
             <tr>
-                <th scope="row ">{{ evento.id_evento }}</th>
+                <th scope="row ">{{i+1}}</th>
                 <td>{{ evento.nombre }}</td>
-                <td>{{ evento.fecha_inicio }}</td>
-                <td>{{ evento.fecha_fin }}</td>
-                <ng-container *ngIf="evento.estado === '1'; else elseTemplate">
+                <td>{{ evento.fecha_inicio | date:"dd/MMMM/yy"}}</td>
+                <td>{{ evento.fecha_fin | date:"dd/MMMM/yy"}}</td>
+                <ng-container *ngIf="evento.estado === 'A'; else elseTemplate">
                     <td><span class="badge badge-success">Activo</span></td>
                 </ng-container>
                 <ng-template #elseTemplate>
                     <td><span class="badge badge-danger">Inactivo</span></td>
                 </ng-template>
-                <td><a href="#"><i class="fas fa-edit"></i></a></td>
-                <td><a href="#"><i class="fas fa-trash"></i></a></td>
+                <td><a class="btn btn-warning" (click)="editar(evento.id_evento)"><i class="fas fa-edit"></i></a></td>
+                <td><a class="btn btn-danger" (click)="eliminar(evento.id_evento)"><i class="fas fa-trash"></i></a></td>
             </tr>
         </tbody>
     </table>
@@ -182,8 +182,8 @@
                         <div class="col ">
                             <p class="mb-0 ">Status</p>
                             <select class="custom-select" formControlName="status" id="status">
-                                <option value="true ">Activo</option>
-                                <option value="false ">Inactivo</option>
+                                <option value="A">Activo</option>
+                                <option value="I">Inactivo</option>
                             </select>
                             <div *ngIf="forma.controls['status'].errors?.required && (forma.dirty && forma.touched)" class="form-control-feedback ">
                                 <p style="color: red ">*Status campo requerido.</p>

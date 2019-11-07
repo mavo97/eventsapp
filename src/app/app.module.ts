@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, LOCALE_ID } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -15,6 +15,10 @@ import { NavbarComponent } from './shared/navbar/navbar.component';
 import { HomeComponent } from './components/home/home.component';
 import { AdminComponent } from './components/admin/admin.component';
 import { AdeventComponent } from './components/adevent/adevent.component';
+// Traduccion al español
+import localeEs from '@angular/common/locales/es';
+import { registerLocaleData } from '@angular/common';
+registerLocaleData(localeEs);
 
 @NgModule({
   declarations: [
@@ -34,7 +38,9 @@ import { AdeventComponent } from './components/adevent/adevent.component';
     ReactiveFormsModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [
+    { provide: LOCALE_ID, useValue: 'es' }
+   ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

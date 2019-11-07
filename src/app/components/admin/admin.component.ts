@@ -1,16 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
-import { tap, map } from 'rxjs/operators';
-
+// Models
+import { verEventosModel } from '../../models/evento.model';
 // Selects
 import { months, days } from './datetime.component';
 // Services
 import { EventoService } from '../../services/evento.service';
 // Alertas
 import Swal from 'sweetalert2';
-import { Config } from 'protractor';
-import { ArrayType } from '@angular/compiler';
 
 
 @Component({
@@ -21,10 +19,12 @@ import { ArrayType } from '@angular/compiler';
 export class AdminComponent implements OnInit {
 
   forma: FormGroup;
-  eventsarray: any;
+  eventsarray: verEventosModel = new verEventosModel();
+
 
   mesess = months;
   diass = days;
+  // tslint:disable-next-line: variable-name
   constructor( private _eventoService: EventoService) {
 
     this.forma = new FormGroup({
@@ -55,12 +55,22 @@ export class AdminComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.callEvents();
+  }
+
+  callEvents() {
     this._eventoService.verEventos()
-    .subscribe(resp => {
-      this.eventsarray = resp.records
-      
+    .subscribe((resp: verEventosModel) => {
+      this.eventsarray.records = resp.records;
     });
-    
+  }
+
+  editar(id: number) {
+    console.log(`id: ${id} del evento a editar`);
+  }
+
+  eliminar(id: number) {
+    console.log(`id: ${id} del evento a editar`);
   }
 
   noCero(control: FormControl ):{[s: string]: boolean} {
@@ -90,6 +100,10 @@ export class AdminComponent implements OnInit {
     }
     const evento2 = JSON.stringify(evento);
     console.log(evento2);
+    
+
+    let peticion: Observable<any>;
+    peticion = this._eventoService.crearEvento(evento2);
     Swal.fire({
       title: 'Espere',
       text: 'Guardando información...',
@@ -97,47 +111,42 @@ export class AdminComponent implements OnInit {
       allowOutsideClick: false
     });
     Swal.showLoading();
+    peticion.subscribe(
+      resp => {
+        if (resp.message === 'El evento fue creado.') {
+          Swal.fire({
+            title: 'El evento ' + this.forma.value.nombre + '.',
+            text: 'Fue creado.',
+            icon: 'success',
+          });
+          this.callEvents();
+          this.forma.reset({
+            nombre: '',
+            fecha_inicio: {
+              dia: '',
+              mes: '',
+              year: ''
+            },
+            fecha_fin: {
+              diaf: '',
+              mesf: '',
+              yearf: ''
+            },
+            ubicacion: '',
+            costo: '',
+            status: '',
+            descripcion: ''
+          });
 
-    let peticion: Observable<any>;
-    peticion = this._eventoService.crearEvento(evento2);
-    peticion.subscribe( resp => {
-      console.log(resp);
-      if ( resp.message === 'El evento fue creado.' ) {
-        this._eventoService.verEventos()
-    .subscribe(resp => {
-      this.eventsarray = resp.records
-      
-    });
+        }
+      }, (err) => {
         Swal.fire({
-          title: 'El evento ' + this.forma.value.nombre + '.',
-          text: 'Fue creado.',
-          icon: 'success',
-        });
-        this.forma.reset({
-          nombre: '',
-          fecha_inicio: {
-            dia: '',
-            mes: '',
-            year: ''
-          },
-          fecha_fin: {
-            diaf: '',
-            mesf: '',
-            yearf: ''
-          },
-          ubicacion: '',
-          costo: '',
-          status: '',
-          descripcion: ''
-        })
-      } else {
-        Swal.fire({
-          title: 'El evento ' + this.forma.value.nombre + '.',
-          text: 'No se pudo crear.',
           icon: 'error',
+          title: 'Error al crear el evento.',
+          text: 'Verifica los datos'
         });
       }
-    });
+    );
 
   }
 }
