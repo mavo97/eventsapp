@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
 // Models
 import { verEventosModel } from '../../models/evento.model';
 // Selects
@@ -25,7 +26,8 @@ export class AdminComponent implements OnInit {
   mesess = months;
   diass = days;
   // tslint:disable-next-line: variable-name
-  constructor( private _eventoService: EventoService) {
+  constructor( private _eventoService: EventoService,
+               private _route: Router ) {
 
     this.forma = new FormGroup({
       nombre: new FormControl('',   [
@@ -67,10 +69,55 @@ export class AdminComponent implements OnInit {
 
   editar(id: number) {
     console.log(`id: ${id} del evento a editar`);
+    this._route.navigate(['admin/evento', id]);
   }
 
   eliminar(id: number) {
-    console.log(`id: ${id} del evento a editar`);
+    let peticion: Observable<any>;
+    // tslint:disable-next-line: variable-name
+    const id_evento: Object  = {
+      id_evento: id
+    };
+    const idjson = JSON.stringify(id_evento);
+    Swal.fire({
+      title: '¿Está seguro de querer eliminar el evento?',
+      text: "¡No podrás revertir esto!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sí, eliminar evento!'
+    }).then((result) => {
+      if (result.value) {
+        peticion = this._eventoService.eliminarEvento(idjson);
+        Swal.fire({
+          title: 'Espere',
+          text: 'Eliminando evento...',
+          icon: 'info',
+          allowOutsideClick: false
+        });
+        Swal.showLoading();
+        peticion.subscribe(
+          resp => {
+            if (resp.message === 'El evento fue eliminado.') {
+              Swal.fire({
+                title: 'El evento ' + this.forma.value.nombre + '.',
+                text: 'Fue eliminado correctamente.',
+                icon: 'success',
+              });
+              this.callEvents(); }
+           },
+          (err) => {
+            Swal.fire({
+              icon: 'error',
+              title: 'Error al eliminar el evento.',
+              text: 'Intenta más tarde...'
+            });
+          }
+        ); 
+      }
+    })
+    
   }
 
   noCero(control: FormControl ):{[s: string]: boolean} {
@@ -97,10 +144,9 @@ export class AdminComponent implements OnInit {
       costo: this.forma.value.costo,
       estado: this.forma.value.status,
       descripcion: this.forma.value.descripcion
-    }
+    };
     const evento2 = JSON.stringify(evento);
-    console.log(evento2);
-    
+    // console.log(evento2);
 
     let peticion: Observable<any>;
     peticion = this._eventoService.crearEvento(evento2);

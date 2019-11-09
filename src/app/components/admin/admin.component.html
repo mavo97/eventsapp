@@ -62,7 +62,7 @@
                     <div class="form-group">
                         <label for="nombre">Nombre</label>
                         <input type="text" formControlName="nombre" class="form-control" id="nombre" aria-describedby="text" placeholder="Nombre Del Evento">
-                        <div *ngIf="forma.controls['nombre'].errors?.required && forma.controls['nombre'].dirty " class="form-control-feedback">
+                        <div *ngIf="forma.controls['nombre'].errors?.required && (forma.dirty && forma.touched) " class="form-control-feedback">
                             <p style="color: red ">*Nombre campo requerido.</p>
                         </div>
                         <div *ngIf="forma.controls['nombre'].errors?.minlength && forma.controls['nombre'].dirty " class="form-control-feedback">
@@ -155,7 +155,7 @@
                     <div class="form-group ">
                         <label for="ubicacion">Ubicación</label>
                         <input type="text " class="form-control " formControlName="ubicacion" id="ubicacion" aria-describedby="text " placeholder="Ubicación">
-                        <div *ngIf="forma.controls['ubicacion'].errors?.required && forma.controls['ubicacion'].dirty " class="form-control-feedback ">
+                        <div *ngIf="forma.controls['ubicacion'].errors?.required && (forma.dirty && forma.touched) " class="form-control-feedback ">
                             <p style="color: red ">*Ubicación campo requerido.</p>
                         </div>
                         <div *ngIf="forma.controls['ubicacion'].errors?.maxlength && forma.controls['ubicacion'].dirty " class="form-control-feedback ">
@@ -166,7 +166,7 @@
                         <div class="col ">
                             <label for="costo">Costo</label>
                             <input type="text" class="form-control" pattern="^[0-9]+" formControlName="costo" id="costo" aria-describedby="number" placeholder="Costo">
-                            <div *ngIf="forma.controls['costo'].errors?.required && forma.controls['costo'].dirty " class="form-control-feedback ">
+                            <div *ngIf="forma.controls['costo'].errors?.required && (forma.dirty && forma.touched) " class="form-control-feedback ">
                                 <p style="color: red ">*Costo campo requerido.</p>
                             </div>
                             <div *ngIf="forma.controls['costo'].errors?.maxlength && forma.controls['costo'].dirty" class="form-control-feedback ">
@@ -193,7 +193,7 @@
                     <div class="form-group ">
                         <label for="descripcion">Descripción</label>
                         <textarea class="form-control " id="descripcion" formControlName="descripcion" rows="2 "></textarea>
-                        <div *ngIf="forma.controls['descripcion'].errors?.required && forma.controls['descripcion'].dirty " class="form-control-feedback">
+                        <div *ngIf="forma.controls['descripcion'].errors?.required && (forma.dirty && forma.touched) " class="form-control-feedback">
                             <p style="color: red ">*Descripción campo requerido.</p>
                         </div>
                         <div *ngIf="forma.controls['descripcion'].errors?.maxlength && forma.controls['descripcion'].dirty " class="form-control-feedback">

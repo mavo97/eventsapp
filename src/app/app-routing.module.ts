@@ -8,7 +8,7 @@ import { AdeventComponent } from './components/adevent/adevent.component';
 const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'admin', component: AdminComponent},
-  { path: 'admin/eventos', component: AdeventComponent},
+  { path: 'admin/evento/:id', component: AdeventComponent},
   { path: '**', pathMatch: 'full', redirectTo: '' }
 ];
 

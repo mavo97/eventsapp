@@ -21,7 +21,15 @@ export class EventoService {
   }
 
   verEventos() {
-
     return this.http.get(`${ this.url }/read.php`);
+  }
+
+  eliminarEvento(id: string) {
+    return this.http.post(`${ this.url }/delete.php`, id)
+    .pipe(
+      map( ( resp: any ) => {
+        return resp;
+      })
+    );
   }
 }
