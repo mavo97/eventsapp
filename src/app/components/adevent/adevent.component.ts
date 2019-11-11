@@ -21,11 +21,12 @@ export class AdeventComponent implements OnInit {
   id: number; // Id evento
   event: EventModel = new EventModel(); // Evento que se esta editando
   forma: FormGroup; // Formulario editar evento
-  edit: boolean = false; // Variable para ocultar o mostrar formulario editar
+  edit = false; // Variable para ocultar o mostrar formulario editar
 
 
 
   constructor( private route: ActivatedRoute,
+               // tslint:disable-next-line: variable-name
                private _eventoService: EventoService ) {
     // Validar formulario
     this.forma = new FormGroup({
@@ -45,6 +46,7 @@ export class AdeventComponent implements OnInit {
     this.forma.controls.fecha_inicio.setValidators([
       Validators.required, this.dateVaidator
     ]);
+
 
                 }
 
@@ -70,11 +72,12 @@ export class AdeventComponent implements OnInit {
       this.forma.controls.costo.setValue(this.event.costo);
       this.forma.controls.ubicacion.setValue(this.event.ubicacion);
       this.forma.controls.descripcion.setValue(this.event.descripcion);
-      console.log(this.event);
+      // console.log(this.event);
     });
   }
+
   // Funcion para no permitir ceros
-  noCero(control: FormControl ):{[s: string]: boolean} {
+  noCero(control: FormControl ): {[s: string]: boolean} {
     const forma: any = this;
     const val = forma.controls.costo.value;
     if (val === '0' || val === '00' || val === '000' || val === '0000' || val === '00000') {
@@ -86,7 +89,7 @@ export class AdeventComponent implements OnInit {
   }
   // funcion para actualizar evento
   updateEvento( form: NgForm ) {
-    const id2 = this.id.toString(); 
+    const id2 = this.id.toString();
     const eventU: EventModel = {
       id_evento: id2,
       nombre: this.forma.value.nombre,
@@ -138,8 +141,12 @@ export class AdeventComponent implements OnInit {
   // Validar fecha
   dateVaidator(AC: AbstractControl) {
     if (AC && AC.value && !moment(AC.value, 'YYYY-MM-DD', true).isValid()) {
-      return { 'dateVaidator': true };
+      return { dateVaidator: true };
     }
     return null;
+  }
+  // Regresar una pagina atrás
+  return() {
+    window.history.back();
   }
 }

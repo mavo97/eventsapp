@@ -4,7 +4,10 @@
     </div>
     <div class="row mb-1">
         <div class="col text-center">
-            <button type="button" class="btn btn-primary" *ngIf="!edit" (click)="editar()">
+            <button type="button" class="btn btn-info mr-3" (click)="return()">
+                Regresar a eventos
+            </button>
+            <button type="button" class="btn btn-info" *ngIf="!edit" (click)="editar()">
                 Editar Evento
             </button>
             <button type="button" class="btn btn-danger" *ngIf="edit" (click)="noeditar()">
@@ -97,7 +100,6 @@
                     <p style="color: red ">*Maximo 200 caracteres.</p>
                 </div>
             </div>
-            {{forma.valid}}
             <button type="submit" class="btn btn-primary" [disabled]="!forma.valid">Submit</button>
         </form>
 
