@@ -32,4 +32,8 @@ export class EventoService {
       })
     );
   }
+
+  leerEvento(id: number) {
+    return this.http.get(`${this.url}/read_one.php?id=${id}`);
+  }
 }

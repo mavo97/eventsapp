@@ -47,17 +47,17 @@
 <!-- Modal Evento -->
 <div class="modal fade" id="crearEvento" tabindex="-1 " role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
-        <div class="modal-content ">
-            <div class="modal-header ">
-                <h5 class="modal-title " id="exampleModalLabel">Crear Evento</h5>
-                <button type="button " class="close " data-dismiss="modal " aria-label="Close ">
-            <span aria-hidden="true ">&times;</span>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Crear Evento</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
           </button>
             </div>
-            <div class="modal-body ">
+            <div class="modal-body">
 
                 <!---------------------Form------------------------------------------>
-                <form (ngSubmit)="guardarEvento() " [formGroup]="forma ">
+                <form (ngSubmit)="guardarEvento()" [formGroup]="forma">
 
                     <div class="form-group">
                         <label for="nombre">Nombre</label>
@@ -65,93 +65,31 @@
                         <div *ngIf="forma.controls['nombre'].errors?.required && (forma.dirty && forma.touched) " class="form-control-feedback">
                             <p style="color: red ">*Nombre campo requerido.</p>
                         </div>
-                        <div *ngIf="forma.controls['nombre'].errors?.minlength && forma.controls['nombre'].dirty " class="form-control-feedback">
-                            <p style="color: red ">*Minimo 3 caracteres.</p>
-                        </div>
                     </div>
 
-                    <div class="form-group mb-0" formGroupName="fecha_inicio">
-                        <label>Fecha Inicio</label>
-                    </div>
-
-                    <div class="row " formGroupName="fecha_inicio">
+                    <div class="row">
                         <div class="col">
-                            <select class="custom-select" id="dia" formControlName="dia">
-                                <option *ngFor="let day of diass" value="{{day.value}}">{{day.value}}</option>
-                            </select>
-                            <label for="dia">Día</label>
-                            <div *ngIf="forma.controls['fecha_inicio'].controls['dia'].errors?.required && (forma.dirty && forma.touched)" class="form-control-feedback">
-                                <p style="color: red ">*Día campo requerido.</p>
+                            <label for="costo">Fecha Inicio</label>
+                            <input type="text" formControlName="fecha_inicio" class="form-control" id="fecha_inicio" aria-describedby="number" placeholder="YYYY-MM-DD">
+                            <div *ngIf="forma.controls['fecha_inicio'].errors?.required && (forma.dirty && forma.touched) " class="form-control-feedback">
+                                <p style="color: red ">*Fecha Inicio campo requerido.</p>
+                            </div>
+                            <div *ngIf="forma.controls['fecha_inicio'].errors?.dateVaidator && (forma.dirty && forma.touched) " class="form-control-feedback">
+                                <p style="color: red ">*Formato de fecha incorrecto. Año-Mes-Día</p>
                             </div>
                         </div>
                         <div class="col">
-                            <select class="custom-select" id="mes" formControlName="mes">
-                                <option *ngFor="let mes of mesess" value="{{mes.value2}}">{{mes.value}}</option>
-                            </select>
-                            <label for="mes">Mes</label>
-                            <div *ngIf="forma.controls['fecha_inicio'].controls['mes'].errors?.required && (forma.dirty && forma.touched) " class="form-control-feedback ">
-                                <p style="color: red ">*Mes campo requerido.</p>
+                            <label for="costo">Fecha Fin</label>
+                            <input type="text" class="form-control" formControlName="fecha_fin" placeholder="YYYY-MM-DD" id="fecha_fin" aria-describedby="number">
+                            <div *ngIf="forma.controls['fecha_fin'].errors?.required && (forma.dirty && forma.touched) " class="form-control-feedback">
+                                <p style="color: red ">*Fecha Fin campo requerido. Año-Mes-Día</p>
                             </div>
-                        </div>
-                        <div class="col">
-                            <input type="text" formControlName="year" id="year" class="form-control " placeholder="Ej: 2019 " pattern="^[0-9]+">
-                            <label for="year ">Año</label>
-                            <div *ngIf="forma.controls['fecha_inicio'].controls['year'].errors?.required && (forma.dirty && forma.touched)" class="form-control-feedback">
-                                <p style="color: red ">*Año campo requerido.</p>
-                            </div>
-                            <div *ngIf="forma.controls['fecha_inicio'].controls['year'].errors?.maxlength && forma.controls['fecha_inicio'].controls['year'].dirty" class="form-control-feedback">
-                                <p style="color: red ">*Maximo 4 digitos.</p>
-                            </div>
-                            <div *ngIf="forma.controls['fecha_inicio'].controls['year'].errors?.minlength && forma.controls['fecha_inicio'].controls['year'].dirty" class="form-control-feedback">
-                                <p style="color: red ">*Minimo 4 digitos.</p>
-                            </div>
-                            <div *ngIf="forma.controls['fecha_inicio'].controls['year'].errors?.pattern && forma.controls['fecha_inicio'].controls['year'].dirty" class="form-control-feedback">
-                                <p style="color: red ">*Solo se permiten digitos.</p>
+                            <div *ngIf="forma.controls['fecha_fin'].errors?.dateVaidator && (forma.dirty && forma.touched) " class="form-control-feedback">
+                                <p style="color: red ">*Formato de fecha incorrecto.</p>
                             </div>
                         </div>
                     </div>
 
-                    <div class="form-group mb-0">
-                        <label>Fecha Fin</label>
-                    </div>
-
-                    <div class="row" formGroupName="fecha_fin">
-                        <div class="col ">
-                            <select class="custom-select" formControlName="diaf" id="diaf">
-                                <option *ngFor="let day of diass" value="{{day.value}}">{{day.value}}</option>
-                            </select>
-                            <label for="diaf">Día</label>
-                            <div *ngIf="forma.controls['fecha_fin'].controls['diaf'].errors?.required && (forma.dirty && forma.touched)" class="form-control-feedback">
-                                <p style="color: red ">*Día campo requerido.</p>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <select class="custom-select " id="mesf" formControlName="mesf">
-                                <option *ngFor="let mes of mesess" value="{{mes.value2}}">{{mes.value}}</option>
-                            </select>
-                            <label for="mesf">Mes</label>
-                            <div *ngIf="forma.controls['fecha_fin'].controls['mesf'].errors?.required && (forma.dirty && forma.touched)" class="form-control-feedback">
-                                <p style="color: red ">*Mes campo requerido.</p>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <input type="text" id="yearf" formControlName="yearf" class="form-control" placeholder="Ej: 2019" pattern="^[0-9]+">
-                            <label for="yearf">Año</label>
-                            <div *ngIf="forma.controls['fecha_fin'].controls['yearf'].errors?.required && (forma.dirty && forma.touched)" class="form-control-feedback">
-                                <p style="color: red ">*Año campo requerido.</p>
-                            </div>
-                            <div *ngIf="forma.controls['fecha_fin'].controls['yearf'].errors?.maxlength && forma.controls['fecha_fin'].controls['yearf'].dirty" class="form-control-feedback ">
-                                <p style="color: red ">*Maximo 4 digitos.</p>
-                            </div>
-                            <div *ngIf="forma.controls['fecha_fin'].controls['yearf'].errors?.minlength && forma.controls['fecha_fin'].controls['yearf'].dirty" class="form-control-feedback ">
-                                <p style="color: red ">*Minimo 4 digitos.</p>
-                            </div>
-                            <div *ngIf="forma.controls['fecha_fin'].controls['yearf'].errors?.pattern && forma.controls['fecha_fin'].controls['yearf'].dirty" class="form-control-feedback ">
-                                <p style="color: red ">*Solo se permiten digitos.</p>
-                            </div>
-
-                        </div>
-                    </div>
                     <div class="form-group ">
                         <label for="ubicacion">Ubicación</label>
                         <input type="text " class="form-control " formControlName="ubicacion" id="ubicacion" aria-describedby="text " placeholder="Ubicación">
@@ -192,7 +130,7 @@
                     </div>
                     <div class="form-group ">
                         <label for="descripcion">Descripción</label>
-                        <textarea class="form-control " id="descripcion" formControlName="descripcion" rows="2 "></textarea>
+                        <textarea class="form-control" id="descripcion" formControlName="descripcion" rows="2" placeholder="Descripción del evento"></textarea>
                         <div *ngIf="forma.controls['descripcion'].errors?.required && (forma.dirty && forma.touched) " class="form-control-feedback">
                             <p style="color: red ">*Descripción campo requerido.</p>
                         </div>

@@ -1,1 +1,103 @@
-<p>adevent works!</p>
+<div class="container main-container">
+    <div class="alert alert-success text-center" role="alert">
+        Evento {{event.nombre}}
+    </div>
+    <div class="row mb-1">
+        <div class="col text-center">
+            <button type="button" class="btn btn-primary" *ngIf="!edit" (click)="editar()">
+                Editar Evento
+            </button>
+            <button type="button" class="btn btn-danger" *ngIf="edit" (click)="noeditar()">
+                Ocultar formulario de edición
+            </button>
+        </div>
+    </div>
+    <div class="mb-5" *ngIf="edit">
+        <form (ngSubmit)="updateEvento( f )" [formGroup]="forma" #f="ngForm">
+            <h3>Editar Evento</h3>
+            <div class="form-group">
+                <label for="nombre">Nombre</label>
+                <input type="text" class="form-control" id="nombre" formControlName="nombre" aria-describedby="text" placeholder="Nombre Del Evento">
+                <div *ngIf="forma.controls['nombre'].errors?.required && (forma.dirty && forma.touched) " class="form-control-feedback">
+                    <p style="color: red ">*Nombre campo requerido.</p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <label for="costo">Fecha Inicio</label>
+                    <input type="text" formControlName="fecha_inicio" class="form-control" id="fecha_inicio" aria-describedby="number" placeholder="YYYY-MM-DD">
+                    <div *ngIf="forma.controls['fecha_inicio'].errors?.required && (forma.dirty && forma.touched) " class="form-control-feedback">
+                        <p style="color: red ">*Fecha Inicio campo requerido.</p>
+                    </div>
+                    <div *ngIf="forma.controls['fecha_inicio'].errors?.dateVaidator && (forma.dirty && forma.touched) " class="form-control-feedback">
+                        <p style="color: red ">*Formato de fecha incorrecto. Año-Mes-Día</p>
+                    </div>
+                </div>
+                <div class="col">
+                    <label for="costo">Fecha Fin</label>
+                    <input type="text" class="form-control" formControlName="fecha_fin" placeholder="YYYY-MM-DD" id="fecha_fin" aria-describedby="number">
+                    <div *ngIf="forma.controls['fecha_fin'].errors?.required && (forma.dirty && forma.touched) " class="form-control-feedback">
+                        <p style="color: red ">*Fecha Fin campo requerido. Año-Mes-Día</p>
+                    </div>
+                    <div *ngIf="forma.controls['fecha_fin'].errors?.dateVaidator && (forma.dirty && forma.touched) " class="form-control-feedback">
+                        <p style="color: red ">*Formato de fecha incorrecto.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <label for="costo">Costo</label>
+                    <input type="text" class="form-control" formControlName="costo" pattern="^[0-9]+" id="costo" aria-describedby="number" placeholder="Costo">
+                    <div *ngIf="forma.controls['costo'].errors?.required && (forma.dirty && forma.touched) " class="form-control-feedback ">
+                        <p style="color: red ">*Costo campo requerido.</p>
+                    </div>
+                    <div *ngIf="forma.controls['costo'].errors?.maxlength && forma.controls['costo'].dirty" class="form-control-feedback ">
+                        <p style="color: red ">*Maximo 5 digitos.</p>
+                    </div>
+                    <div *ngIf="forma.controls['costo'].errors?.pattern && forma.controls['costo'].dirty" class="form-control-feedback ">
+                        <p style="color: red ">*Solo se permiten digitos.</p>
+                    </div>
+                    <div *ngIf="forma.controls['costo'].errors?.noCeros && forma.controls['costo'].dirty" class="form-control-feedback ">
+                        <p style="color: red ">*No se puede poner 0 como valor.</p>
+                    </div>
+                </div>
+                <div class="col">
+                    <p class="mb-0">Status</p>
+                    <select formControlName="status" class="custom-select" id="status">
+                        <option value="A">Activo</option>
+                        <option value="I">Inactivo</option>
+                        <div *ngIf="forma.controls['status'].errors?.required && (forma.dirty && forma.touched || !forma.valid)" class="form-control-feedback ">
+                            <p style="color: red ">*Status campo requerido.</p>
+                        </div>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="descripcion">Ubicación</label>
+                <textarea class="form-control" id="descripcion" formControlName="ubicacion" placeholder="Descripción del evento" rows="2"></textarea>
+                <div *ngIf="forma.controls['ubicacion'].errors?.required && (forma.dirty && forma.touched)" class="form-control-feedback ">
+                    <p style="color: red ">*Ubicación campo requerido.</p>
+                </div>
+                <div *ngIf="forma.controls['ubicacion'].errors?.maxlength && forma.controls['ubicacion'].dirty" class="form-control-feedback ">
+                    <p style="color: red ">*Maximo 30 caracteres.</p>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="descripcion">Descripción</label>
+                <textarea class="form-control" id="descripcion" formControlName="descripcion" placeholder="Descripción del evento" rows="2"></textarea>
+                <div *ngIf="forma.controls['descripcion'].errors?.required && (forma.dirty && forma.touched)" class="form-control-feedback">
+                    <p style="color: red ">*Descripción campo requerido.</p>
+                </div>
+                <div *ngIf="forma.controls['descripcion'].errors?.maxlength && forma.controls['descripcion'].dirty" class="form-control-feedback">
+                    <p style="color: red ">*Maximo 200 caracteres.</p>
+                </div>
+            </div>
+            {{forma.valid}}
+            <button type="submit" class="btn btn-primary" [disabled]="!forma.valid">Submit</button>
+        </form>
+
+    </div>
+
+</div>
