@@ -21,6 +21,9 @@
                 <div *ngIf="forma.controls['nombre'].errors?.required && (forma.dirty && forma.touched) " class="form-control-feedback">
                     <p style="color: red ">*Nombre campo requerido.</p>
                 </div>
+                <div *ngIf="forma.controls['nombre'].errors?.maxlength && forma.controls['nombre'].dirty" class="form-control-feedback ">
+                    <p style="color: red ">*Maximo 30 caracteres.</p>
+                </div>
             </div>
 
             <div class="row">

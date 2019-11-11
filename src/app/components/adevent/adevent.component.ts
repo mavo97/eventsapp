@@ -15,18 +15,18 @@ import * as moment from 'moment';
 })
 export class AdeventComponent implements OnInit {
 
-  id: number;
-  event: EventModel = new EventModel();
-  forma: FormGroup;
-  edit: boolean = false;
-  nombre: string;
+  id: number; // Id evento
+  event: EventModel = new EventModel(); // Evento que se esta editando
+  forma: FormGroup; // Formulario editar evento
+  edit: boolean = false; // Variable para ocultar o mostrar formulario editar
+
 
 
   constructor( private route: ActivatedRoute,
                private _eventoService: EventoService ) {
-
+    // Validar formulario
     this.forma = new FormGroup({
-      nombre: new FormControl('', Validators.required),
+      nombre: new FormControl('', [Validators.required, Validators.maxLength(30)]),
       fecha_inicio: new FormControl(''),
       fecha_fin: new FormControl('', [Validators.required, this.dateVaidator ]),
       ubicacion: new FormControl('', [Validators.required, Validators.maxLength(30)]),
@@ -47,13 +47,16 @@ export class AdeventComponent implements OnInit {
 
 
   ngOnInit() {
+    // Obtener id de la url
     this.route.params.subscribe(params => {
       this.id = +params.id;
     });
-
+    // Leer el evento actual
     this.readEvent();
 
   }
+
+  // Funcion para leer el evento actual
   readEvent() {
     this._eventoService.leerEvento(this.id)
     .subscribe( (resp: EventModel ) => {
@@ -66,6 +69,7 @@ export class AdeventComponent implements OnInit {
       this.forma.controls.descripcion.setValue(this.event.descripcion);
     });
   }
+  // Funcion para no permitir ceros
   noCero(control: FormControl ):{[s: string]: boolean} {
     const forma: any = this;
     const val = forma.controls.costo.value;
@@ -76,18 +80,22 @@ export class AdeventComponent implements OnInit {
     }
     return null;
   }
+  // funcion para actualizar evento
   updateEvento( form: NgForm ) {
     console.log(this.forma);
     if ( form.invalid ) {
       console.log('Formulario Invalido!!');
       return; }
   }
+  // Mostrar formulario
   editar() {
     this.edit = true;
   }
+  // Ocultar formulario
   noeditar() {
     this.edit = false;
   }
+  // Validar fecha
   dateVaidator(AC: AbstractControl) {
     if (AC && AC.value && !moment(AC.value, 'YYYY-MM-DD', true).isValid()) {
       return { 'dateVaidator': true };

@@ -4,8 +4,6 @@ import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 // Models
 import { verEventosModel } from '../../models/evento.model';
-// Selects
-import { months, days } from './datetime.component';
 // Services
 import { EventoService } from '../../services/evento.service';
 // Alertas
@@ -21,19 +19,17 @@ import * as moment from 'moment';
 })
 export class AdminComponent implements OnInit {
 
-  forma: FormGroup;
-  eventsarray: verEventosModel = new verEventosModel();
+  forma: FormGroup; // Formulario para validar
+  eventsarray: verEventosModel = new verEventosModel(); // Array de eventos
 
-
-  mesess = months;
-  diass = days;
   // tslint:disable-next-line: variable-name
   constructor( private _eventoService: EventoService,
                private _route: Router ) {
 
+    // Validar formulario crear evento
     this.forma = new FormGroup({
       nombre: new FormControl('',   [
-        Validators.required
+        Validators.required, Validators.maxLength(30)
       ]),
       fecha_inicio: new FormControl('', [Validators.required, this.dateVaidator ]),
       fecha_fin: new FormControl('', [Validators.required, this.dateVaidator ]),
@@ -50,9 +46,11 @@ export class AdminComponent implements OnInit {
   }
 
   ngOnInit() {
+    // Llamada de eventos
     this.callEvents();
   }
 
+  // Validador para campo fecha
   dateVaidator(AC: AbstractControl) {
     if (AC && AC.value && !moment(AC.value, 'YYYY-MM-DD', true).isValid()) {
       return { 'dateVaidator': true };
@@ -60,18 +58,20 @@ export class AdminComponent implements OnInit {
     return null;
   }
 
+  // Funcion para llamar a los eventos
   callEvents() {
     this._eventoService.verEventos()
     .subscribe((resp: verEventosModel) => {
       this.eventsarray.records = resp.records;
     });
   }
-
+  // Editar evento
   editar(id: number) {
     console.log(`id: ${id} del evento a editar`);
     this._route.navigate(['admin/evento', id]);
   }
 
+  // Eliminar evento
   eliminar(id: number) {
     let peticion: Observable<any>;
     // tslint:disable-next-line: variable-name
@@ -114,13 +114,12 @@ export class AdminComponent implements OnInit {
               text: 'Intenta más tarde...'
             });
           }
-        ); 
+        );
       }
-    })
-    
+    });
   }
 
-
+  // Validador para no permitir ceros en el campo costo
   noCero(control: FormControl ): {[s: string]: boolean} {
     const forma: any = this;
     const val = forma.controls.costo.value;
@@ -132,9 +131,11 @@ export class AdminComponent implements OnInit {
     return null;
   }
 
+  // Funcion guardar evento
   guardarEvento() {
     // console.log(this.forma);
     // console.log(this.forma.value);
+    // Objecto evento
     const evento: object = {
       nombre: this.forma.value.nombre,
       fecha_inicio: this.forma.value.fecha_inicio,
@@ -144,6 +145,7 @@ export class AdminComponent implements OnInit {
       estado: this.forma.value.status,
       descripcion: this.forma.value.descripcion
     };
+    // Convertir objeto evento a JSON
     const evento2 = JSON.stringify(evento);
     // console.log(evento2);
 
@@ -165,6 +167,7 @@ export class AdminComponent implements OnInit {
             icon: 'success',
           });
           this.callEvents();
+          // Reset Formulario
           this.forma.reset({
             nombre: '',
             fecha_inicio: '',
