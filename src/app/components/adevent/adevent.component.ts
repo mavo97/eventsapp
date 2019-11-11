@@ -1,10 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FormGroup, FormControl, Validators, AbstractControl, NgForm } from '@angular/forms';
+import { Observable } from 'rxjs';
 // Services
 import { EventoService } from '../../services/evento.service';
 // Models
 import { EventModel } from '../../models/evento.model';
+// Alertas
+import Swal from 'sweetalert2';
 
 import * as moment from 'moment';
 
@@ -67,6 +70,7 @@ export class AdeventComponent implements OnInit {
       this.forma.controls.costo.setValue(this.event.costo);
       this.forma.controls.ubicacion.setValue(this.event.ubicacion);
       this.forma.controls.descripcion.setValue(this.event.descripcion);
+      console.log(this.event);
     });
   }
   // Funcion para no permitir ceros
@@ -82,10 +86,46 @@ export class AdeventComponent implements OnInit {
   }
   // funcion para actualizar evento
   updateEvento( form: NgForm ) {
-    console.log(this.forma);
-    if ( form.invalid ) {
-      console.log('Formulario Invalido!!');
-      return; }
+    const id2 = this.id.toString(); 
+    const eventU: EventModel = {
+      id_evento: id2,
+      nombre: this.forma.value.nombre,
+      fecha_inicio: this.forma.value.fecha_inicio,
+      fecha_fin: this.forma.value.fecha_fin,
+      ubicacion: this.forma.value.ubicacion,
+      costo: this.forma.value.costo,
+      estado: this.forma.value.status,
+      descripcion: this.forma.value.descripcion
+    };
+    const evento2 = JSON.stringify(eventU);
+    let peticion: Observable<any>;
+    peticion = this._eventoService.actualizarEvento(evento2);
+    Swal.fire({
+      title: 'Espere',
+      text: 'Guardando información...',
+      icon: 'info',
+      allowOutsideClick: false
+    });
+    Swal.showLoading();
+    peticion.subscribe(
+      resp => {
+        if (resp.message === 'El evento fue actualizado.') {
+          Swal.fire({
+            title: 'El evento ' + this.forma.value.nombre + '.',
+            text: 'Fue actualizado correctamente.',
+            icon: 'success',
+          });
+          this.readEvent();
+          this.edit = false;
+        }
+      }, (err) => {
+        Swal.fire({
+          icon: 'error',
+          title: 'Error al crear el evento.',
+          text: 'Verifica los datos.'
+        });
+      }
+    );
   }
   // Mostrar formulario
   editar() {

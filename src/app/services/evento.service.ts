@@ -36,4 +36,8 @@ export class EventoService {
   leerEvento(id: number) {
     return this.http.get(`${this.url}/read_one.php?id=${id}`);
   }
+
+  actualizarEvento( evento ) {
+    return this.http.post(`${this.url}/update.php`, evento);
+  }
 }
