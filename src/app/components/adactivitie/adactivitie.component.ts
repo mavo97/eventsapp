@@ -12,5 +12,4 @@ export class AdactivitieComponent implements OnInit {
 
   ngOnInit() {
   }
-
 }

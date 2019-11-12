@@ -22,4 +22,13 @@ export class ActividadService {
   verActividades( id: number ) {
     return this.http.get(`${ this.url }/readacts.php?id=${id}`);
   }
+
+  eliminarActividad(id: string) {
+    return this.http.post(`${ this.url }/delete.php`, id)
+    .pipe(
+      map( ( resp: any ) => {
+        return resp;
+      })
+    );
+  }
 }

@@ -220,13 +220,63 @@ export class AdeventComponent implements OnInit {
       this.mostrarA = true;
     }, (error) => {
       this.mostrarA = false;
-      console.log(error);
+      // console.log(error);
     });
-    console.log(this.id);
+    // console.log(this.id);
   }
   // Editar actividad
   editarActividad( id ) {
     console.log(id);
     this.router.navigate(['admin/actividad', id]);
   }
+  // Eliminar evento
+  eliminarActividad(id: number) {
+    let peticion: Observable<any>;
+    // tslint:disable-next-line: variable-name
+    const id_actividad: Object  = {
+      id_actividad: id
+    };
+    const idjson = JSON.stringify(id_actividad);
+    Swal.fire({
+      title: '¿Está seguro de querer eliminar la actividad?',
+      text: "¡No podrás revertir esto!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sí, eliminar actividad!'
+    }).then((result) => {
+      if (result.value) {
+        peticion = this.actividadService.eliminarActividad(idjson);
+        Swal.fire({
+          title: 'Espere',
+          text: 'Eliminando evento...',
+          icon: 'info',
+          allowOutsideClick: false
+        });
+        Swal.showLoading();
+        peticion.subscribe(
+          resp => {
+            if (resp.message === 'La actividad fue eliminada.') {
+              Swal.fire({
+                title: 'La actividad.',
+                text: 'Fue eliminado correctamente.',
+                icon: 'success',
+              });
+              this.readEvent();
+              this.callActivities();
+            }
+           },
+          (err) => {
+            Swal.fire({
+              icon: 'error',
+              title: 'Error al eliminar el evento.',
+              text: 'Intenta más tarde...'
+            });
+          }
+        );
+      }
+    });
+  }
+
 }

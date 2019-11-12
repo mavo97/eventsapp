@@ -130,7 +130,7 @@
                     <td>{{ actividad.fecha_inicio | date:"dd/MMMM/yy"}}</td>
                     <td>{{ actividad.fecha_fin | date:"dd/MMMM/yy"}}</td>
                     <td><a class="btn btn-warning" (click)="editarActividad(actividad.id_actividad)"><i class="fas fa-edit"></i></a></td>
-                    <td><a class="btn btn-danger"><i class="fas fa-trash"></i></a></td>
+                    <td><a class="btn btn-danger" (click)="eliminarActividad(actividad.id_actividad)"><i class="fas fa-trash"></i></a></td>
                 </tr>
             </tbody>
         </table>
@@ -236,7 +236,6 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
             </div>
         </div>
     </div>
