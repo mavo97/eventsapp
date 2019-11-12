@@ -18,6 +18,7 @@ import { AdeventComponent } from './components/adevent/adevent.component';
 // Traduccion al español
 import localeEs from '@angular/common/locales/es';
 import { registerLocaleData } from '@angular/common';
+import { AdactivitieComponent } from './components/adactivitie/adactivitie.component';
 registerLocaleData(localeEs);
 
 @NgModule({
@@ -27,6 +28,7 @@ registerLocaleData(localeEs);
     HomeComponent,
     AdminComponent,
     AdeventComponent,
+    AdactivitieComponent,
     
   ],
   imports: [

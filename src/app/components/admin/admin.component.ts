@@ -67,7 +67,7 @@ export class AdminComponent implements OnInit {
   }
   // Editar evento
   editar(id: number) {
-    console.log(`id: ${id} del evento a editar`);
+    // console.log(`id: ${id} del evento a editar`);
     this._route.navigate(['admin/evento', id]);
   }
 

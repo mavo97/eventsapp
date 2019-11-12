@@ -1,6 +1,9 @@
 <div class="container main-container">
-    <div class="alert alert-success text-center" role="alert">
-        Evento {{event.nombre}}
+    <div class="alert alert-dark text-center" role="alert">
+        Evento {{event.nombre}} <br>
+        <button type="button" class="btn btn-dark mr-3" data-toggle="modal" data-target="#watchEvent">
+            Ver evento.
+        </button>
     </div>
     <div class="row mb-1">
         <div class="col text-center">
@@ -12,6 +15,9 @@
             </button>
             <button type="button" class="btn btn-danger" *ngIf="edit" (click)="noeditar()">
                 Ocultar formulario de edición
+            </button>
+            <button type="button" class="btn btn-info ml-3" data-toggle="modal" data-target="#crearActividad">
+                Crear Actividad
             </button>
         </div>
     </div>
@@ -104,5 +110,134 @@
         </form>
 
     </div>
+    <div class="mt-2" *ngIf="mostrarA">
+        <h2>Actividades</h2>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Fecha Inicio</th>
+                    <th scope="col">Fecha Fin</th>
+                    <th scope="col">Editar</th>
+                    <th scope="col">Eliminar</th>
+                </tr>
+            </thead>
+            <tbody *ngFor="let actividad of actividades.records let i = index;">
+                <tr>
+                    <th scope="row ">{{i+1}}</th>
+                    <td>{{ actividad.nombre }}</td>
+                    <td>{{ actividad.fecha_inicio | date:"dd/MMMM/yy"}}</td>
+                    <td>{{ actividad.fecha_fin | date:"dd/MMMM/yy"}}</td>
+                    <td><a class="btn btn-warning" (click)="editarActividad(actividad.id_actividad)"><i class="fas fa-edit"></i></a></td>
+                    <td><a class="btn btn-danger"><i class="fas fa-trash"></i></a></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="mt-2" *ngIf="!mostrarA">
+        <div class="alert alert-warning text-center" role="alert">
+            Evento sin actividades registradas.
+        </div>
+    </div>
+</div>
 
+
+
+<!-- Modal Evento -->
+<div class="modal fade" id="crearActividad" tabindex="-1 " role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Crear Actividad</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+
+                <!---------------------Form------------------------------------------>
+                <form (ngSubmit)="crearActividad( f )" [formGroup]="forma2" #f="ngForm">
+
+                    <div class="form-group">
+                        <label for="nombre">Nombre</label>
+                        <input type="text" id="nombre" formControlName="nombre" class="form-control" aria-describedby="text" placeholder="Nombre de la actividad">
+                        <div *ngIf="forma2.controls['nombre'].errors?.required && (forma2.dirty && forma2.touched)" class="form-control-feedback">
+                            <p style="color: red ">*Nombre campo requerido.</p>
+                        </div>
+                        <div *ngIf="forma2.controls['nombre'].errors?.maxlength && forma2.controls['nombre'].dirty" class="form-control-feedback ">
+                            <p style="color: red ">*Maximo 30 caracteres.</p>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col">
+                            <label for="fecha_inicio">Fecha Inicio</label>
+                            <input type="text" id="fecha_inicio" class="form-control" formControlName="fecha_inicio" aria-describedby="number" placeholder="YYYY-MM-DD">
+                            <div *ngIf="forma2.controls['fecha_inicio'].errors?.required && (forma2.dirty && forma2.touched)" class="form-control-feedback">
+                                <p style="color: red ">*Fecha Inicio campo requerido.</p>
+                            </div>
+                            <div *ngIf="forma2.controls['fecha_inicio'].errors?.dateVaidator && (forma2.dirty && forma2.touched)" class="form-control-feedback">
+                                <p style="color: red ">*Formato de fecha incorrecto. Año-Mes-Día</p>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <label for="fecha_fin">Fecha Fin</label>
+                            <input type="text" id="fecha_fin" class="form-control" placeholder="YYYY-MM-DD" formControlName="fecha_fin" aria-describedby="number">
+                            <div *ngIf="forma2.controls['fecha_fin'].errors?.required && (forma2.dirty && forma2.touched)" class="form-control-feedback">
+                                <p style="color: red ">*Fecha Fin campo requerido.</p>
+                            </div>
+                            <div *ngIf="forma2.controls['fecha_fin'].errors?.dateVaidator && (forma2.dirty && forma2.touched)" class="form-control-feedback">
+                                <p style="color: red ">*Formato de fecha incorrecto. Año-Mes-Día</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group ">
+                        <label for="descripcion">Descripción</label>
+                        <textarea class="form-control" id="descripcion" formControlName="descripcion" rows="2" placeholder="Descripción del evento"></textarea>
+                        <div *ngIf="forma2.controls['descripcion'].errors?.required && (forma2.dirty && forma2.touched)" class="form-control-feedback">
+                            <p style="color: red ">*Descripción campo requerido.</p>
+                        </div>
+                        <div *ngIf="forma2.controls['descripcion'].errors?.maxlength && forma2.controls['descripcion'].dirty" class="form-control-feedback">
+                            <p style="color: red ">*Maximo 200 caracteres.</p>
+                        </div>
+
+                    </div>
+
+                    <button type="submit" class="btn btn-primary" [disabled]="!forma2.valid">Submit</button>
+                </form>
+                <!---------------------Form------------------------------------------>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal watch event -->
+<div class="modal fade" id="watchEvent" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Evento: {{event.nombre}}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+            </div>
+            <div class="modal-body text-center text-justify">
+                <p><b>Fecha inicio:</b> {{ event.fecha_inicio | date:"MMMM d, y" }}</p>
+                <p><b>Fecha fin:</b> {{ event.fecha_fin | date:"MMMM d, y" }}</p>
+                <p><b>Ubicación:</b> {{ event.ubicacion }}</p>
+                <p><b>Costo:</b> ${{ event.costo }}</p>
+                <p><b>Status:</b> {{ event.estado }}</p>
+                <p><b>Descripción:</b> {{ event.descripcion }}</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
 </div>
