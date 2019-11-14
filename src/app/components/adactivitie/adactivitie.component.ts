@@ -4,8 +4,11 @@ import { FormGroup, FormControl, Validators, AbstractControl, NgForm } from '@an
 import { Observable } from 'rxjs';
 // Services
 import { ActividadService } from '../../services/actividad.service';
+import { SalaService } from '../../services/sala.service';
 // Models
 import { ActividadModel } from '../../models/actividad.model';
+import { salaModel } from '../../models/sala.model';
+
 // Alertas
 import Swal from 'sweetalert2';
 
@@ -19,7 +22,8 @@ import * as moment from 'moment';
 export class AdactivitieComponent implements OnInit {
 
   constructor( private route: ActivatedRoute,
-               private actividadService: ActividadService ) {
+               private actividadService: ActividadService,
+               private salaService: SalaService ) {
 
                 this.forma = new FormGroup({
                   nombre: new FormControl('', [Validators.required, Validators.maxLength(30)]),
@@ -32,13 +36,22 @@ export class AdactivitieComponent implements OnInit {
                 this.forma.controls.fecha_inicio.setValidators([
                   Validators.required, this.dateVaidator
                 ]);
+
+                // Validar formulario crear sala
+                this.forma2 = new FormGroup({
+                  nombre: new FormControl('',   [
+                    Validators.required, Validators.maxLength(30)
+                  ]),
+                  ubicacion: new FormControl('', [Validators.required, Validators.maxLength(30)]),
+                  status: new FormControl('', [Validators.required, Validators.maxLength(5)]),
+                });
                 }
 
   id: number; // Id actividad
   activity: ActividadModel = new ActividadModel(); // Actividad que se esta editando
   edit = false; // Variable para ocultar o mostrar formulario editar
   forma: FormGroup; // Formulario editar actividad
-
+  forma2: FormGroup; // Formulario crear sala
 
   ngOnInit() {
     this.route.params.subscribe(params => {
@@ -130,5 +143,50 @@ export class AdactivitieComponent implements OnInit {
       return { dateVaidator: true };
     }
     return null;
+  }
+
+  crearSala( form: NgForm ) {
+    console.log(form.value);
+    const sala: salaModel = {
+      nombre: this.forma2.value.nombre,
+      ubicacion: this.forma2.value.ubicacion,
+      id_actividad: this.id.toString(),
+      estado: this.forma2.value.status
+    };
+    const sala2 = JSON.stringify(sala);
+    // console.log(actividad2);
+    let peticion: Observable<any>;
+    peticion = this.salaService.crearSala(sala2);
+    Swal.fire({
+      title: 'Espere',
+      text: 'Guardando información...',
+      icon: 'info',
+      allowOutsideClick: false
+    });
+    Swal.showLoading();
+    peticion.subscribe(
+      resp => {
+        if (resp.message === 'La sala fue creada.') {
+          Swal.fire({
+            title: 'La sala.',
+            text: 'Fue creada.',
+            icon: 'success',
+          });
+          // Reset Formulario
+          this.forma2.reset({
+            nombre: '',
+            ubicacion: '',
+            status: ''
+          });
+        }
+      }, (err) => {
+        Swal.fire({
+          icon: 'error',
+          title: 'Error al crear la sala.',
+          text: 'Verifica los datos'
+        });
+        // console.log(err);
+      }
+    );
   }
 }

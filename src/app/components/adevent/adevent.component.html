@@ -80,15 +80,15 @@
                     <select formControlName="status" class="custom-select" id="status">
                         <option value="A">Activo</option>
                         <option value="I">Inactivo</option>
-                        <div *ngIf="forma.controls['status'].errors?.required && (forma.dirty && forma.touched || !forma.valid)" class="form-control-feedback ">
-                            <p style="color: red ">*Status campo requerido.</p>
-                        </div>
                     </select>
+                    <div *ngIf="forma.controls['status'].errors?.required && (forma.dirty && forma.touched || !forma.valid)" class="form-control-feedback ">
+                        <p style="color: red ">*Status campo requerido.</p>
+                    </div>
                 </div>
             </div>
             <div class="form-group">
                 <label for="descripcion">Ubicación</label>
-                <textarea class="form-control" id="descripcion" formControlName="ubicacion" placeholder="Descripción del evento" rows="2"></textarea>
+                <textarea class="form-control" id="descripcion" formControlName="ubicacion" placeholder="Ubicación" rows="2"></textarea>
                 <div *ngIf="forma.controls['ubicacion'].errors?.required && (forma.dirty && forma.touched)" class="form-control-feedback ">
                     <p style="color: red ">*Ubicación campo requerido.</p>
                 </div>
