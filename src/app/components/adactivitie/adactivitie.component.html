@@ -1,1 +1,99 @@
-<p>adactivitie works!</p>
+<div class="container main-container">
+    <div class="alert alert-success text-center" role="alert">
+        <b>Actividad {{activity.nombre}}</b><br>
+        <button type="button" class="btn btn-danger btn-lg btn-block" data-toggle="modal" data-target="#watchActivitie">
+            Ver actividad
+        </button>
+    </div>
+    <div class="row mb-1">
+        <div class="col text-center">
+            <button type="button" class="btn btn-info mr-3" (click)="return()">
+                Regresar a actividades
+            </button>
+            <button type="button" *ngIf="!edit" class="btn btn-info" (click)="editar()">
+                Editar Actividad
+            </button>
+            <button type="button" *ngIf="edit" class="btn btn-danger" (click)="noeditar()">
+                Ocultar formulario de edición
+            </button>
+            <button type="button" class="btn btn-info ml-3" data-toggle="modal" data-target="#crearActividad">
+                Crear Sala
+            </button>
+        </div>
+    </div>
+    <div class="mb-5" *ngIf="edit">
+        <form (ngSubmit)="updateActividad( f )" [formGroup]="forma" #f="ngForm">
+            <h3>Editar Evento</h3>
+            <div class="form-group">
+                <label for="nombre">Nombre</label>
+                <input type="text" class="form-control" id="nombre" formControlName="nombre" aria-describedby="text" placeholder="Nombre de la actividad">
+                <div *ngIf="forma.controls['nombre'].errors?.required && (forma.dirty && forma.touched) " class="form-control-feedback">
+                    <p style="color: red ">*Nombre campo requerido.</p>
+                </div>
+                <div *ngIf="forma.controls['nombre'].errors?.maxlength && forma.controls['nombre'].dirty" class="form-control-feedback ">
+                    <p style="color: red ">*Maximo 30 caracteres.</p>
+                </div>
+            </div>
+            <div class="form-group">
+                <input type="hidden" class="form-control" id="nombre" formControlName="id_evento" aria-describedby="text">
+            </div>
+            <div class="row">
+                <div class="col">
+                    <label for="costo">Fecha Inicio</label>
+                    <input type="text" formControlName="fecha_inicio" class="form-control" id="fecha_inicio" aria-describedby="number" placeholder="YYYY-MM-DD">
+                    <div *ngIf="forma.controls['fecha_inicio'].errors?.required && (forma.dirty && forma.touched) " class="form-control-feedback">
+                        <p style="color: red ">*Fecha Inicio campo requerido.</p>
+                    </div>
+                    <div *ngIf="forma.controls['fecha_inicio'].errors?.dateVaidator && (forma.dirty && forma.touched) " class="form-control-feedback">
+                        <p style="color: red ">*Formato de fecha incorrecto. Año-Mes-Día</p>
+                    </div>
+                </div>
+                <div class="col">
+                    <label for="costo">Fecha Fin</label>
+                    <input type="text" class="form-control" formControlName="fecha_fin" placeholder="YYYY-MM-DD" id="fecha_fin" aria-describedby="number">
+                    <div *ngIf="forma.controls['fecha_fin'].errors?.required && (forma.dirty && forma.touched) " class="form-control-feedback">
+                        <p style="color: red ">*Fecha Fin campo requerido. Año-Mes-Día</p>
+                    </div>
+                    <div *ngIf="forma.controls['fecha_fin'].errors?.dateVaidator && (forma.dirty && forma.touched) " class="form-control-feedback">
+                        <p style="color: red ">*Formato de fecha incorrecto.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="descripcion">Descripción</label>
+                <textarea class="form-control" id="descripcion" formControlName="descripcion" placeholder="Descripción de la actividad" rows="2"></textarea>
+                <div *ngIf="forma.controls['descripcion'].errors?.required && (forma.dirty && forma.touched)" class="form-control-feedback">
+                    <p style="color: red ">*Descripción campo requerido.</p>
+                </div>
+                <div *ngIf="forma.controls['descripcion'].errors?.maxlength && forma.controls['descripcion'].dirty" class="form-control-feedback">
+                    <p style="color: red ">*Maximo 200 caracteres.</p>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary" [disabled]="!forma.valid">Submit</button>
+        </form>
+
+    </div>
+</div>
+
+<!-- Modal watch event -->
+<div class="modal fade" id="watchActivitie" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Actividad: {{activity.nombre}}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+            </div>
+            <div class="modal-body text-center text-justify">
+                <p><b>Fecha inicio:</b> {{ activity.fecha_inicio | date:"MMMM d, y" }}</p>
+                <p><b>Fecha fin:</b> {{ activity.fecha_fin | date:"MMMM d, y" }}</p>
+                <p><b>Descripción:</b> {{ activity.descripcion }}</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

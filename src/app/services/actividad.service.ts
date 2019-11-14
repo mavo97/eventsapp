@@ -31,4 +31,11 @@ export class ActividadService {
       })
     );
   }
+  leerActividad(id: number) {
+    return this.http.get(`${this.url}/read_one.php?id=${id}`);
+  }
+
+  actualizarActividad( actividad ) {
+    return this.http.post(`${this.url}/update.php`, actividad);
+  }
 }

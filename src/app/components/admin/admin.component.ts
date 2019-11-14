@@ -21,6 +21,7 @@ export class AdminComponent implements OnInit {
 
   forma: FormGroup; // Formulario para validar
   eventsarray: verEventosModel = new verEventosModel(); // Array de eventos
+  mostrarA;
 
   // tslint:disable-next-line: variable-name
   constructor( private _eventoService: EventoService,
@@ -63,6 +64,10 @@ export class AdminComponent implements OnInit {
     this._eventoService.verEventos()
     .subscribe((resp: verEventosModel) => {
       this.eventsarray.records = resp.records;
+      this.mostrarA = true;
+    }, (error) => {
+      this.mostrarA = false;
+      // console.log(error);
     });
   }
   // Editar evento

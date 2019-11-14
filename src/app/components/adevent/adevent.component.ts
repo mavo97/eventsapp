@@ -139,7 +139,7 @@ export class AdeventComponent implements OnInit {
       }, (err) => {
         Swal.fire({
           icon: 'error',
-          title: 'Error al crear el evento.',
+          title: 'Error al actualizar el evento.',
           text: 'Verifica los datos.'
         });
       }
@@ -194,6 +194,7 @@ export class AdeventComponent implements OnInit {
             text: 'Fue creada.',
             icon: 'success',
           });
+          this.callActivities();
           // Reset Formulario
           this.forma2.reset({
             nombre: '',
@@ -226,7 +227,7 @@ export class AdeventComponent implements OnInit {
   }
   // Editar actividad
   editarActividad( id ) {
-    console.log(id);
+    // console.log(id);
     this.router.navigate(['admin/actividad', id]);
   }
   // Eliminar evento
@@ -270,7 +271,7 @@ export class AdeventComponent implements OnInit {
           (err) => {
             Swal.fire({
               icon: 'error',
-              title: 'Error al eliminar el evento.',
+              title: 'Error al eliminar la actividad.',
               text: 'Intenta más tarde...'
             });
           }
