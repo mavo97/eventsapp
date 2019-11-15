@@ -32,5 +32,11 @@ export class SalaService {
       })
     );
   }
+  leerSala(id: number) {
+    return this.http.get(`${this.url}/read_one.php?id=${id}`);
+  }
 
+  actualizarSala( sala ) {
+    return this.http.post(`${this.url}/update.php`, sala);
+  }
 }

@@ -1,0 +1,84 @@
+<div class="container main-container">
+    <div class="alert alert-success text-center" role="alert">
+        <h2>Sala: {{sala.nombre}}</h2><br>
+        <button type="button" class="btn btn-danger btn-lg btn-block" data-toggle="modal" data-target="#watchSala">
+            Ver sala
+        </button>
+    </div>
+    <div class="row mb-1">
+        <div class="col text-center">
+            <button type="button" class="btn btn-info mr-3" (click)="return()">
+                Regresar a actividad
+            </button>
+            <button type="button" *ngIf="!edit" class="btn btn-info" (click)="editar()">
+                Editar Sala
+            </button>
+            <button type="button" *ngIf="edit" class="btn btn-danger" (click)="noeditar()">
+                Ocultar formulario de edición
+            </button>
+        </div>
+    </div>
+    <div class="mb-5" *ngIf="edit">
+        <form (ngSubmit)="updateSala( f )" [formGroup]="forma" #f="ngForm">
+            <h3>Editar Evento</h3>
+            <div class="form-group">
+                <label for="nombre">Nombre</label>
+                <input type="text" class="form-control" id="nombre" formControlName="nombre" aria-describedby="text" placeholder="Nombre de la sala">
+                <div *ngIf="forma.controls['nombre'].errors?.required && (forma.dirty && forma.touched) " class="form-control-feedback">
+                    <p style="color: red ">*Nombre campo requerido.</p>
+                </div>
+                <div *ngIf="forma.controls['nombre'].errors?.maxlength && forma.controls['nombre'].dirty" class="form-control-feedback ">
+                    <p style="color: red ">*Maximo 30 caracteres.</p>
+                </div>
+            </div>
+            <div class="form-group">
+                <input type="hidden" class="form-control" id="id_actividad" formControlName="id_actividad" aria-describedby="text">
+            </div>
+            <div class="form-group">
+                <p class="mb-0">Status</p>
+                <select formControlName="status" class="custom-select" id="status">
+                    <option value="A">Activo</option>
+                    <option value="I">Inactivo</option>
+                </select>
+                <div *ngIf="forma.controls['status'].errors?.required && (forma.dirty && forma.touched)" class="form-control-feedback">
+                    <p style="color: red ">*Status campo requerido.</p>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="descripcion">Ubicación</label>
+                <textarea class="form-control" id="descripcion" formControlName="ubicacion" placeholder="Ubicación de la sala" rows="2"></textarea>
+                <div *ngIf="forma.controls['ubicacion'].errors?.required && (forma.dirty && forma.touched)" class="form-control-feedback ">
+                    <p style="color: red ">*Ubicación campo requerido.</p>
+                </div>
+                <div *ngIf="forma.controls['ubicacion'].errors?.maxlength && forma.controls['ubicacion'].dirty" class="form-control-feedback ">
+                    <p style="color: red ">*Maximo 30 caracteres.</p>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary" [disabled]="!forma.valid">Submit</button>
+        </form>
+
+    </div>
+
+</div>
+
+<!-- Modal watch sala -->
+<div class="modal fade" id="watchSala" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Sala: {{sala.nombre}}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+            </div>
+            <div class="modal-body text-center text-justify">
+                <p><b>Ubicación:</b> {{ sala.ubicacion }}</p>
+                <p><b>Status:</b> {{ sala.estado }}</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

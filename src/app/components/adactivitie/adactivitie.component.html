@@ -98,7 +98,7 @@
                     <ng-template #elseTemplate>
                         <td><span class="badge badge-danger">Inactivo</span></td>
                     </ng-template>
-                    <td><a class="btn btn-warning"><i class="fas fa-edit"></i></a></td>
+                    <td><a class="btn btn-warning" (click)="editarSala(sala.id_sala)"><i class="fas fa-edit"></i></a></td>
                     <td><a class="btn btn-danger" (click)="eliminarSala(sala.id_sala)"><i class="fas fa-trash"></i></a></td>
                 </tr>
             </tbody>

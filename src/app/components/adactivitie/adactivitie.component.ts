@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup, FormControl, Validators, AbstractControl, NgForm } from '@angular/forms';
 import { Observable } from 'rxjs';
 // Services
@@ -23,7 +23,8 @@ export class AdactivitieComponent implements OnInit {
 
   constructor( private route: ActivatedRoute,
                private actividadService: ActividadService,
-               private salaService: SalaService ) {
+               private salaService: SalaService,
+               private router: Router ) {
 
                 this.forma = new FormGroup({
                   nombre: new FormControl('', [Validators.required, Validators.maxLength(30)]),
@@ -256,5 +257,10 @@ export class AdactivitieComponent implements OnInit {
         );
       }
     });
+  }
+  // Editar sala
+  editarSala( id ) {
+    // console.log(id);
+    this.router.navigate(['admin/sala', id]);
   }
 }
