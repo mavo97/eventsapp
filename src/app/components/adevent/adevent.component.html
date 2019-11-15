@@ -1,6 +1,6 @@
 <div class="container main-container">
     <div class="alert alert-success text-center" role="alert">
-        <b><h2>Evento {{event.nombre}}</h2></b> <br>
+        <b><h2>Evento: {{event.nombre}}</h2></b> <br>
         <button type="button" class="btn btn-danger btn-lg btn-block" data-toggle="modal" data-target="#watchEvent">
             Ver evento
         </button>
@@ -137,7 +137,7 @@
     </div>
     <div class="mt-2" *ngIf="!mostrarA">
         <div class="alert alert-warning text-center" role="alert">
-            Evento sin actividades registradas.
+            <h3>Evento sin actividades registradas.</h3>
         </div>
     </div>
 </div>

@@ -175,6 +175,7 @@ export class AdactivitieComponent implements OnInit {
             text: 'Fue creada.',
             icon: 'success',
           });
+          this.verSalas();
           // Reset Formulario
           this.forma2.reset({
             nombre: '',
@@ -205,5 +206,55 @@ export class AdactivitieComponent implements OnInit {
       // console.log(error);
     });
     // console.log(this.id);
+  }
+
+  // Eliminar sala
+  eliminarSala(id: number) {
+    let peticion: Observable<any>;
+    // tslint:disable-next-line: variable-name
+    const id_sala: Object  = {
+      id_sala: id
+    };
+    const idjson = JSON.stringify(id_sala);
+    Swal.fire({
+      title: '¿Está seguro de querer eliminar la sala?',
+      text: "¡No podrás revertir esto!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sí, eliminar sala!'
+    }).then((result) => {
+      if (result.value) {
+        peticion = this.salaService.eliminarSala(idjson);
+        Swal.fire({
+          title: 'Espere',
+          text: 'Eliminando sala...',
+          icon: 'info',
+          allowOutsideClick: false
+        });
+        Swal.showLoading();
+        peticion.subscribe(
+          resp => {
+            if (resp.message === 'La sala fue eliminada.') {
+              Swal.fire({
+                title: 'La sala.',
+                text: 'Fue eliminada correctamente.',
+                icon: 'success',
+              });
+              this.leerActividad();
+              this.verSalas();
+            }
+           },
+          (err) => {
+            Swal.fire({
+              icon: 'error',
+              title: 'Error al eliminar la sala.',
+              text: 'Intenta más tarde...'
+            });
+          }
+        );
+      }
+    });
   }
 }

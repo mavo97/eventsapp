@@ -24,4 +24,13 @@ export class SalaService {
     return this.http.get(`${ this.url }/readsalas.php?id=${id}`);
   }
 
+  eliminarSala(id: string) {
+    return this.http.post(`${ this.url }/delete.php`, id)
+    .pipe(
+      map( ( resp: any ) => {
+        return resp;
+      })
+    );
+  }
+
 }

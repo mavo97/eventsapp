@@ -230,7 +230,7 @@ export class AdeventComponent implements OnInit {
     // console.log(id);
     this.router.navigate(['admin/actividad', id]);
   }
-  // Eliminar evento
+  // Eliminar Actividad
   eliminarActividad(id: number) {
     let peticion: Observable<any>;
     // tslint:disable-next-line: variable-name
