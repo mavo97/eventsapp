@@ -7,3 +7,7 @@ export class salaModel {
     // tslint:disable-next-line: variable-name
     id_actividad: string;
 }
+
+export class verSalaModel {
+    records: Array<any>;
+};

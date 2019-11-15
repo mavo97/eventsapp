@@ -20,4 +20,8 @@ export class SalaService {
     );
   }
 
+  verSalas( id: number ) {
+    return this.http.get(`${ this.url }/readsalas.php?id=${id}`);
+  }
+
 }

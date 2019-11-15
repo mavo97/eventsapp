@@ -7,7 +7,7 @@ import { ActividadService } from '../../services/actividad.service';
 import { SalaService } from '../../services/sala.service';
 // Models
 import { ActividadModel } from '../../models/actividad.model';
-import { salaModel } from '../../models/sala.model';
+import { salaModel, verSalaModel } from '../../models/sala.model';
 
 // Alertas
 import Swal from 'sweetalert2';
@@ -52,12 +52,15 @@ export class AdactivitieComponent implements OnInit {
   edit = false; // Variable para ocultar o mostrar formulario editar
   forma: FormGroup; // Formulario editar actividad
   forma2: FormGroup; // Formulario crear sala
+  mostrarS: boolean;
+  salas: verSalaModel = new verSalaModel();
 
   ngOnInit() {
     this.route.params.subscribe(params => {
       this.id = +params.id;
     });
     this.leerActividad();
+    this.verSalas();
   }
 
   leerActividad() {
@@ -69,8 +72,8 @@ export class AdactivitieComponent implements OnInit {
       this.forma.controls.fecha_fin.setValue(this.activity.fecha_fin);
       this.forma.controls.id_evento.setValue(this.activity.id_evento);
       this.forma.controls.descripcion.setValue(this.activity.descripcion);
-      console.log(this.activity);
-      console.log(this.id);
+      // console.log(this.activity);
+      // console.log(this.id);
       // console.log(this.event);
     });
   }
@@ -188,5 +191,19 @@ export class AdactivitieComponent implements OnInit {
         // console.log(err);
       }
     );
+  }
+  // Ver Salas
+  verSalas() {
+    this.salaService.verSalas( this.id )
+    .subscribe((resp: verSalaModel ) => {
+      this.salas.records = resp.records;
+      console.log(this.salas);
+      this.mostrarS = true;
+    }, (error) => {
+      this.mostrarS = false;
+      console.log(error);
+      // console.log(error);
+    });
+    // console.log(this.id);
   }
 }
