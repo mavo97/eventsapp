@@ -20,6 +20,8 @@ import localeEs from '@angular/common/locales/es';
 import { registerLocaleData } from '@angular/common';
 import { AdactivitieComponent } from './components/adactivitie/adactivitie.component';
 import { AdsalaComponent } from './components/adsala/adsala.component';
+import { RegistroComponent } from './components/registro/registro.component';
+import { LoginComponent } from './components/login/login.component';
 registerLocaleData(localeEs);
 
 @NgModule({
@@ -31,6 +33,8 @@ registerLocaleData(localeEs);
     AdeventComponent,
     AdactivitieComponent,
     AdsalaComponent,
+    RegistroComponent,
+    LoginComponent,
     
   ],
   imports: [

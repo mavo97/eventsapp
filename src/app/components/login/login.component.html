@@ -1,0 +1,25 @@
+<div class="wrapper">
+    <div id="formContent">
+        <!-- Tabs Titles -->
+        <h2 [routerLink]="['/registro']" routerLinkActive="active">Registrarse</h2>
+        <h2 [routerLink]="['/login']" routerLinkActive="active">Iniciar Sesión</h2>
+
+        <!-- Icon -->
+        <div class="fadeIn first">
+            <i class="fas fa-user fa-2x"></i>
+        </div>
+
+        <!-- Login Form -->
+        <form>
+            <input type="text" id="login" class="fadeIn second" name="login" placeholder="login">
+            <input type="text" id="password" class="fadeIn third" name="login" placeholder="password">
+            <input type="submit" class="fadeIn fourth" value="Log In">
+        </form>
+
+        <!-- Remind Passowrd -->
+        <!--<div id="formFooter">
+            <a class="underlineHover" href="#">Forgot Password?</a>
+        </div>-->
+
+    </div>
+</div>
