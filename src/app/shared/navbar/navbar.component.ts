@@ -17,14 +17,18 @@ export class NavbarComponent implements OnInit, DoCheck{
   usuario: UsuarioModel = new UsuarioModel;
   token = localStorage.getItem('jwt');
   uLogueado: string;
+  ver: string;
+
   constructor( private authServices: AuthService ) { }
 
   ngOnInit() {
     this.buscarUsuario();
+    this.authServices.tipoUsuario();
   }
   ngDoCheck() {
     this.authServices.currentMessage.subscribe(message => this.uLogueado = message);
-  }
+    this.authServices.messageCurrent.subscribe(message => this.ver = message);
+    }
 
   buscarUsuario() {
     if ( this.token ) {
@@ -42,6 +46,7 @@ export class NavbarComponent implements OnInit, DoCheck{
   logOut() {
     this.authServices.logOut();
     this.authServices.changeMessage('NoLogueado');
+    this.authServices.changeMessage2('');
   }
 
 }

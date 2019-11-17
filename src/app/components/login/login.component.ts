@@ -62,8 +62,10 @@ export class LoginComponent implements OnInit {
         this.authService.changeMessage('Logueado');
         if ( this.usuario.rol_usuario === 'A' ) {
           this.router.navigateByUrl('/admin');
+          this.authService.changeMessage2('A');
         } else {
           this.router.navigateByUrl('/eventos');
+          this.authService.changeMessage2('U');
         }
         // console.log(this.verToken);
       }, (err2) => {

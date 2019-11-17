@@ -3,6 +3,9 @@ import { HttpClient } from '@angular/common/http';
 import { map, catchError } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
+import { tokenModel } from '../../models/usuario.model';
+import { stringify } from 'querystring';
+
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +16,9 @@ export class AuthService {
   private uLogueado = new BehaviorSubject('NoLogueado');
   currentMessage = this.uLogueado.asObservable();
   token = localStorage.getItem('jwt');
+
+  private tipoUser = new BehaviorSubject('');
+  messageCurrent = this.tipoUser.asObservable();
 
   
   constructor( private http: HttpClient,
@@ -34,9 +40,26 @@ export class AuthService {
       }),
     );
   }
-
+  
   changeMessage(message: string) {
     this.uLogueado.next(message);
+  }
+  changeMessage2(message: string){
+    this.tipoUser.next(message);
+  }
+
+  tipoUsuario() {
+    const token: object = {
+      jwt : this.token
+    };
+    const tokenF = JSON.stringify(token);
+    this.validateToken( tokenF ).subscribe( (resp: tokenModel) => {
+      if ( resp.data.rol_usuario === 'A' ) {
+        this.changeMessage2('A');
+      } else {
+        this.changeMessage2('U');
+      }
+    });
   }
 
   validateToken( token ) {

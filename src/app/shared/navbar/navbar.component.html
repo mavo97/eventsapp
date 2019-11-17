@@ -10,10 +10,10 @@
             <li class="nav-item">
                 <a class="nav-link" [routerLink]="['/']" routerLinkActive="active"><b>Inicio</b></a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item" *ngIf="ver === 'A'">
                 <a class="nav-link" [routerLink]="['/admin']" routerLinkActive="active"><b>Eventos</b></a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item" *ngIf="ver === 'U'">
                 <a class="nav-link" [routerLink]="['/eventos']" routerLinkActive="active"><b>Mis Eventos</b></a>
             </li>
 
