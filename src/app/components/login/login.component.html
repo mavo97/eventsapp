@@ -10,10 +10,32 @@
         </div>
 
         <!-- Login Form -->
-        <form>
-            <input type="text" id="login" class="fadeIn second" name="login" placeholder="login">
-            <input type="text" id="password" class="fadeIn third" name="login" placeholder="password">
-            <input type="submit" class="fadeIn fourth" value="Log In">
+        <form (ngSubmit)="logIn()" [formGroup]="forma">
+            <div class="form-group fadeIn second">
+                <input type="text" [ngClass]="{'danger': !forma.controls['correo'].valid}" formControlName="correo" id="correo" name="correo" placeholder="Email">
+                <div *ngIf="forma.controls['correo'].errors?.required && (forma.dirty && forma.touched) " class="form-control-feedback">
+                    <p style="color: red ">*Correo campo requerido.</p>
+                </div>
+                <div *ngIf="forma.controls['correo'].errors?.maxlength && forma.controls['correo'].dirty " class="form-control-feedback ">
+                    <p style="color: red ">*Maximo 30 caracteres.</p>
+                </div>
+                <div *ngIf="forma.controls['correo'].errors?.pattern && forma.controls['correo'].dirty " class="form-control-feedback ">
+                    <p style="color: red ">*Correo no valido.</p>
+                </div>
+            </div>
+            <div class="form-group fadeIn third">
+                <input type="password" [ngClass]="{'danger': !forma.controls['contrasena'].valid}" formControlName="contrasena" id="contrasena" name="contrasena" placeholder="Contraseña">
+                <div *ngIf="forma.controls['contrasena'].errors?.required && (forma.dirty && forma.touched) " class="form-control-feedback">
+                    <p style="color: red ">*Contraseña campo requerido.</p>
+                </div>
+                <div *ngIf="forma.controls['contrasena'].errors?.maxlength && forma.controls['contrasena'].dirty " class="form-control-feedback ">
+                    <p style="color: red ">*Maximo 20 caracteres.</p>
+                </div>
+                <div *ngIf="forma.controls['contrasena'].errors?.minlength && forma.controls['contrasena'].dirty " class="form-control-feedback ">
+                    <p style="color: red ">*Minimo 6 caracteres.</p>
+                </div>
+            </div>
+            <button type="submit" [disabled]="!forma.valid" class="fadeIn fourth">Iniciar Sesión</button>
         </form>
 
         <!-- Remind Passowrd -->
