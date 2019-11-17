@@ -6,14 +6,91 @@
 
         <!-- Icon -->
         <div class="fadeIn first">
-            <i class="fas fa-user fa-2x"></i>
+            <i class="fas fa-clipboard fa-2x"></i>
         </div>
 
         <!-- Login Form -->
-        <form>
-            <input type="text" id="login" class="fadeIn second" name="login" placeholder="login">
-            <input type="text" id="password" class="fadeIn third" name="login" placeholder="password">
-            <input type="submit" class="fadeIn fourth" value="Log In">
+        <form (ngSubmit)="guardarUsuario()" [formGroup]="forma">
+            <div class="row">
+                <div class="col">
+                    <div class="form-group fadeIn second">
+                        <input type="text" [ngClass]="{'danger': !forma.controls['nombre'].valid}" formControlName="nombre" id="nombre" name="nombre" placeholder="Nombre">
+                        <div *ngIf="forma.controls['nombre'].errors?.required && (forma.dirty && forma.touched) " class="form-control-feedback">
+                            <p style="color: red ">*Nombre campo requerido.</p>
+                        </div>
+                        <div *ngIf="forma.controls['nombre'].errors?.maxlength && forma.controls['nombre'].dirty " class="form-control-feedback ">
+                            <p style="color: red ">*Maximo 30 caracteres.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group fadeIn second">
+                        <input type="text" [ngClass]="{'danger': !forma.controls['apellidos'].valid}" formControlName="apellidos" id="apellidos" name="apellidos" placeholder="Apellidos">
+                        <div *ngIf="forma.controls['apellidos'].errors?.required && (forma.dirty && forma.touched) " class="form-control-feedback">
+                            <p style="color: red ">*Apellidos campo requerido.</p>
+                        </div>
+                        <div *ngIf="forma.controls['apellidos'].errors?.maxlength && forma.controls['apellidos'].dirty " class="form-control-feedback ">
+                            <p style="color: red ">*Maximo 30 caracteres.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group fadeIn third">
+                <input type="text" [ngClass]="{'danger': !forma.controls['telefono'].valid}" formControlName="telefono" id="telefono" name="telefono" placeholder="Telefono">
+                <div *ngIf="forma.controls['telefono'].errors?.required && (forma.dirty && forma.touched) " class="form-control-feedback">
+                    <p style="color: red ">*Telefono campo requerido.</p>
+                </div>
+                <div *ngIf="forma.controls['telefono'].errors?.maxlength && forma.controls['telefono'].dirty " class="form-control-feedback ">
+                    <p style="color: red ">*Maximo 10 caracteres.</p>
+                </div>
+                <div *ngIf="forma.controls['telefono'].errors?.minlength && forma.controls['telefono'].dirty " class="form-control-feedback ">
+                    <p style="color: red ">*Minimo 10 caracteres.</p>
+                </div>
+            </div>
+            <div class="form-group fadeIn fourth">
+                <input type="text" [ngClass]="{'danger': !forma.controls['correo'].valid}" formControlName="correo" id="correo" name="correo" placeholder="Email">
+                <div *ngIf="forma.controls['correo'].errors?.required && (forma.dirty && forma.touched) " class="form-control-feedback">
+                    <p style="color: red ">*Correo campo requerido.</p>
+                </div>
+                <div *ngIf="forma.controls['correo'].errors?.maxlength && forma.controls['correo'].dirty " class="form-control-feedback ">
+                    <p style="color: red ">*Maximo 30 caracteres.</p>
+                </div>
+                <div *ngIf="forma.controls['correo'].errors?.pattern && forma.controls['correo'].dirty " class="form-control-feedback ">
+                    <p style="color: red ">*Correo no valido.</p>
+                </div>
+            </div>
+            <div class="form-group fadeIn fourth">
+                <input type="hidden" formControlName="rol_usuario" id="rol_usuario" name="rol_usuario" placeholder="Rol Usuario">
+            </div>
+            <div class="form-group fadeIn fifth">
+                <input type="password" [ngClass]="{'danger': !forma.controls['contrasena'].valid}" formControlName="contrasena" id="contrasena" name="contrasena" placeholder="Contraseña">
+                <div *ngIf="forma.controls['contrasena'].errors?.required && (forma.dirty && forma.touched) " class="form-control-feedback">
+                    <p style="color: red ">*Contraseña campo requerido.</p>
+                </div>
+                <div *ngIf="forma.controls['contrasena'].errors?.maxlength && forma.controls['contrasena'].dirty " class="form-control-feedback ">
+                    <p style="color: red ">*Maximo 20 caracteres.</p>
+                </div>
+                <div *ngIf="forma.controls['contrasena'].errors?.minlength && forma.controls['contrasena'].dirty " class="form-control-feedback ">
+                    <p style="color: red ">*Minimo 6 caracteres.</p>
+                </div>
+            </div>
+            <div class="form-group fadeIn sixth">
+                <input type="password" [ngClass]="{'danger': !forma.controls['contrasena2'].valid}" formControlName="contrasena2" id="contrasena2" name="contrasena2" placeholder="Repetir Contraseña">
+                <div *ngIf="forma.controls['contrasena2'].errors?.required && (forma.dirty && forma.touched)" class="form-control-feedback">
+                    <p style="color: red ">*Repetir Contraseña campo requerido.</p>
+                </div>
+                <div *ngIf="forma.controls['contrasena2'].errors?.maxlength && forma.controls['contrasena2'].dirty" class="form-control-feedback ">
+                    <p style="color: red ">*Maximo 20 caracteres.</p>
+                </div>
+                <div *ngIf="forma.controls['contrasena2'].errors?.noiguales && forma.controls['contrasena2'].dirty" class="form-control-feedback ">
+                    <p style="color: red ">*La contraseña debe ser igual a la anterior.</p>
+                </div>
+                <div *ngIf="forma.controls['contrasena2'].errors?.minlength && forma.controls['contrasena2'].dirty" class="form-control-feedback ">
+                    <p style="color: red ">*Minimo 6 caracteres.</p>
+                </div>
+            </div>
+            <button type="submit" [disabled]="!forma.valid" class="fadeIn seventh">Registrar</button>
+
         </form>
 
         <!-- Remind Passowrd -->
