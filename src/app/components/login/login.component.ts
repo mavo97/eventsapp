@@ -57,15 +57,15 @@ export class LoginComponent implements OnInit {
       };
       const tokenF = JSON.stringify(token);
       peticion2 = this.authService.validateToken(tokenF);
-      console.log(tokenF);
       peticion2.subscribe( (resp2: tokenModel) => {
         this.usuario = resp2.data;
+        this.authService.changeMessage('Logueado');
         if ( this.usuario.rol_usuario === 'A' ) {
           this.router.navigateByUrl('/admin');
         } else {
-          this.router.navigateByUrl('/');
+          this.router.navigateByUrl('/eventos');
         }
-        console.log(this.verToken);
+        // console.log(this.verToken);
       }, (err2) => {
         Swal.fire({
           icon: 'error',

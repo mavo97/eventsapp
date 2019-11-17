@@ -7,6 +7,7 @@ import { AdactivitieComponent } from './components/adactivitie/adactivitie.compo
 import { AdsalaComponent } from './components/adsala/adsala.component';
 import { RegistroComponent } from './components/registro/registro.component';
 import { LoginComponent } from './components/login/login.component';
+import { UseventosComponent } from './components/useventos/useventos.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -16,6 +17,7 @@ const routes: Routes = [
   { path: 'admin/sala/:id', component: AdsalaComponent },
   { path: 'registro', component: RegistroComponent },
   { path: 'login', component: LoginComponent },
+  { path: 'eventos', component: UseventosComponent },
   { path: '**', pathMatch: 'full', redirectTo: '' }
 ];
 

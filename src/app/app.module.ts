@@ -22,6 +22,7 @@ import { AdactivitieComponent } from './components/adactivitie/adactivitie.compo
 import { AdsalaComponent } from './components/adsala/adsala.component';
 import { RegistroComponent } from './components/registro/registro.component';
 import { LoginComponent } from './components/login/login.component';
+import { UseventosComponent } from './components/useventos/useventos.component';
 registerLocaleData(localeEs);
 
 @NgModule({
@@ -35,6 +36,7 @@ registerLocaleData(localeEs);
     AdsalaComponent,
     RegistroComponent,
     LoginComponent,
+    UseventosComponent,
     
   ],
   imports: [
