@@ -217,7 +217,7 @@ export class AdeventComponent implements OnInit {
     this.actividadService.verActividades( this.id )
     .subscribe((resp: verActividadesModel) => {
       this.actividades.records = resp.records;
-      console.log(this.actividades);
+      // console.log(this.actividades);
       this.mostrarA = true;
     }, (error) => {
       this.mostrarA = false;

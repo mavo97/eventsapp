@@ -50,7 +50,7 @@ export class RegistroComponent implements OnInit {
     return null;
   }
   guardarUsuario( forma: NgForm ) {
-    console.log(this.forma);
+    // console.log(this.forma);
     const usuario: UsuarioModel = {
       nombre: this.forma.value.nombre,
       apellidos: this.forma.value.apellidos,
@@ -87,6 +87,12 @@ export class RegistroComponent implements OnInit {
             contrasena2: ''
           });
 
+        } else if ( resp.message === 'El correo ya esta registrado.') {
+          Swal.fire({
+            title: 'El correo ya se encuentra registrado.',
+            text: 'Favor de poner otro correo.',
+            icon: 'info',
+          });
         }
       }, (err) => {
         Swal.fire({

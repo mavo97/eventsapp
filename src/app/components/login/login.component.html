@@ -12,7 +12,7 @@
         <!-- Login Form -->
         <form (ngSubmit)="logIn()" [formGroup]="forma">
             <div class="form-group fadeIn second">
-                <input type="text" [ngClass]="{'danger': !forma.controls['correo'].valid}" formControlName="correo" id="correo" name="correo" placeholder="Email">
+                <input type="text" [ngClass]="{'danger': !forma.controls['correo'].valid}" formControlName="correo" id="correo" name="correo" placeholder="Correo">
                 <div *ngIf="forma.controls['correo'].errors?.required && (forma.dirty && forma.touched) " class="form-control-feedback">
                     <p style="color: red ">*Correo campo requerido.</p>
                 </div>
@@ -24,7 +24,7 @@
                 </div>
             </div>
             <div class="form-group fadeIn third">
-                <input type="password" [ngClass]="{'danger': !forma.controls['contrasena'].valid}" formControlName="contrasena" id="contrasena" name="contrasena" placeholder="Contraseña">
+                <input type="password" [ngClass]="{'danger': !forma.controls['contrasena'].valid}" formControlName="contrasena" id="contrasena" name="Contrasena" placeholder="Contraseña">
                 <div *ngIf="forma.controls['contrasena'].errors?.required && (forma.dirty && forma.touched) " class="form-control-feedback">
                     <p style="color: red ">*Contraseña campo requerido.</p>
                 </div>

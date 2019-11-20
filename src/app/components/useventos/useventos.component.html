@@ -1,1 +1,38 @@
-<p>useventos works!</p>
+<div class="container main-container">
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container">
+            <h1 class="display-4">Hola {{ usuario.nombre }}!</h1>
+            <p class="lead">Bienvenido a tú sección de eventos.</p>
+        </div>
+    </div>
+    <div class="mt-2" *ngIf="!mostrarA">
+        <div class="alert alert-warning text-center" role="alert">
+            <h2>No tienes eventos registrados.</h2>
+        </div>
+    </div>
+    <div class="mt-2" *ngIf="mostrarA">
+        <table class="table table-sm table-info">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Fecha Inicio</th>
+                    <th scope="col">Fecha Fin</th>
+                    <th scope="col">Ubicación</th>
+                    <th scope="col">Ver Actividades</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let evento of eventos.records">
+                    <th scope="row">1</th>
+                    <td>{{ evento.nombre }}</td>
+                    <td><span class="badge badge-warning">{{ evento.fecha_inicio | date:"MMMM d, y" }}</span></td>
+                    <td><span class="badge badge-danger">{{ evento.fecha_fin | date:"MMMM d, y" }}</span></td>
+                    <td>{{ evento.ubicacion }}</td>
+                    <td><a class="btn btn-secondary" href=""><i class="far fa-eye"></i></a></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>

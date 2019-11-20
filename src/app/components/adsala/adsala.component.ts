@@ -37,7 +37,7 @@ export class AdsalaComponent implements OnInit {
   ngOnInit() {
     this.route.params.subscribe(params => {
       this.id = +params.id;
-      console.log(this.id);
+      // console.log(this.id);
     });
     this.leerSala();
   }
@@ -50,7 +50,7 @@ export class AdsalaComponent implements OnInit {
       this.forma.controls.ubicacion.setValue(this.sala.ubicacion);
       this.forma.controls.status.setValue(this.sala.estado);
       this.forma.controls.id_actividad.setValue(this.sala.id_actividad);
-      console.log(this.sala);
+      // console.log(this.sala);
     });
   }
   editar() {

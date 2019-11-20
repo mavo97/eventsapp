@@ -33,7 +33,7 @@ export class LoginComponent implements OnInit {
   }
 
   logIn() {
-    console.log(this.forma);
+    // console.log(this.forma);
     const usuario: Object = {
       correo: this.forma.controls.correo.value,
       contrasena: this.forma.controls.contrasena.value

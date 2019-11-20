@@ -14,7 +14,7 @@ import { tokenModel, UsuarioModel } from '../../models/usuario.model';
 export class NavbarComponent implements OnInit, DoCheck{
 
   verToken: tokenModel = new tokenModel();
-  usuario: UsuarioModel = new UsuarioModel;
+  usuario: UsuarioModel = new UsuarioModel();
   token = localStorage.getItem('jwt');
   uLogueado: string;
   ver: string;

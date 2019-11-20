@@ -9,16 +9,20 @@ import { RegistroComponent } from './components/registro/registro.component';
 import { LoginComponent } from './components/login/login.component';
 import { UseventosComponent } from './components/useventos/useventos.component';
 
+// Guards
+import { AuthGuard } from './guards/auth.guard';
+import { AdminGuard } from './guards/admin.guard';
+
 const routes: Routes = [
-  { path: '', component: HomeComponent },
-  { path: 'admin', component: AdminComponent},
-  { path: 'admin/evento/:id', component: AdeventComponent},
-  { path: 'admin/actividad/:id', component: AdactivitieComponent},
-  { path: 'admin/sala/:id', component: AdsalaComponent },
+  { path: 'inicio', component: HomeComponent },
+  { path: 'admin', component: AdminComponent, canActivate: [AdminGuard] },
+  { path: 'admin/evento/:id', component: AdeventComponent, canActivate: [AdminGuard] },
+  { path: 'admin/actividad/:id', component: AdactivitieComponent, canActivate: [AdminGuard] },
+  { path: 'admin/sala/:id', component: AdsalaComponent, canActivate: [AdminGuard] },
   { path: 'registro', component: RegistroComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'eventos', component: UseventosComponent },
-  { path: '**', pathMatch: 'full', redirectTo: '' }
+  { path: 'eventos', component: UseventosComponent, canActivate: [AuthGuard] },
+  { path: '**', pathMatch: 'full', redirectTo: 'inicio' }
 ];
 
 @NgModule({

@@ -1,6 +1,6 @@
 // tslint:disable-next-line: class-name
 export class verEventosModel {
-    records: Array<any>;
+    records: EventModel;
 }
 export class EventModel {
     costo: string;
