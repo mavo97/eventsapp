@@ -9,5 +9,24 @@ export class salaModel {
 }
 
 export class verSalaModel {
-    records: Array<any>;
+    records: salaModel;
+};
+export class salaModel2 {
+    // tslint:disable-next-line: variable-name
+    id_sala?: string;
+    // tslint:disable-next-line: variable-name
+    id_usuario?: string;
+    nombreSala: string;
+    correo: string;
+    ubicacion: string;
+    estado: string;
+    // tslint:disable-next-line: variable-name
+    nombreEvento: string;
+    nombreActividad: string;
+    fecha_inicio: string;
+    fecha_fin: string;
+}
+
+export class verSalaModel2 {
+    records: salaModel2;
 };

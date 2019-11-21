@@ -8,6 +8,7 @@ import { map, catchError } from 'rxjs/operators';
 export class SalaService {
 
   private url = 'http://localhost/api_eventos/salas';
+  private url2 = 'http://localhost/api_eventos/usuarios_sala';
 
   constructor( private http: HttpClient ) { }
 
@@ -19,9 +20,33 @@ export class SalaService {
       }),
     );
   }
-
+  bajaUsuario(id: string){
+    return this.http.post(`${ this.url }/deleteuser.php`, id)
+    .pipe(
+      map( ( resp: any ) => {
+        return resp;
+      })
+    );
+  }
+  // usuario se registra a una sala
+  registrarse( usuarioSala ) {
+    return this.http.post(`${ this.url2 }/registrar.php`, usuarioSala)
+    .pipe(
+      map( ( resp: any ) => {
+        return resp;
+      }),
+    );
+  }
+  // Para admin
+  usuariosenSala( id: number ) {
+    return this.http.get(`${ this.url2 }/usuariosensala.php?id=${id}`);
+  }
   verSalas( id: number ) {
     return this.http.get(`${ this.url }/readsalas.php?id=${id}`);
+  }
+  // Salas de un usuario
+  usuarioSalas( id: number ) {
+    return this.http.get(`${ this.url2 }/salasusuario.php?id=${id}`);
   }
 
   eliminarSala(id: string) {

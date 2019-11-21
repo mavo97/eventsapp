@@ -59,7 +59,33 @@
         </form>
 
     </div>
-
+    <div class="alert alert-warning" *ngIf="!mostrarU" role="alert">
+        Esta sala no tiene usuarios registrados.
+    </div>
+    <div class="mt-2" *ngIf="mostrarU">
+        <h2>Usuarios registrados</h2>
+        <table class="table">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Apellidos</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Dar de baja</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let usal of usuarios.records; let i = index;">
+                    <th scope="row">{{i + 1}}</th>
+                    <td>{{ usal.nombreUsuario }}</td>
+                    <td>{{ usal.apellidos }}</td>
+                    <td>{{ usal.correo }}</td>
+                    <td><a class="btn btn-danger text-light" (click)="baja(usal.id_usuario, usal.id_sala)"><i class="fas fa-arrow-down"></i></a></td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
 
 <!-- Modal watch sala -->

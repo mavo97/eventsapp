@@ -11,8 +11,9 @@
         </div>
     </div>
     <div class="mt-2" *ngIf="mostrarA">
-        <table class="table table-sm table-info">
-            <thead>
+        <h2>Mis Eventos</h2>
+        <table class="table">
+            <thead class="thead-dark">
                 <tr>
                     <th scope="col">#</th>
                     <th scope="col">Nombre</th>
@@ -22,14 +23,45 @@
                     <th scope="col">Ver Actividades</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody class="thead-light">
                 <tr *ngFor="let evento of eventos.records">
                     <th scope="row">1</th>
                     <td>{{ evento.nombre }}</td>
-                    <td><span class="badge badge-warning">{{ evento.fecha_inicio | date:"MMMM d, y" }}</span></td>
-                    <td><span class="badge badge-danger">{{ evento.fecha_fin | date:"MMMM d, y" }}</span></td>
+                    <td>{{ evento.fecha_inicio | date:"MMMM d, y" }}</td>
+                    <td>{{ evento.fecha_fin | date:"MMMM d, y" }}</td>
                     <td>{{ evento.ubicacion }}</td>
-                    <td><a class="btn btn-secondary" href=""><i class="far fa-eye"></i></a></td>
+                    <td><a class="btn btn-info" (click)="verActividades(evento.id_evento)"><i class="far fa-eye"></i></a></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <hr>
+    <div class="alert alert-warning" *ngIf="!mostrarB && mostrarA" role="alert">
+        No tienes salas registradas.
+    </div>
+    <div class="mt-2" *ngIf="mostrarB && mostrarA">
+        <h2>Mis salas</h2>
+        <table class="table">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Nombre Sala</th>
+                    <th scope="col">Evento</th>
+                    <th scope="col">Actividad</th>
+                    <th scope="col">Fecha Inicio</th>
+                    <th scope="col">Fecha Fin</th>
+                    <th scope="col">Ubicacion</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let usal of userSalas.records; let i = index;">
+                    <th scope="row">{{ i + 1 }}</th>
+                    <td>{{ usal.nombreSala }}</td>
+                    <td>{{ usal.nombreEvento }}</td>
+                    <td>{{ usal.nombreActividad }}</td>
+                    <td>{{ usal.fecha_inicio | date:"MMMM d, y" }}</td>
+                    <td>{{ usal.fecha_fin | date:"MMMM d, y" }}</td>
+                    <td>{{ usal.ubicacion }}</td>
                 </tr>
             </tbody>
         </table>

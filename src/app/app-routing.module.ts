@@ -8,6 +8,7 @@ import { AdsalaComponent } from './components/adsala/adsala.component';
 import { RegistroComponent } from './components/registro/registro.component';
 import { LoginComponent } from './components/login/login.component';
 import { UseventosComponent } from './components/useventos/useventos.component';
+import { UsactividadesComponent } from './components/usactividades/usactividades.component';
 
 // Guards
 import { AuthGuard } from './guards/auth.guard';
@@ -22,6 +23,7 @@ const routes: Routes = [
   { path: 'registro', component: RegistroComponent },
   { path: 'login', component: LoginComponent },
   { path: 'eventos', component: UseventosComponent, canActivate: [AuthGuard] },
+  { path: 'actividades/:id', component: UsactividadesComponent, canActivate: [AuthGuard] },
   { path: '**', pathMatch: 'full', redirectTo: 'inicio' }
 ];
 

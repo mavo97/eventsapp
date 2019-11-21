@@ -2,9 +2,14 @@ import { Component, OnInit } from '@angular/core';
 // Services
 import { EventoService } from '../../services/evento.service';
 import { AuthService } from '../../services/auth/auth.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { SalaService } from '../../services/sala.service';
+
 // Models
 import { verEventosModel, EventModel } from '../../models/evento.model';
 import { UsuarioModel, tokenModel, dataUserModel } from '../../models/usuario.model';
+import { verSalaModel, verSalaModel2 } from '../../models/sala.model';
+
 
 @Component({
   selector: 'app-useventos',
@@ -18,11 +23,16 @@ export class UseventosComponent implements OnInit {
   mostrarA: boolean;
   ver: string;
   token = localStorage.getItem('jwt');
+  mostrarB: boolean;
+  userSalas: verSalaModel2 = new verSalaModel2();
+
 
 
   constructor( private eventoService: EventoService,
-               private authServices: AuthService ) { }
-  
+               private authServices: AuthService,
+               private router: Router,
+               private salaService: SalaService ) { }
+
   ngOnInit() {
     this.buscarUsuario();
   }
@@ -35,14 +45,25 @@ export class UseventosComponent implements OnInit {
       let peticion = this.authServices.validateToken(tokenF);
       peticion.subscribe( (resp: tokenModel) => {
         this.usuario = resp.data;
-        console.log(this.usuario);
+        // console.log(this.usuario);
         this.leerMisEventos(this.usuario.id_usuario);
+        this.usuarioSalas(this.usuario.id_usuario);
       });
     };
   }
+  usuarioSalas(id) {
+    this.salaService.usuarioSalas(id)
+    .subscribe( (resp: verSalaModel2) => {
+       this.userSalas = resp;
+       console.log(this.userSalas);
+       this.mostrarB = true;
+      }, (err) => {
+      this.mostrarB = false;
+    });
+  }
   leerMisEventos( id ) {
     this.eventoService.usuarioEvento(id)
-    .subscribe( (resp : verEventosModel ) => {
+    .subscribe( (resp: verEventosModel ) => {
       this.eventos = resp;
       this.mostrarA = true;
       console.log(this.eventos);
@@ -51,5 +72,8 @@ export class UseventosComponent implements OnInit {
       this.mostrarA = false;
       // console.log(error);
     });
+  }
+  verActividades(id) {
+    this.router.navigate(['actividades/', id]);
   }
 }

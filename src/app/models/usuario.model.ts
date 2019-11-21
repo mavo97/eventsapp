@@ -25,6 +25,18 @@ export interface userModel {
         // tslint:disable-next-line: variable-name
         rol_usuario: string;
 }
+export interface userSala {
+    // tslint:disable-next-line: variable-name
+    id_usuario?: string;
+    id_sala?: string;
+    nombreUsuario: string;
+    apellidos: string;
+    correo: string;
+}
+
 export class dataUserModel {
     data: userModel
+};
+export class dataUserSala {
+    data: userSala
 };
