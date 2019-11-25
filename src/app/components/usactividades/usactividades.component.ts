@@ -62,7 +62,7 @@ export class UsactividadesComponent implements OnInit {
       this.salas = null;
     });
   }
-  
+
   buscarUsuario() {
     if ( this.token ) {
       const token2: object = {
@@ -72,7 +72,7 @@ export class UsactividadesComponent implements OnInit {
       let peticion = this.authService.validateToken(tokenF);
       peticion.subscribe( (resp: tokenModel) => {
         this.usuario = resp.data;
-       
+
       });
     };
   }

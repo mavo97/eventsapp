@@ -10,7 +10,7 @@
             <h2>No tienes eventos registrados.</h2>
         </div>
     </div>
-    <div class="mt-2" *ngIf="mostrarA">
+    <div class="table-responsive mt-2" *ngIf="mostrarA">
         <h2>Mis Eventos</h2>
         <table class="table">
             <thead class="thead-dark">
@@ -39,7 +39,7 @@
     <div class="alert alert-warning" *ngIf="!mostrarB && mostrarA" role="alert">
         No tienes salas registradas.
     </div>
-    <div class="mt-2" *ngIf="mostrarB && mostrarA">
+    <div class="table-responsive mt-2" *ngIf="mostrarB && mostrarA">
         <h2>Mis salas</h2>
         <table class="table">
             <thead class="thead-dark">

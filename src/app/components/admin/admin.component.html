@@ -2,7 +2,7 @@
 
     <div class="row mb-2">
         <div class="col text-center">
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#crearEvento">
+            <button type="button" class="btn btn-primary m-2" data-toggle="modal" data-target="#crearEvento">
                 Crear Evento
             </button>
         </div>
@@ -14,7 +14,7 @@
             <h2>Sin eventos registrados.</h2>
         </div>
     </div>
-    <div *ngIf="mostrarA">
+    <div class="table-responsive" *ngIf="mostrarA">
         <h2>Eventos</h2>
         <table class="table table-striped">
             <thead>

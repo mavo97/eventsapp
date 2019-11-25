@@ -7,13 +7,13 @@
     </div>
     <div class="row mb-1">
         <div class="col text-center">
-            <button type="button" class="btn btn-info mr-3" (click)="return()">
+            <button type="button" class="btn btn-info mr-3 m-2" (click)="return()">
                 Regresar a actividad
             </button>
-            <button type="button" *ngIf="!edit" class="btn btn-info" (click)="editar()">
+            <button type="button" *ngIf="!edit" class="btn btn-info m-2" (click)="editar()">
                 Editar Sala
             </button>
-            <button type="button" *ngIf="edit" class="btn btn-danger" (click)="noeditar()">
+            <button type="button" *ngIf="edit" class="btn btn-danger m-2" (click)="noeditar()">
                 Ocultar formulario de edición
             </button>
         </div>
@@ -62,7 +62,7 @@
     <div class="alert alert-warning" *ngIf="!mostrarU" role="alert">
         Esta sala no tiene usuarios registrados.
     </div>
-    <div class="mt-2" *ngIf="mostrarU">
+    <div class="table-responsive mt-2" *ngIf="mostrarU">
         <h2>Usuarios registrados</h2>
         <table class="table">
             <thead class="thead-dark">

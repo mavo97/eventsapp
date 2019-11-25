@@ -7,16 +7,16 @@
     </div>
     <div class="row mb-1">
         <div class="col text-center">
-            <button type="button" class="btn btn-info mr-3" (click)="return()">
+            <button type="button" class="btn btn-info mr-3 m-2" (click)="return()">
                 Regresar a evento
             </button>
-            <button type="button" class="btn btn-info" *ngIf="!edit" (click)="editar()">
+            <button type="button" class="btn btn-info m-2" *ngIf="!edit" (click)="editar()">
                 Editar Evento
             </button>
-            <button type="button" class="btn btn-danger" *ngIf="edit" (click)="noeditar()">
+            <button type="button" class="btn btn-danger m-2" *ngIf="edit" (click)="noeditar()">
                 Ocultar formulario de edición
             </button>
-            <button type="button" class="btn btn-info ml-3" data-toggle="modal" data-target="#crearActividad">
+            <button type="button" class="btn btn-info ml-3 m-2" data-toggle="modal" data-target="#crearActividad">
                 Crear Actividad
             </button>
         </div>
@@ -110,7 +110,7 @@
         </form>
 
     </div>
-    <div class="mt-2" *ngIf="mostrarA">
+    <div class="table-responsive mt-2" *ngIf="mostrarA">
         <h2>Actividades</h2>
         <table class="table table-striped">
             <thead>
