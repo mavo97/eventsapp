@@ -140,6 +140,33 @@
             <h3>Evento sin actividades registradas.</h3>
         </div>
     </div>
+    <div class="alert alert-warning" *ngIf="!mostrarB && mostrarA" role="alert">
+        Evento sin usuarios registrados.
+    </div>
+    <div class="table-responsive mt-2" *ngIf="mostrarB && mostrarA">
+        <h2>Usuarios registrados al evento.</h2>
+        <table class="table">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Apellidos</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Dar de baja</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let usev of userEventos.records; let i = index;">
+                    <th scope="row">{{i + 1}}</th>
+                    <td>{{ usev.nombreUsuario }}</td>
+                    <td>{{ usev.apellidos }}</td>
+                    <td>{{ usev.correo }}</td>
+                    <td><a class="btn btn-danger text-light" (click)="baja(usev.id_usuario, usev.id_evento)"><i class="fas fa-arrow-down"></i></a></td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
 
 

@@ -57,7 +57,6 @@
                             <tr *ngFor="let sala of salas.records">
                                 <td>{{sala.nombre}}</td>
                                 <td>{{sala.ubicacion}}</td>
-                                <td>{{usuario.nombre}}</td>
                                 <td><a class="btn btn-success text-light" (click)="registrarSala(sala.id_sala, usuario.id_usuario)"><i class="fas fa-arrow-up"></i></a></td>
                             </tr>
                         </tbody>

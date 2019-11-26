@@ -15,3 +15,14 @@ export class EventModel {
     nombre: string;
     ubicacion: string;
 }
+export class verUsEvento{
+    records: UsuarioEventoModel;
+ }
+
+export class UsuarioEventoModel{
+     apellidos: string;
+     correo: string;
+     id_evento: string;
+     id_usuario: string;
+     nombreUsuario: string;
+}

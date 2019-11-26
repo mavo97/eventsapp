@@ -55,4 +55,16 @@ export class EventoService {
   actualizarEvento( evento ) {
     return this.http.post(`${this.url}/update.php`, evento);
   }
+  // Usuarios en un evento
+  usuarioEventos( id: number ) {
+    return this.http.get(`${ this.url2 }/usuariosenevento.php?id=${id}`);
+  }
+  bajaUsuario(id: string){
+    return this.http.post(`${ this.url }/deleteuser.php`, id)
+    .pipe(
+      map( ( resp: any ) => {
+        return resp;
+      })
+    );
+  }
 }

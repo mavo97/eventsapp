@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 import { EventoService } from '../../services/evento.service';
 import { ActividadService } from '../../services/actividad.service';
 // Models
-import { EventModel } from '../../models/evento.model';
+import { EventModel, verUsEvento, UsuarioEventoModel } from '../../models/evento.model';
 import { ActividadModel, verActividadesModel } from '../../models/actividad.model';
 // Alertas
 import Swal from 'sweetalert2';
@@ -27,6 +27,8 @@ export class AdeventComponent implements OnInit {
   forma2: FormGroup; // Formulario crear actividad
   actividades: verActividadesModel = new verActividadesModel();
   mostrarA: boolean;
+  mostrarB: boolean;
+  userEventos;
 
   constructor( private route: ActivatedRoute,
                // tslint:disable-next-line: variable-name
@@ -73,6 +75,7 @@ export class AdeventComponent implements OnInit {
     // Leer el evento actual
     this.readEvent();
     this.callActivities();
+    this.usuarioEventos();
 
   }
 
@@ -279,5 +282,66 @@ export class AdeventComponent implements OnInit {
       }
     });
   }
-
+  baja(idUsuario, idEvento) {
+    let peticion: Observable<any>;
+    // tslint:disable-next-line: variable-name
+    const id_usuario: Object  = {
+      id_usuario : idUsuario,
+      id_evento : idEvento
+    };
+    const idjson = JSON.stringify(id_usuario);
+    console.log(idjson);
+    Swal.fire({
+      title: '¿Está seguro de querer dar de baja a este usuario?',
+      text: "¡No podrás revertir esto!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sí, dar de baja!'
+    }).then((result) => {
+      if (result.value) {
+        peticion = this._eventoService.bajaUsuario(idjson);
+        Swal.fire({
+          title: 'Espere',
+          text: 'Procesando baja...',
+          icon: 'info',
+          allowOutsideClick: false
+        });
+        Swal.showLoading();
+        peticion.subscribe(
+          resp => {
+            if (resp.message === 'El usuario fue dado de baja.') {
+              Swal.fire({
+                title: 'El usuario.',
+                text: 'Fue dado de baja correctamente.',
+                icon: 'success',
+              });
+              this.readEvent();
+              this.callActivities();
+              this.usuarioEventos();
+            }
+           },
+          (err) => {
+            console.log(err);
+            Swal.fire({
+              icon: 'error',
+              title: 'Error al querer dar de baja al usuario.',
+              text: 'Intenta más tarde...'
+            });
+          }
+        );
+      }
+    });
+  }
+  usuarioEventos() {
+    this._eventoService.usuarioEventos(this.id)
+    .subscribe( ( resp: verUsEvento ) => {
+       this.userEventos = resp;
+       console.log(this.userEventos);
+       this.mostrarB = true;
+      }, (err) => {
+      this.mostrarB = false;
+    });
+  }
 }
