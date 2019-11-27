@@ -20,6 +20,9 @@ export class SalaService {
       }),
     );
   }
+  readAll(){
+    return this.http.get(`${ this.url }/readAll.php`);
+  }
   bajaUsuario(id: string){
     return this.http.post(`${ this.url }/deleteuser.php`, id)
     .pipe(

@@ -19,4 +19,16 @@ export class UsuarioService {
       }),
     );
   }
+  readUsers(){
+    return this.http.get(`${ this.url }/readUsers.php`);
+  }
+  
+  eliminarUsuario(id) {
+    return this.http.post(`${ this.url }/deleteuser.php`, id)
+    .pipe(
+      map( ( resp: any ) => {
+        return resp;
+      })
+    );
+  }
 }

@@ -9,7 +9,8 @@ import { RegistroComponent } from './components/registro/registro.component';
 import { LoginComponent } from './components/login/login.component';
 import { UseventosComponent } from './components/useventos/useventos.component';
 import { UsactividadesComponent } from './components/usactividades/usactividades.component';
-
+import { AdversalasComponent } from './components/adversalas/adversalas.component';
+import { AdverusuariosComponent } from './components/adverusuarios/adverusuarios.component';
 // Guards
 import { AuthGuard } from './guards/auth.guard';
 import { AdminGuard } from './guards/admin.guard';
@@ -24,6 +25,8 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'eventos', component: UseventosComponent, canActivate: [AuthGuard] },
   { path: 'actividades/:id', component: UsactividadesComponent, canActivate: [AuthGuard] },
+  { path: 'salas', component: AdversalasComponent, canActivate: [AdminGuard] },
+  { path: 'usuarios', component: AdverusuariosComponent, canActivate: [AdminGuard] },
   { path: '**', pathMatch: 'full', redirectTo: 'inicio' }
 ];
 

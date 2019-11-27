@@ -30,3 +30,15 @@ export class salaModel2 {
 export class verSalaModel2 {
     records: salaModel2;
 };
+
+export class readAll{
+    records: Allsalas;
+}
+export class Allsalas{
+    estado: string;
+    id_sala: string;
+    nombreActividad: string;
+    nombreEvento: string;
+    nombreSala: string;
+    ubicacion: string;
+}

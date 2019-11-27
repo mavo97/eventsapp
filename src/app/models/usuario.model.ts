@@ -40,3 +40,16 @@ export class dataUserModel {
 export class dataUserSala {
     data: userSala
 };
+export interface userModel2 {
+    // tslint:disable-next-line: variable-name
+    id_usuario?: string;
+    nombre: string;
+    apellidos: string;
+    telefono: string;
+    correo: string;
+    // tslint:disable-next-line: variable-name
+    rol_usuario: string;
+}
+export class dataUserModel2 {
+    records: userModel2
+};

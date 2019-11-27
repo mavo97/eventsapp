@@ -13,6 +13,12 @@
             <li class="nav-item" *ngIf="ver === 'A'">
                 <a class="nav-link" [routerLink]="['/admin']" routerLinkActive="active"><b>Eventos</b></a>
             </li>
+            <li class="nav-item" *ngIf="ver === 'A'">
+                <a class="nav-link" [routerLink]="['/salas']" routerLinkActive="active"><b>Salas</b></a>
+            </li>
+            <li class="nav-item" *ngIf="ver === 'A'">
+                <a class="nav-link" [routerLink]="['/usuarios']" routerLinkActive="active"><b>Usuarios</b></a>
+            </li>
             <li class="nav-item" *ngIf="ver === 'U'">
                 <a class="nav-link" [routerLink]="['/eventos']" routerLinkActive="active"><b>Mis Eventos</b></a>
             </li>

@@ -344,4 +344,5 @@ export class AdeventComponent implements OnInit {
       this.mostrarB = false;
     });
   }
+
 }

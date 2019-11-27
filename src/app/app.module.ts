@@ -25,6 +25,8 @@ import { LoginComponent } from './components/login/login.component';
 import { UseventosComponent } from './components/useventos/useventos.component';
 import { UsactividadesComponent } from './components/usactividades/usactividades.component';
 import { FooterComponent } from '../app/shared/footer/footer.component';
+import { AdversalasComponent } from './components/adversalas/adversalas.component';
+import { AdverusuariosComponent } from './components/adverusuarios/adverusuarios.component';
 registerLocaleData(localeEs);
 
 @NgModule({
@@ -41,6 +43,8 @@ registerLocaleData(localeEs);
     UseventosComponent,
     UsactividadesComponent,
     FooterComponent,
+    AdversalasComponent,
+    AdverusuariosComponent,
     
   ],
   imports: [
