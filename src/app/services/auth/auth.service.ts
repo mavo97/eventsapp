@@ -12,7 +12,9 @@ import { stringify } from 'querystring';
 })
 export class AuthService {
 
-  private url = 'http://localhost/api_eventos/usuarios';
+  // private url = 'http://localhost/api_eventos/usuarios';
+  private url = 'https://apeventos.herokuapp.com/usuarios';
+
   private uLogueado = new BehaviorSubject('NoLogueado');
   currentMessage = this.uLogueado.asObservable();
   token = localStorage.getItem('jwt');

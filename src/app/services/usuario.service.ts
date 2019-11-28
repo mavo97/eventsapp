@@ -7,8 +7,9 @@ import { map, catchError } from 'rxjs/operators';
 })
 export class UsuarioService {
 
-  private url = 'http://localhost/api_eventos/usuarios';
+  // private url = 'http://localhost/api_eventos/usuarios';
   
+  private url = 'https://apeventos.herokuapp.com/api_eventos/usuarios';
   constructor( private http: HttpClient ) { }
 
   crearUsuario( usuario ) {

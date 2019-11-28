@@ -6,9 +6,11 @@ import { map, catchError } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class EventoService {
-
-  private url = 'http://localhost/api_eventos/eventos';
-  private url2 = 'http://localhost/api_eventos/usuarios_evento';
+  // https://apeventos.herokuapp.com/
+  // private url = 'http://localhost/api_eventos/eventos';
+  // private url2 = 'http://localhost/api_eventos/usuarios_evento';
+  private url = 'https://apeventos.herokuapp.com/api_eventos/eventos';
+  private url2 = 'https://apeventos.herokuapp.com/api_eventos/usuarios_evento';
 
   constructor(private http: HttpClient) { }
 
@@ -21,7 +23,7 @@ export class EventoService {
     );
   }
   registrarEvento( usuarioEvento ) { 
-    return this.http.post(`http://localhost/api_eventos/usuarios_evento/registrar.php`, usuarioEvento)
+    return this.http.post(`https://apeventos.herokuapp.com/usuarios_evento/registrar.php`, usuarioEvento)
     .pipe(
       map( ( resp: any ) => {
         return resp;
