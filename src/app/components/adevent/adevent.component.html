@@ -141,10 +141,10 @@
             <h3>Evento sin actividades registradas.</h3>
         </div>
     </div>
-    <div class="alert alert-warning" *ngIf="!mostrarB && mostrarA" role="alert">
+    <div class="alert alert-warning" *ngIf="!mostrarB" role="alert">
         Evento sin usuarios registrados.
     </div>
-    <div class="table-responsive mt-2" *ngIf="mostrarB && mostrarA">
+    <div class="table-responsive mt-2" *ngIf="mostrarB">
         <h2>Usuarios registrados al evento.</h2>
         <table class="table">
             <thead class="thead-dark">
