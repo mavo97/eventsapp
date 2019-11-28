@@ -16,28 +16,23 @@
         Sin eventos.
     </div>
     <div class="row">
-
-        <div class="row" *ngIf="mostrarA">
-            <div class="col-md-4 mb-5" *ngFor="let evento of eventos.records">
-                <div class="card h-100">
-                    <!--<img class="card-img-top" src="http://placehold.it/300x200" alt="">-->
-                    <div class="card-body">
-                        <h4 class="card-title">{{ evento.nombre }}</h4>
-                        <p class="card-text">{{evento.descripcion}}</p>
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item"><b>Costo: </b>${{evento.costo}}</li>
-                            <li class="list-group-item"><b>Ubicación: </b>{{evento.ubicacion}}</li>
-                            <li class="list-group-item"><b>De <span class="badge badge-warning">{{evento.fecha_inicio | date:"MMMM d, y"}}</span> A <span class="badge badge-danger">{{evento.fecha_fin | date:"MMMM d, y"}}</span></b></li>
-                        </ul>
-                    </div>
-                    <div class="card-footer">
-                        <a (click)="registrarEvento(evento.id_evento, usuario.id_usuario)" *ngIf="ver === 'U'" class="btn btn-primary text-light">Registrar</a>
-                    </div>
+        <div class="col-md-4 mb-5" *ngFor="let evento of eventos.records">
+            <div class="card h-100">
+                <!--<img class="card-img-top" src="http://placehold.it/300x200" alt="">-->
+                <div class="card-body">
+                    <h4 class="card-title">{{ evento.nombre }}</h4>
+                    <p class="card-text">{{evento.descripcion}}</p>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item"><b>Costo: </b>${{evento.costo}}</li>
+                        <li class="list-group-item"><b>Ubicación: </b>{{evento.ubicacion}}</li>
+                        <li class="list-group-item"><b>De <span class="badge badge-warning">{{evento.fecha_inicio | date:"MMMM d, y"}}</span> A <span class="badge badge-danger">{{evento.fecha_fin | date:"MMMM d, y"}}</span></b></li>
+                    </ul>
+                </div>
+                <div class="card-footer">
+                    <a (click)="registrarEvento(evento.id_evento, usuario.id_usuario)" *ngIf="ver === 'U'" class="btn btn-primary text-light">Registrar</a>
                 </div>
             </div>
-
         </div>
-        <!-- /.row -->
 
     </div>
     <!-- /.container -->
