@@ -111,7 +111,6 @@ button[type=submit] {
     text-align: center;
     text-decoration: none;
     display: inline-block;
-    text-transform: uppercase;
     font-size: 13px;
     -webkit-box-shadow: 0 10px 30px 0 rgba(95, 186, 233, 0.4);
     box-shadow: 0 10px 30px 0 rgba(95, 186, 233, 0.4);
@@ -133,7 +132,6 @@ button[type=submit] {
     text-align: center;
     text-decoration: none;
     display: inline-block;
-    text-transform: uppercase;
     font-size: 13px;
     -webkit-box-shadow: 0 10px 30px 0 rgba(212, 4, 4, 0.4);
     box-shadow: 0 10px 30px 0 rgba(212, 4, 4, 0.4);
@@ -172,7 +170,6 @@ input[type=reset] {
     text-align: center;
     text-decoration: none;
     display: inline-block;
-    text-transform: uppercase;
     font-size: 13px;
     -webkit-box-shadow: 0 10px 30px 0 rgba(95, 186, 233, 0.4);
     box-shadow: 0 10px 30px 0 rgba(95, 186, 233, 0.4);

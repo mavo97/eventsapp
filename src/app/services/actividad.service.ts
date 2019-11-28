@@ -8,7 +8,7 @@ import { map, catchError } from 'rxjs/operators';
 export class ActividadService {
   
   // private url = 'http://localhost/api_eventos/actividades';
-  private url = 'https://apeventos.herokuapp.com/api_eventos/actividades';
+  private url = 'https://apeventos.herokuapp.com/actividades';
   constructor(private http: HttpClient) { }
 
   crearActividad( actividad ) {
