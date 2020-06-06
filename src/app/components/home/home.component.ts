@@ -37,6 +37,7 @@ export class HomeComponent implements OnInit, DoCheck{
     this.authServices.messageCurrent.subscribe(message => this.ver = message);
   }
 
+
   // Funcion para llamar a los eventos
   llamarEventos() {
     this._eventoService.eventosDisponibles()
