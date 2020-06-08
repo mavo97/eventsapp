@@ -17,15 +17,14 @@ export class LoginComponent implements OnInit {
 
   forma: FormGroup; // Formulario para validar
   verToken: tokenModel = new tokenModel();
-  usuario: UsuarioModel = new UsuarioModel;
+  usuario: UsuarioModel = new UsuarioModel();
 
   constructor( private authService: AuthService,
                private router: Router) {
     this.forma = new FormGroup({
-      correo: new FormControl('', [Validators.required, Validators.maxLength(30),
+      correo: new FormControl('', [Validators.required, Validators.maxLength(50),
         Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$')]),
-      contrasena: new FormControl('', [Validators.required, Validators.maxLength(20),
-      Validators.minLength(6) ]),
+      contrasena: new FormControl('', [Validators.required ]),
     });
    }
 
@@ -63,10 +62,16 @@ export class LoginComponent implements OnInit {
         if ( this.usuario.rol_usuario === 'A' ) {
           this.router.navigateByUrl('/admin');
           this.authService.changeMessage2('A');
-        } else {
+        } else if ( this.usuario.rol_usuario === 'U' ) {
           this.router.navigateByUrl('/eventos');
           this.authService.changeMessage2('U');
-        }
+        } else if ( this.usuario.rol_usuario === 'P' ) {
+          this.router.navigateByUrl('/eventos');
+          this.authService.changeMessage2('P');
+         } else {
+          this.router.navigateByUrl('/eventos');
+          this.authService.changeMessage2('E');
+         }
         // console.log(this.verToken);
       }, (err2) => {
         Swal.fire({

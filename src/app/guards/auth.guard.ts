@@ -6,7 +6,7 @@ import { AuthService } from '../services/auth/auth.service';
   providedIn: 'root'
 })
 export class AuthGuard implements CanActivate {
-  
+
   tipoUsuario: string;
 
   constructor( private auth: AuthService,
@@ -14,7 +14,7 @@ export class AuthGuard implements CanActivate {
 
   canActivate(): boolean {
     this.auth.messageCurrent.subscribe(message => this.tipoUsuario = message);
-    if (this.tipoUsuario === 'U' ){
+    if (this.tipoUsuario === 'U' || 'P' || 'E' ) {
       return true;
     } else {
       this.route.navigateByUrl('/inicio');

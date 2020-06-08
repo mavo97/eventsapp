@@ -1,47 +1,45 @@
-<div class="wrapper">
-    <div id="formContent">
-        <!-- Tabs Titles -->
-        <h2 [routerLink]="['/registro']" routerLinkActive="active">Registrarse</h2>
-        <h2 [routerLink]="['/login']" routerLinkActive="active">Iniciar Sesión</h2>
+<div class="limiter">
 
-        <!-- Icon -->
-        <div class="fadeIn first">
-            <i class="fas fa-user fa-2x"></i>
+    <div class="container-login100">
+        <div class="wrap-login100 p-t-20 p-b-90">
+            <span class="login100-form-title p-b-20">Iniciar sesión</span>
+
+
+            <!-- Formulario registrar externo -->
+            <form (ngSubmit)="logIn()" [formGroup]="forma" class="login100-form validate-form flex-sb flex-w">
+
+                <div class="col">
+                    <div class="wrap-input100 validate-input m-b-5" [ngClass]="{'alert-validate': forma.controls['correo'].errors?.required && (forma.dirty && forma.touched)}" data-validate="Campo requerido">
+                        <input class="input100" type="email" formControlName="correo" name="correo" placeholder="Correo">
+                        <span class="focus-input100 "></span>
+                    </div>
+                    <div *ngIf="forma.controls['correo'].errors?.maxlength && forma.controls['correo'].dirty" class="form-control-feedback">
+                        <p style="color: red">*Maximó 50 caracteres.</p>
+                    </div>
+                    <div *ngIf="forma.controls['correo'].errors?.pattern && forma.controls['correo'].dirty" class="form-control-feedback">
+                        <p style="color: red">*Formato de correo erróneo.</p>
+                    </div>
+                </div>
+
+
+                <div class="wrap-input100 validate-input m-b-5" [ngClass]="{'alert-validate': forma.controls['contrasena'].errors?.required && (forma.dirty && forma.touched)}" data-validate="Campo requerido">
+                    <input class="input100" type="password" formControlName="contrasena" name="contrasena" placeholder="Contraseña">
+                    <span class="focus-input100"></span>
+                </div>
+
+
+                <div class="flex-sb-m w-full p-t-3 p-b-5">
+                    <div>
+                        <a [routerLink]="['/registro']" class="txt1">Crear una cuenta</a>
+                    </div>
+                </div>
+
+                <div class="container-login100-form-btn m-t-5">
+                    <button class="login100-form-btn" [disabled]="!forma.valid">Iniciar sesión</button>
+                </div>
+
+            </form>
+
         </div>
-
-        <!-- Login Form -->
-        <form (ngSubmit)="logIn()" [formGroup]="forma">
-            <div class="form-group fadeIn second">
-                <input type="text" formControlName="correo" id="correo" name="correo" placeholder="Correo">
-                <div *ngIf="forma.controls['correo'].errors?.required && (forma.dirty && forma.touched) " class="form-control-feedback">
-                    <p style="color: red ">*Correo campo requerido.</p>
-                </div>
-                <div *ngIf="forma.controls['correo'].errors?.maxlength && forma.controls['correo'].dirty " class="form-control-feedback ">
-                    <p style="color: red ">*Maximo 30 caracteres.</p>
-                </div>
-                <div *ngIf="forma.controls['correo'].errors?.pattern && forma.controls['correo'].dirty " class="form-control-feedback ">
-                    <p style="color: red ">*Correo no valido.</p>
-                </div>
-            </div>
-            <div class="form-group fadeIn third">
-                <input type="password" formControlName="contrasena" id="contrasena" name="Contrasena" placeholder="Contraseña">
-                <div *ngIf="forma.controls['contrasena'].errors?.required && (forma.dirty && forma.touched) " class="form-control-feedback">
-                    <p style="color: red ">*Contraseña campo requerido.</p>
-                </div>
-                <div *ngIf="forma.controls['contrasena'].errors?.maxlength && forma.controls['contrasena'].dirty " class="form-control-feedback ">
-                    <p style="color: red ">*Maximo 20 caracteres.</p>
-                </div>
-                <div *ngIf="forma.controls['contrasena'].errors?.minlength && forma.controls['contrasena'].dirty " class="form-control-feedback ">
-                    <p style="color: red ">*Minimo 6 caracteres.</p>
-                </div>
-            </div>
-            <button type="submit" [disabled]="!forma.valid" class="fadeIn fourth">Iniciar Sesión</button>
-        </form>
-
-        <!-- Remind Passowrd -->
-        <!--<div id="formFooter">
-            <a class="underlineHover" href="#">Forgot Password?</a>
-        </div>-->
-
     </div>
 </div>
