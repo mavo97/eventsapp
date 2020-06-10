@@ -32,12 +32,12 @@ export class NavbarComponent implements OnInit, DoCheck{
 
   buscarUsuario() {
     if ( this.token ) {
-      
+
       const token2: object = {
         jwt: this.token
       };
       const tokenF = JSON.stringify(token2);
-      let peticion = this.authServices.validateToken(tokenF);
+      const peticion = this.authServices.validateToken(tokenF);
       peticion.subscribe( (resp: tokenModel) => {
         this.usuario = resp.data;
       });

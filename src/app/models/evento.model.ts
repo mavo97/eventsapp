@@ -14,6 +14,8 @@ export class EventModel {
     id_evento: string;
     nombre: string;
     ubicacion: string;
+    cupo?: number;
+    contador?: number;
 }
 export class verUsEvento{
     records: UsuarioEventoModel;

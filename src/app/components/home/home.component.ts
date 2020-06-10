@@ -50,6 +50,9 @@ export class HomeComponent implements OnInit, DoCheck{
       // console.log(error);
     });
   }
+  hola() {
+    console.log('ss');
+  }
   buscarUsuario() {
     if ( this.token ) {
       const token2: object = {
@@ -90,6 +93,7 @@ export class HomeComponent implements OnInit, DoCheck{
             text: 'Haz sido registrado al evento.',
             icon: 'success',
           });
+          this.llamarEventos();
         }
       }, (err) => {
         Swal.fire({

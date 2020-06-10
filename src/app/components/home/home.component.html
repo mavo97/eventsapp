@@ -60,9 +60,31 @@
                     <p class="card-text">{{ evento.descripcion }}</p>
                     <p class="card-text">{{ evento.ubicacion }}</p>
                     <p class="text-left"><b>De {{evento.fecha_inicio | date:"MMMM d, y"}} A {{evento.fecha_fin | date:"MMMM d, y"}}</b></p>
+                    <div class="row">
+                        <div class="col-4">
+                            <ng-container *ngIf="evento.costo === '0'; else elseTemplate">
+                                <p class="card-text">Gratis!</p>
+                            </ng-container>
+                            <ng-template #elseTemplate>
+                                <p class="card-text"><b>Costo:</b> ${{ evento.costo }}</p>
+                            </ng-template>
+                        </div>
+                        <div class="col-4">
+                            <p class="card-text"><i class="fas fa-users" style="color: black"></i> Cupo: {{ evento.cupo }}</p>
+                        </div>
+                        <div class="col-4">
+                            <p class="card-text"><i class="fas fa-users" style="color: green"></i> Libres: {{ evento.cupo - evento.contador }}</p>
+                        </div>
+                    </div>
                 </div>
-                <div class="card-footer" *ngIf="ver === 'U'">
-                    <a (click)="registrarEvento(evento.id_evento, usuario.id_usuario)" class="btn btn-primary text-light">Registrar</a>
+
+                <div class="card-footer" *ngIf="ver === 'U' || ver === 'E' || ver === 'P'">
+                    <ng-container *ngIf="evento.cupo === '0' || evento.cupo===evento.contador; else elseTemplate">
+                        <button class="btn btn-secondary text-light" [disabled]>Cerrado</button>
+                    </ng-container>
+                    <ng-template #elseTemplate>
+                        <a (click)="registrarEvento(evento.id_evento, usuario.id_usuario)" class="btn btn-primary text-light">Registrar</a>
+                    </ng-template>
                 </div>
             </div>
         </div>

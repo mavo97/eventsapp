@@ -22,8 +22,8 @@ export class EventoService {
       }),
     );
   }
-  registrarEvento( usuarioEvento ) { 
-    return this.http.post(`https://apeventos.herokuapp.com/usuarios_evento/registrar.php`, usuarioEvento)
+  registrarEvento( usuarioEvento ) {
+    return this.http.post(`${ this.url2 }/registrar.php`, usuarioEvento)
     .pipe(
       map( ( resp: any ) => {
         return resp;

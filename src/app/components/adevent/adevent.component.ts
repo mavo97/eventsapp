@@ -40,15 +40,15 @@ export class AdeventComponent implements OnInit {
       nombre: new FormControl('', [Validators.required, Validators.maxLength(30)]),
       fecha_inicio: new FormControl(''),
       fecha_fin: new FormControl('', [Validators.required, this.dateVaidator ]),
-      ubicacion: new FormControl('', [Validators.required, Validators.maxLength(30)]),
+      ubicacion: new FormControl('', [Validators.required, Validators.maxLength(100)]),
       costo: new FormControl(''),
       status: new FormControl('', [Validators.required, Validators.maxLength(5)]),
-      descripcion: new FormControl('', [Validators.required, Validators.maxLength(200)])
+      descripcion: new FormControl('', [Validators.required, Validators.maxLength(200)]),
+      cupo: new FormControl('', [Validators.required, Validators.maxLength(4), Validators.pattern('^[0-9]+') ])
     });
 
     this.forma.controls.costo.setValidators([
-      Validators.required, Validators.maxLength(5), Validators.pattern('^[0-9]+'),
-      this.noCero.bind(this.forma)
+      Validators.required, Validators.maxLength(5), Validators.pattern('^[0-9]+')
     ]);
     this.forma.controls.fecha_inicio.setValidators([
       Validators.required, this.dateVaidator
@@ -90,6 +90,7 @@ export class AdeventComponent implements OnInit {
       this.forma.controls.costo.setValue(this.event.costo);
       this.forma.controls.ubicacion.setValue(this.event.ubicacion);
       this.forma.controls.descripcion.setValue(this.event.descripcion);
+      this.forma.controls.cupo.setValue(this.event.cupo);
       // console.log(this.event);
     });
   }
@@ -116,8 +117,9 @@ export class AdeventComponent implements OnInit {
       ubicacion: this.forma.value.ubicacion,
       costo: this.forma.value.costo,
       estado: this.forma.value.status,
-      descripcion: this.forma.value.descripcion
-    };
+      descripcion: this.forma.value.descripcion,
+      cupo: this.forma.value.cupo
+        };
     const evento2 = JSON.stringify(eventU);
     let peticion: Observable<any>;
     peticion = this._eventoService.actualizarEvento(evento2);

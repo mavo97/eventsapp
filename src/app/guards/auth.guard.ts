@@ -10,11 +10,11 @@ export class AuthGuard implements CanActivate {
   tipoUsuario: string;
 
   constructor( private auth: AuthService,
-    private route: Router ) {}
+               private route: Router ) {}
 
   canActivate(): boolean {
     this.auth.messageCurrent.subscribe(message => this.tipoUsuario = message);
-    if (this.tipoUsuario === 'U' || 'P' || 'E' ) {
+    if (this.tipoUsuario === 'U' || this.tipoUsuario === 'P' || this.tipoUsuario === 'E' ) {
       return true;
     } else {
       this.route.navigateByUrl('/inicio');

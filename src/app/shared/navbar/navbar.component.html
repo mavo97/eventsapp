@@ -19,7 +19,7 @@
             <li class="nav-item" *ngIf="ver === 'A'">
                 <a class="nav-link" [routerLink]="['/usuarios']" routerLinkActive="active"><b>Usuarios</b></a>
             </li>
-            <li class="nav-item" *ngIf="ver === 'U'">
+            <li class="nav-item" *ngIf="ver === 'U' || ver === 'P' || ver === 'E'">
                 <a class="nav-link" [routerLink]="['/eventos']" routerLinkActive="active"><b>Mis Eventos</b></a>
             </li>
 

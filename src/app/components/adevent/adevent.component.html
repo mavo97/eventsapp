@@ -71,9 +71,6 @@
                     <div *ngIf="forma.controls['costo'].errors?.pattern && forma.controls['costo'].dirty" class="form-control-feedback ">
                         <p style="color: red ">*Solo se permiten digitos.</p>
                     </div>
-                    <div *ngIf="forma.controls['costo'].errors?.noCeros && forma.controls['costo'].dirty" class="form-control-feedback ">
-                        <p style="color: red ">*No se puede poner 0 como valor.</p>
-                    </div>
                 </div>
                 <div class="col">
                     <p class="mb-0">Status</p>
@@ -93,7 +90,7 @@
                     <p style="color: red ">*Ubicación campo requerido.</p>
                 </div>
                 <div *ngIf="forma.controls['ubicacion'].errors?.maxlength && forma.controls['ubicacion'].dirty" class="form-control-feedback ">
-                    <p style="color: red ">*Maximo 30 caracteres.</p>
+                    <p style="color: red ">*Maximo 100 caracteres.</p>
                 </div>
             </div>
             <div class="form-group">
@@ -106,7 +103,20 @@
                     <p style="color: red ">*Maximo 200 caracteres.</p>
                 </div>
             </div>
-            <button type="submit" class="btn btn-primary" [disabled]="!forma.valid">Submit</button>
+            <div class="form-group ">
+                <label for="cupo"><i class="fas fa-users"></i> Cupo</label>
+                <input type="text" class="form-control" formControlName="cupo" id="cupo" aria-describedby="text" placeholder="Cupo">
+                <div *ngIf="forma.controls['cupo'].errors?.required && (forma.dirty && forma.touched) " class="form-control-feedback">
+                    <p style="color: red">*Cupo campo requerido.</p>
+                </div>
+                <div *ngIf="forma.controls['cupo'].errors?.maxlength && forma.controls['cupo'].dirty" class="form-control-feedback">
+                    <p style="color: red">*Maximo 4 digitos.</p>
+                </div>
+                <div *ngIf="forma.controls['cupo'].errors?.pattern && forma.controls['cupo'].dirty" class="form-control-feedback ">
+                    <p style="color: red ">*Solo se permiten digitos.</p>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary" [disabled]="!forma.valid">Guardar</button>
         </form>
 
     </div>
