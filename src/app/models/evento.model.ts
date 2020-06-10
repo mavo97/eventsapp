@@ -27,4 +27,5 @@ export class UsuarioEventoModel{
      id_evento: string;
      id_usuario: string;
      nombreUsuario: string;
+     rol_usuario?: string;
 }

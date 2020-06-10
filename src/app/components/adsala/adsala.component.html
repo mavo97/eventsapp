@@ -71,6 +71,7 @@
                     <th scope="col">Nombre</th>
                     <th scope="col">Apellidos</th>
                     <th scope="col">Email</th>
+                    <th scope="col">Tipo</th>
                     <th scope="col">Dar de baja</th>
                 </tr>
             </thead>
@@ -80,6 +81,17 @@
                     <td>{{ usal.nombreUsuario }}</td>
                     <td>{{ usal.apellidos }}</td>
                     <td>{{ usal.correo }}</td>
+                    <span [ngSwitch]="usal.rol_usuario">
+                        <p *ngSwitchCase="'U'">
+                            <td>Alumno</td>
+                        </p>
+                        <p *ngSwitchCase="'P'">
+                            <td>Personal</td>
+                        </p>
+                        <p *ngSwitchDefault>
+                            <td>Externo</td>
+                        </p>
+                    </span>
                     <td><a class="btn btn-danger text-light" (click)="baja(usal.id_usuario, usal.id_sala)"><i class="fas fa-arrow-down"></i></a></td>
                     <td></td>
                 </tr>
