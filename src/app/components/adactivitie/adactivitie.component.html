@@ -23,7 +23,7 @@
     </div>
     <div class="mb-5" *ngIf="edit">
         <form (ngSubmit)="updateActividad( f )" [formGroup]="forma" #f="ngForm">
-            <h3>Editar Evento</h3>
+            <h3>Editar Actividad</h3>
             <div class="form-group">
                 <label for="nombre">Nombre</label>
                 <input type="text" class="form-control" id="nombre" formControlName="nombre" aria-describedby="text" placeholder="Nombre de la actividad">
@@ -70,7 +70,7 @@
                     <p style="color: red ">*Maximo 200 caracteres.</p>
                 </div>
             </div>
-            <button type="submit" class="btn btn-primary" [disabled]="!forma.valid">Submit</button>
+            <button type="submit" class="btn btn-primary" [disabled]="!forma.valid">Guardar</button>
         </form>
 
     </div>
@@ -181,7 +181,7 @@
                             <p style="color: red ">*Maximo 30 caracteres.</p>
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-primary" [disabled]="!forma2.valid">Submit</button>
+                    <button type="submit" class="btn btn-primary" [disabled]="!forma2.valid">Guardar</button>
                 </form>
                 <!---------------------Form------------------------------------------>
             </div>
