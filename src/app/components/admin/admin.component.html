@@ -5,6 +5,12 @@
             <button type="button" class="btn btn-primary m-2" data-toggle="modal" data-target="#crearEvento">
                 Crear Evento
             </button>
+            <button type="button" class="btn btn-primary m-2" *ngIf="!mostrarC" (click)="historial()">
+                <i class="fas fa-history"></i> Historial de eventos
+            </button>
+            <button type="button" class="btn btn-primary m-2" *ngIf="mostrarC" (click)="ocultar()">
+                <i class="fas fa-history"></i> Ocultar historial
+            </button>
         </div>
     </div>
 
@@ -13,6 +19,43 @@
         <div class="alert alert-warning text-center" role="alert">
             <h2>Sin eventos registrados.</h2>
         </div>
+    </div>
+    <div class="mt-2" *ngIf="mostrarC === 'e'">
+        <div class="alert alert-warning text-center" role="alert">
+            <h2>Sin historial de eventos.</h2>
+        </div>
+    </div>
+    <div class="table-responsive" *ngIf="mostrarC && mostrarC !== 'e'">
+        <h2><i class="fas fa-history"></i> Historial de eventos</h2>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Fecha Inicio</th>
+                    <th scope="col">Fecha Fin</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Editar</th>
+                    <th scope="col">Eliminar</th>
+                </tr>
+            </thead>
+            <tbody *ngFor="let evento of eventsarray2.records let i = index;">
+                <tr>
+                    <th scope="row ">{{i+1}}</th>
+                    <td>{{ evento.nombre }}</td>
+                    <td>{{ evento.fecha_inicio | date:"dd/MMMM/yy"}}</td>
+                    <td>{{ evento.fecha_fin | date:"dd/MMMM/yy"}}</td>
+                    <ng-container *ngIf="evento.estado === 'A'; else elseTemplate">
+                        <td><span class="badge badge-success">Activo</span></td>
+                    </ng-container>
+                    <ng-template #elseTemplate>
+                        <td><span class="badge badge-danger">Inactivo</span></td>
+                    </ng-template>
+                    <td><a class="btn btn-warning" (click)="editar(evento.id_evento)"><i class="fas fa-edit"></i></a></td>
+                    <td><a class="btn btn-danger" (click)="eliminar(evento.id_evento)"><i class="fas fa-trash"></i></a></td>
+                </tr>
+            </tbody>
+        </table>
     </div>
     <div class="table-responsive" *ngIf="mostrarA">
         <h2>Eventos</h2>
@@ -108,7 +151,7 @@
                             <p style="color: red ">*Ubicación campo requerido.</p>
                         </div>
                         <div *ngIf="forma.controls['ubicacion'].errors?.maxlength && forma.controls['ubicacion'].dirty " class="form-control-feedback ">
-                            <p style="color: red ">*Maximo 30 caracteres.</p>
+                            <p style="color: red ">*Maximo 100 caracteres.</p>
                         </div>
                     </div>
                     <div class="row ">
@@ -123,9 +166,6 @@
                             </div>
                             <div *ngIf="forma.controls['costo'].errors?.pattern && forma.controls['costo'].dirty" class="form-control-feedback ">
                                 <p style="color: red ">*Solo se permiten digitos.</p>
-                            </div>
-                            <div *ngIf="forma.controls['costo'].errors?.noCeros && forma.controls['costo'].dirty" class="form-control-feedback ">
-                                <p style="color: red ">*No se puede poner 0 como valor.</p>
                             </div>
                         </div>
                         <div class="col ">
@@ -143,20 +183,32 @@
                         <label for="descripcion">Descripción</label>
                         <textarea class="form-control" id="descripcion" formControlName="descripcion" rows="2" placeholder="Descripción del evento"></textarea>
                         <div *ngIf="forma.controls['descripcion'].errors?.required && (forma.dirty && forma.touched) " class="form-control-feedback">
-                            <p style="color: red ">*Descripción campo requerido.</p>
+                            <p style="color: red">*Descripción campo requerido.</p>
                         </div>
                         <div *ngIf="forma.controls['descripcion'].errors?.maxlength && forma.controls['descripcion'].dirty " class="form-control-feedback">
-                            <p style="color: red ">*Maximo 200 caracteres.</p>
+                            <p style="color: red">*Maximo 200 caracteres.</p>
                         </div>
                     </div>
-
-                    <button type="submit" [disabled]="!forma.valid" class="btn btn-primary">Submit</button>
+                    <div class="form-group ">
+                        <label for="cupo"><i class="fas fa-users"></i> Cupo</label>
+                        <input type="text" class="form-control" formControlName="cupo" id="cupo" aria-describedby="text" placeholder="Cupo">
+                        <div *ngIf="forma.controls['cupo'].errors?.required && (forma.dirty && forma.touched) " class="form-control-feedback">
+                            <p style="color: red">*Cupo campo requerido.</p>
+                        </div>
+                        <div *ngIf="forma.controls['cupo'].errors?.maxlength && forma.controls['cupo'].dirty" class="form-control-feedback">
+                            <p style="color: red">*Maximo 4 digitos.</p>
+                        </div>
+                        <div *ngIf="forma.controls['cupo'].errors?.pattern && forma.controls['cupo'].dirty" class="form-control-feedback ">
+                            <p style="color: red ">*Solo se permiten digitos.</p>
+                        </div>
+                    </div>
+                    <button type="submit" [disabled]="!forma.valid" class="btn btn-primary">Registrar evento</button>
                 </form>
                 <!---------------------Form------------------------------------------>
 
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
             </div>
         </div>
     </div>

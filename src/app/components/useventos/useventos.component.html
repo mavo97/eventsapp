@@ -5,6 +5,12 @@
             <p class="lead">Bienvenido a tú sección de eventos.</p>
         </div>
     </div>
+    <div>
+        <button class="btn btn-success" data-toggle="modal" data-target="#contrasenaModal">
+            <i class="fas fa-key"></i> Cambiar contraseña
+        </button>
+    </div>
+    <hr>
     <div class="mt-2" *ngIf="!mostrarA">
         <div class="alert alert-warning text-center" role="alert">
             <h2>No tienes eventos registrados.</h2>
@@ -21,6 +27,7 @@
                     <th scope="col">Fecha Fin</th>
                     <th scope="col">Ubicación</th>
                     <th scope="col">Ver Actividades</th>
+                    <th scope="col">Baja</th>
                 </tr>
             </thead>
             <tbody class="thead-light">
@@ -31,6 +38,7 @@
                     <td>{{ evento.fecha_fin | date:"MMMM d, y" }}</td>
                     <td>{{ evento.ubicacion }}</td>
                     <td><a class="btn btn-info" (click)="verActividades(evento.id_evento)"><i class="far fa-eye"></i></a></td>
+                    <td><a class="btn btn-danger text-light" (click)="baja(usuario.id_usuario, evento.id_evento)"><i class="fas fa-arrow-down"></i></a></td>
                 </tr>
             </tbody>
         </table>
@@ -51,6 +59,7 @@
                     <th scope="col">Fecha Inicio</th>
                     <th scope="col">Fecha Fin</th>
                     <th scope="col">Ubicacion</th>
+                    <th scope="col">Baja</th>
                 </tr>
             </thead>
             <tbody>
@@ -62,9 +71,53 @@
                     <td>{{ usal.fecha_inicio | date:"MMMM d, y" }}</td>
                     <td>{{ usal.fecha_fin | date:"MMMM d, y" }}</td>
                     <td>{{ usal.ubicacion }}</td>
+                    <td><a class="btn btn-danger text-light" (click)="baja2(usuario.id_usuario, usal.id_sala)"><i class="fas fa-arrow-down"></i></a></td>
                 </tr>
             </tbody>
         </table>
     </div>
 
+</div>
+
+<!-- Modal cambiar contrasena-->
+
+
+<div class="modal fade" id="contrasenaModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"><i class="fas fa-key"></i> Cambiar contraseña</h5>
+                <a type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </a>
+            </div>
+            <div class="modal-body">
+                <div class="modal-body">
+                    <form [formGroup]="myGroup" (ngSubmit)="guardarContrasena(usuario.id_usuario)">
+                        <div class="form-group">
+                            <input class="form-control" type="password" formControlName="contrasena" name="contrasena" placeholder="Contraseña">
+                            <div *ngIf="myGroup.controls['contrasena'].errors?.required && myGroup.controls['contrasena'].dirty" class="form-control-feedback">
+                                <p style="color: red">*Campo requerido.</p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <input class="form-control" type="password" formControlName="contrasena2" name="contrasena2" placeholder="Repetir contraseña">
+                        </div>
+                        <div *ngIf="myGroup.controls['contrasena2'].errors?.required && myGroup.controls['contrasena2'].dirty" class="form-control-feedback">
+                            <p style="color: red">*Campo requerido.</p>
+                        </div>
+                        <div *ngIf="myGroup.controls['contrasena2'].errors?.noiguales && myGroup.controls['contrasena2'].dirty" class="form-control-feedback">
+                            <p style="color: red">*No coinciden las contraseñas.</p>
+                        </div>
+                        <button class="btn btn-primary" [disabled]="!myGroup.valid">Guardar</button>
+
+                    </form>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
 </div>

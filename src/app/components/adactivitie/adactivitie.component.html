@@ -1,29 +1,29 @@
 <div class="container main-container">
-    <div class="alert alert-success text-center" role="alert">
+    <div class="alert alert-secondary text-center" role="alert">
         <h2>Actividad: {{activity.nombre}}</h2><br>
-        <button type="button" class="btn btn-danger btn-lg btn-block" data-toggle="modal" data-target="#watchActivitie">
+        <button type="button" class="btn btn-primary btn-lg btn-block" data-toggle="modal" data-target="#watchActivitie">
             Ver actividad
         </button>
     </div>
     <div class="row mb-1">
         <div class="col text-center">
-            <button type="button" class="btn btn-info mr-3 m-2" (click)="return()">
+            <button type="button" class="btn btn-primary mr-3 m-2" (click)="return()">
                 Regresar a actividades
             </button>
-            <button type="button" *ngIf="!edit" class="btn btn-info m-2" (click)="editar()">
+            <button type="button" *ngIf="!edit" class="btn btn-primary m-2" (click)="editar()">
                 Editar Actividad
             </button>
             <button type="button" *ngIf="edit" class="btn btn-danger m-2" (click)="noeditar()">
                 Ocultar formulario de edición
             </button>
-            <button type="button" class="btn btn-info ml-3 m-2" data-toggle="modal" data-target="#crearSala">
+            <button type="button" class="btn btn-primary ml-3 m-2" data-toggle="modal" data-target="#crearSala">
                 Crear Sala
             </button>
         </div>
     </div>
     <div class="mb-5" *ngIf="edit">
         <form (ngSubmit)="updateActividad( f )" [formGroup]="forma" #f="ngForm">
-            <h3>Editar Evento</h3>
+            <h3>Editar Actividad</h3>
             <div class="form-group">
                 <label for="nombre">Nombre</label>
                 <input type="text" class="form-control" id="nombre" formControlName="nombre" aria-describedby="text" placeholder="Nombre de la actividad">
@@ -70,7 +70,7 @@
                     <p style="color: red ">*Maximo 200 caracteres.</p>
                 </div>
             </div>
-            <button type="submit" class="btn btn-primary" [disabled]="!forma.valid">Submit</button>
+            <button type="submit" class="btn btn-primary" [disabled]="!forma.valid">Guardar</button>
         </form>
 
     </div>
@@ -181,7 +181,7 @@
                             <p style="color: red ">*Maximo 30 caracteres.</p>
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-primary" [disabled]="!forma2.valid">Submit</button>
+                    <button type="submit" class="btn btn-primary" [disabled]="!forma2.valid">Guardar</button>
                 </form>
                 <!---------------------Form------------------------------------------>
             </div>

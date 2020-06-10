@@ -1,102 +1,342 @@
-<div class="wrapper">
-    <div id="formContent">
-        <!-- Tabs Titles -->
-        <h2 [routerLink]="['/registro']" routerLinkActive="active">Registrarse</h2>
-        <h2 [routerLink]="['/login']" routerLinkActive="active">Iniciar Sesión</h2>
+<!-- <h2 [routerLink]="['/registro']" routerLinkActive="active">Registrarse</h2>
+        <h2 [routerLink]="['/login']" routerLinkActive="active">Iniciar Sesión</h2>-->
+<div class="limiter">
 
-        <!-- Icon -->
-        <div class="fadeIn first">
-            <i class="fas fa-clipboard fa-2x"></i>
+    <div class="container-login100">
+        <div class="wrap-login100 p-t-20 p-b-90">
+            <span class="login100-form-title p-b-2">Registro de usuarios</span>
+            <div class="btn-group mb-4" role="group" aria-label="Basic example">
+                <button class="login100-form-btn2 mr-2" (click)="divPersonal = true;
+                divAlumno = false; divExterno = false;">Personal</button>
+                <button class="login100-form-btn2 mr-2 ml-2" (click)="divAlumno = true; 
+                divPersonal = false; divExterno = false;">Alumno</button>
+                <button class="login100-form-btn2 mr-2 ml-2" (click)="divExterno = true;
+                divAlumno = false; divPersonal = false;">Externo</button>
+            </div>
+            <!-- Formulario registrar personal -->
+            <form (ngSubmit)="guardarPersonal()" class="login100-form validate-form flex-sb flex-w" *ngIf="divPersonal" [formGroup]="formaP">
+                <span class="login100-form-title p-b-20">Personal</span>
+                <div class="row">
+                    <div class="col mr-2">
+                        <div class="wrap-input100 validate-input m-b-5" [ngClass]="{'alert-validate': formaP.controls['nombreP'].errors?.required && formaP.controls['nombreP'].dirty}" data-validate="Campo requerido">
+                            <input class="input100" type="text" name="nombreP" formControlName="nombreP" placeholder="Nombre">
+                            <span class="focus-input100"></span>
+                        </div>
+                        <div *ngIf="formaP.controls['nombreP'].errors?.maxlength && formaP.controls['nombreP'].dirty" class="form-control-feedback ">
+                            <p style="color: red ">*Maximó 30 caracteres.</p>
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <div class="wrap-input100 validate-input m-b-5" [ngClass]="{'alert-validate': formaP.controls['apellidoP'].errors?.required && formaP.controls['apellidoP'].dirty}" data-validate="Campo requerido">
+                            <input class="input100" type="text" name="apellidoP" formControlName="apellidoP" placeholder="Apellido">
+                            <span class="focus-input100"></span>
+                        </div>
+                        <div *ngIf="formaP.controls['apellidoP'].errors?.maxlength && formaP.controls['apellidoP'].dirty" class="form-control-feedback ">
+                            <p style="color: red">*Maximó 30 caracteres.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col mr-2">
+                        <div class="wrap-input100 validate-input m-b-5" [ngClass]="{'alert-validate': formaP.controls['rfc'].errors?.required && formaP.controls['rfc'].dirty}" data-validate="Campo requerido">
+                            <input class="input100" type="text" name="rfc" formControlName="rfc" placeholder="RFC">
+                            <span class="focus-input100"></span>
+                        </div>
+                        <div *ngIf="formaP.controls['rfc'].errors?.maxlength && formaP.controls['rfc'].dirty" class="form-control-feedback ">
+                            <p style="color: red">*Maximó 15 caracteres.</p>
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <div class="wrap-input100 validate-input m-b-5" [ngClass]="{'alert-validate': formaP.controls['correo'].errors?.required && formaP.controls['correo'].dirty}" data-validate="Campo requerido">
+                            <input class="input100" type="email" name="correo" formControlName="correo" placeholder="Correo">
+                            <span class="focus-input100"></span>
+                        </div>
+                        <div *ngIf="formaP.controls['correo'].errors?.maxlength && formaP.controls['correo'].dirty" class="form-control-feedback ">
+                            <p style="color: red">*Maximó 50 caracteres.</p>
+                        </div>
+                        <div *ngIf="formaP.controls['correo'].errors?.pattern && formaP.controls['correo'].dirty" class="form-control-feedback ">
+                            <p style="color: red">*Formato de correo no valido.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col mr-2">
+                        <div class="wrap-input100 validate-input m-b-5" [ngClass]="{'alert-validate': formaP.controls['ocupacion'].errors?.required && formaP.controls['ocupacion'].dirty}" data-validate="Campo requerido">
+                            <input class="input100" type="text" name="ocupacion" formControlName="ocupacion" placeholder="Ocupación ">
+                            <span class="focus-input100 "></span>
+                        </div>
+                        <div *ngIf="formaP.controls['ocupacion'].errors?.maxlength && formaP.controls['ocupacion'].dirty" class="form-control-feedback ">
+                            <p style="color: red">*Maximó 30 caracteres.</p>
+                        </div>
+                    </div>
+
+                    <div class="col ">
+                        <div class="wrap-input100 validate-input m-b-5" [ngClass]="{'alert-validate': formaP.controls['telefono'].errors?.required && formaP.controls['telefono'].dirty}" data-validate="Campo requerido">
+                            <input class="input100" type="text" name="telefono" formControlName="telefono" placeholder="Telefono ">
+                            <span class="focus-input100 "></span>
+                        </div>
+                        <div *ngIf="formaP.controls['telefono'].errors?.maxlength && formaP.controls['telefono'].dirty" class="form-control-feedback ">
+                            <p style="color: red">*Maximó 10 caracteres.</p>
+                        </div>
+                        <div *ngIf="formaP.controls['telefono'].errors?.minlength && formaP.controls['telefono'].dirty" class="form-control-feedback ">
+                            <p style="color: red">*Minimo 10 caracteres.</p>
+                        </div>
+                        <div *ngIf="formaP.controls['telefono'].errors?.pattern && formaP.controls['telefono'].dirty" class="form-control-feedback">
+                            <p style="color: red">*Solo se permiten números.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col ">
+                    <div class="wrap-input100 validate-input m-b-5" [ngClass]="{'alert-validate': formaP.controls['departamento'].errors?.required && formaP.controls['departamento'].dirty}" data-validate="Campo requerido">
+                        <input class="input100" type="text" name="departamento" formControlName="departamento" placeholder="Departamento ">
+                        <span class="focus-input100 "></span>
+                    </div>
+                    <div *ngIf="formaP.controls['departamento'].errors?.maxlength && formaP.controls['departamento'].dirty" class="form-control-feedback ">
+                        <p style="color: red">*Maximó 30 caracteres.</p>
+                    </div>
+                </div>
+
+                <div class="row ">
+                    <div class="col mr-2 ">
+                        <div class="wrap-input100 validate-input m-b-5" [ngClass]="{'alert-validate': formaP.controls['contrasena'].errors?.required && formaP.controls['contrasena'].dirty}" data-validate="Campo requerido">
+                            <input class="input100" type="password" name="contrasena" formControlName="contrasena" placeholder="Contraseña">
+                            <span class="focus-input100"></span>
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <div class="wrap-input100 validate-input m-b-5" [ngClass]="{'alert-validate': formaP.controls['contrasena2'].errors?.required && formaP.controls['contrasena2'].dirty}" data-validate="Campo requerido">
+                            <input class="input100" type="password" name="contrasena2" formControlName="contrasena2" placeholder="Repetir contraseña">
+                            <span class="focus-input100 "></span>
+                        </div>
+                        <div *ngIf="formaP.controls['contrasena2'].errors?.noiguales && formaP.controls['contrasena2'].dirty" class="form-control-feedback ">
+                            <p style="color: red">*No coinciden las contraseñas.</p>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div class="flex-sb-m w-full p-t-3 p-b-5">
+                    <div><a [routerLink]="['/login']" class="txt1">Inciar sesión</a></div>
+                </div>
+
+                <div class="container-login100-form-btn m-t-5">
+                    <button class="login100-form-btn" [disabled]="!formaP.valid">Registrarse</button>
+                </div>
+
+            </form>
+            <!-- Formulario registrar alumno -->
+            <form (ngSubmit)="guardarAlumno()" class="login100-form validate-form flex-sb flex-w" *ngIf="divAlumno" [formGroup]="formaA">
+                <span class="login100-form-title p-b-20">Alumno</span>
+
+                <div class="row ">
+                    <div class="col mr-2 ">
+                        <div class="wrap-input100 validate-input m-b-5" [ngClass]="{'alert-validate': formaA.controls['nombreA'].errors?.required && formaA.controls['nombreA'].dirty}" data-validate="Campo requerido">
+                            <input class="input100" type="text" formControlName="nombreA" name="nombreA" placeholder="Nombre">
+                            <span class="focus-input100"></span>
+                        </div>
+                        <div *ngIf="formaA.controls['nombreA'].errors?.maxlength && formaA.controls['nombreA'].dirty" class="form-control-feedback ">
+                            <p style="color: red">*Maximó 30 caracteres.</p>
+                        </div>
+                    </div>
+
+                    <div class="col ">
+                        <div class="wrap-input100 validate-input m-b-5" [ngClass]="{'alert-validate': formaA.controls['apellidoA'].errors?.required && formaA.controls['apellidoA'].dirty}" data-validate="Campo requerido">
+                            <input class="input100" type="text" formControlName="apellidoA" name="apellidoA" placeholder="Apellido ">
+                            <span class="focus-input100 "></span>
+                        </div>
+                        <div *ngIf="formaA.controls['apellidoA'].errors?.maxlength && formaA.controls['apellidoA'].dirty" class="form-control-feedback">
+                            <p style="color: red">*Maximó 30 caracteres.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row ">
+                    <div class="col mr-2 ">
+                        <div class="wrap-input100 validate-input m-b-5" [ngClass]="{'alert-validate': formaA.controls['nocontrol'].errors?.required && formaA.controls['nocontrol'].dirty}" data-validate="Campo requerido">
+                            <input class="input100" type="text" formControlName="nocontrol" name="nocontrol" placeholder="Num. control">
+                            <span class="focus-input100"></span>
+                        </div>
+                        <div *ngIf="formaA.controls['nocontrol'].errors?.maxlength && formaA.controls['nocontrol'].dirty" class="form-control-feedback">
+                            <p style="color: red">*Maximó 8 caracteres.</p>
+                        </div>
+                        <div *ngIf="formaA.controls['nocontrol'].errors?.minlength && formaA.controls['nocontrol'].dirty" class="form-control-feedback">
+                            <p style="color: red">*Minimo 8 caracteres.</p>
+                        </div>
+                    </div>
+
+                    <div class="col ">
+                        <div class="wrap-input100 validate-input m-b-5" [ngClass]="{'alert-validate': formaA.controls['carrera'].errors?.required && formaA.controls['carrera'].dirty}" data-validate="Campo requerido">
+                            <input class="input100" type="text" formControlName="carrera" name="carrera" placeholder="Carrera">
+                            <span class="focus-input100"></span>
+                        </div>
+                        <div *ngIf="formaA.controls['carrera'].errors?.maxlength && formaA.controls['carrera'].dirty" class="form-control-feedback">
+                            <p style="color: red">*Maximó 40 caracteres.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row ">
+                    <div class="col mr-2 ">
+                        <div class="wrap-input100 validate-input m-b-5" [ngClass]="{'alert-validate': formaA.controls['correo'].errors?.required && formaA.controls['correo'].dirty}" data-validate="Campo requerido">
+                            <input class="input100" type="text" formControlName="correo" name="correo" placeholder="Correo">
+                            <span class="focus-input100 "></span>
+                        </div>
+                        <div *ngIf="formaA.controls['correo'].errors?.maxlength && formaA.controls['correo'].dirty" class="form-control-feedback">
+                            <p style="color: red">*Maximó 50 caracteres.</p>
+                        </div>
+                        <div *ngIf="formaA.controls['correo'].errors?.pattern && formaA.controls['correo'].dirty" class="form-control-feedback">
+                            <p style="color: red">*Formato de correo incorrecto.</p>
+                        </div>
+                    </div>
+
+                    <div class="col ">
+                        <div class="wrap-input100 validate-input m-b-5" [ngClass]="{'alert-validate': formaA.controls['telefono'].errors?.required && formaA.controls['telefono'].dirty}" data-validate="Campo requerido">
+                            <input class="input100" type="text" formControlName="telefono" name="telefono" placeholder="Telefono">
+                            <span class="focus-input100 "></span>
+                        </div>
+                        <div *ngIf="formaA.controls['telefono'].errors?.maxlength && formaA.controls['telefono'].dirty" class="form-control-feedback">
+                            <p style="color: red">*Maximó 10 caracteres.</p>
+                        </div>
+                        <div *ngIf="formaA.controls['telefono'].errors?.minlength && formaA.controls['telefono'].dirty" class="form-control-feedback">
+                            <p style="color: red">*Minimo 10 caracteres.</p>
+                        </div>
+                        <div *ngIf="formaA.controls['telefono'].errors?.pattern && formaA.controls['telefono'].dirty" class="form-control-feedback">
+                            <p style="color: red">*Solo se permiten números.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col mr-2">
+                        <div class="wrap-input100 validate-input m-b-5" [ngClass]="{'alert-validate': formaA.controls['contrasena'].errors?.required && formaA.controls['contrasena'].dirty}" data-validate="Campo requerido">
+                            <input class="input100" type="password" formControlName="contrasena" name="contrasena" placeholder="Contraseña ">
+                            <span class="focus-input100 "></span>
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <div class="wrap-input100 validate-input m-b-5" [ngClass]="{'alert-validate': formaA.controls['contrasena2'].errors?.required && formaA.controls['contrasena2'].dirty}" data-validate="Campo requerido">
+                            <input class="input100" type="password" formControlName="contrasena2" name="contrasena2" placeholder="Repetir contraseña ">
+                            <span class="focus-input100 "></span>
+                        </div>
+                        <div *ngIf="formaA.controls['contrasena2'].errors?.noiguales && formaA.controls['contrasena2'].dirty" class="form-control-feedback">
+                            <p style="color: red">*No coinciden las contraseñas.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex-sb-m w-full p-t-3 p-b-5">
+                    <div><a [routerLink]="['/login']" class="txt1">Inciar sesión</a></div>
+                </div>
+
+                <div class="container-login100-form-btn m-t-5">
+                    <button class="login100-form-btn ">Registrarse</button>
+                </div>
+
+            </form>
+            <!-- Formulario registrar externo -->
+            <form (ngSubmit)="guardarExterno()" class="login100-form validate-form flex-sb flex-w" *ngIf="divExterno" [formGroup]="formaE">
+                <span class="login100-form-title p-b-20">Externo</span>
+
+                <div class="row">
+                    <div class="col mr-2 ">
+                        <div class="wrap-input100 validate-input m-b-5" [ngClass]="{'alert-validate': formaE.controls['nombreE'].errors?.required && formaE.controls['nombreE'].dirty}" data-validate="Campo requerido">
+                            <input class="input100" type="text" formControlName="nombreE" name="nombreE" placeholder="Nombre">
+                            <span class="focus-input100"></span>
+                        </div>
+                        <div *ngIf="formaE.controls['nombreE'].errors?.maxlength && formaE.controls['nombreE'].dirty" class="form-control-feedback ">
+                            <p style="color: red">*Maximó 30 caracteres.</p>
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <div class="wrap-input100 validate-input m-b-5" [ngClass]="{'alert-validate': formaE.controls['apellidoE'].errors?.required && formaE.controls['apellidoE'].dirty}" data-validate="Campo requerido">
+                            <input class="input100" type="text" formControlName="apellidoE" name="apellidoE" placeholder="Apellido">
+                            <span class="focus-input100"></span>
+                        </div>
+                        <div *ngIf="formaE.controls['apellidoE'].errors?.maxlength && formaE.controls['apellidoE'].dirty" class="form-control-feedback ">
+                            <p style="color: red">*Maximó 30 caracteres.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col mr-2 ">
+                        <div class="wrap-input100 validate-input m-b-5" [ngClass]="{'alert-validate': formaE.controls['correo'].errors?.required && formaE.controls['correo'].dirty}" data-validate="Campo requerido">
+                            <input class="input100" type="email" formControlName="correo" name="correo" placeholder="Correo">
+                            <span class="focus-input100 "></span>
+                        </div>
+                        <div *ngIf="formaE.controls['correo'].errors?.maxlength && formaE.controls['correo'].dirty" class="form-control-feedback ">
+                            <p style="color: red">*Maximó 50 caracteres.</p>
+                        </div>
+                        <div *ngIf="formaE.controls['correo'].errors?.pattern && formaE.controls['correo'].dirty" class="form-control-feedback ">
+                            <p style="color: red">*Formato de correo no valido.</p>
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <div class="wrap-input100 validate-input m-b-5" [ngClass]="{'alert-validate': formaE.controls['direccion'].errors?.required && formaE.controls['direccion'].dirty}" data-validate="Campo requerido">
+                            <input class="input100" type="text" formControlName="direccion" name="direccion" placeholder="Dirección">
+                            <span class="focus-input100 "></span>
+                        </div>
+                        <div *ngIf="formaE.controls['direccion'].errors?.maxlength && formaE.controls['direccion'].dirty" class="form-control-feedback">
+                            <p style="color: red">*Maximó 30 caracteres.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="wrap-input100 validate-input m-b-5" [ngClass]="{'alert-validate': formaE.controls['telefono'].errors?.required && formaE.controls['telefono'].dirty}" data-validate="Campo requerido">
+                    <input class="input100" type="text" formControlName="telefono" name="telefono" placeholder="Telefono">
+                    <span class="focus-input100"></span>
+                </div>
+                <div *ngIf="formaE.controls['telefono'].errors?.maxlength && formaE.controls['telefono'].dirty" class="form-control-feedback">
+                    <p style="color: red">*Maximó 10 caracteres.</p>
+                </div>
+                <div *ngIf="formaE.controls['telefono'].errors?.minlength && formaE.controls['telefono'].dirty" class="form-control-feedback">
+                    <p style="color: red">*Minimo 10 caracteres.</p>
+                </div>
+                <div *ngIf="formaE.controls['telefono'].errors?.pattern && formaE.controls['telefono'].dirty" class="form-control-feedback">
+                    <p style="color: red">*Solo se permiten números.</p>
+                </div>
+
+                <div class="row">
+                    <div class="col mr-2">
+                        <div class="wrap-input100 validate-input m-b-5" [ngClass]="{'alert-validate': formaE.controls['contrasena'].errors?.required && formaE.controls['contrasena'].dirty}" data-validate="Campo requerido">
+                            <input class="input100" type="password" formControlName="contrasena" name="contrasena" placeholder="Contraseña">
+                            <span class="focus-input100 "></span>
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <div class="wrap-input100 validate-input m-b-5" [ngClass]="{'alert-validate': formaE.controls['contrasena2'].errors?.required && formaE.controls['contrasena2'].dirty}" data-validate="Campo requerido">
+                            <input class="input100" type="password" formControlName="contrasena2" name="contrasena2" placeholder="Repetir contraseña">
+                            <span class="focus-input100"></span>
+                        </div>
+                        <div *ngIf="formaE.controls['contrasena2'].errors?.noiguales && formaE.controls['contrasena2'].dirty" class="form-control-feedback">
+                            <p style="color: red">*No coinciden las contraseñas.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex-sb-m w-full p-t-3 p-b-5">
+                    <div>
+                        <a [routerLink]="['/login']" class="txt1">Inciar sesión</a>
+                    </div>
+                </div>
+
+                <div class="container-login100-form-btn m-t-5">
+                    <button class="login100-form-btn" [disabled]="!formaE.valid">Registrarse</button>
+                </div>
+
+            </form>
+
         </div>
-
-        <!-- Login Form -->
-        <form (ngSubmit)="guardarUsuario()" [formGroup]="forma">
-            <div class="row">
-                <div class="col">
-                    <div class="form-group fadeIn second">
-                        <input type="text" [ngClass]="{'danger': !forma.controls['nombre'].valid}" formControlName="nombre" id="nombre" name="nombre" placeholder="Nombre">
-                        <div *ngIf="forma.controls['nombre'].errors?.required && (forma.dirty && forma.touched) " class="form-control-feedback">
-                            <p style="color: red ">*Nombre campo requerido.</p>
-                        </div>
-                        <div *ngIf="forma.controls['nombre'].errors?.maxlength && forma.controls['nombre'].dirty " class="form-control-feedback ">
-                            <p style="color: red ">*Maximo 30 caracteres.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="form-group fadeIn second">
-                        <input type="text" [ngClass]="{'danger': !forma.controls['apellidos'].valid}" formControlName="apellidos" id="apellidos" name="apellidos" placeholder="Apellidos">
-                        <div *ngIf="forma.controls['apellidos'].errors?.required && (forma.dirty && forma.touched) " class="form-control-feedback">
-                            <p style="color: red ">*Apellidos campo requerido.</p>
-                        </div>
-                        <div *ngIf="forma.controls['apellidos'].errors?.maxlength && forma.controls['apellidos'].dirty " class="form-control-feedback ">
-                            <p style="color: red ">*Maximo 30 caracteres.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="form-group fadeIn third">
-                <input type="text" [ngClass]="{'danger': !forma.controls['telefono'].valid}" formControlName="telefono" id="telefono" name="telefono" placeholder="Telefono">
-                <div *ngIf="forma.controls['telefono'].errors?.required && (forma.dirty && forma.touched) " class="form-control-feedback">
-                    <p style="color: red ">*Telefono campo requerido.</p>
-                </div>
-                <div *ngIf="forma.controls['telefono'].errors?.maxlength && forma.controls['telefono'].dirty " class="form-control-feedback ">
-                    <p style="color: red ">*Maximo 10 caracteres.</p>
-                </div>
-                <div *ngIf="forma.controls['telefono'].errors?.minlength && forma.controls['telefono'].dirty " class="form-control-feedback ">
-                    <p style="color: red ">*Minimo 10 caracteres.</p>
-                </div>
-            </div>
-            <div class="form-group fadeIn fourth">
-                <input type="text" [ngClass]="{'danger': !forma.controls['correo'].valid}" formControlName="correo" id="correo" name="correo" placeholder="Email">
-                <div *ngIf="forma.controls['correo'].errors?.required && (forma.dirty && forma.touched) " class="form-control-feedback">
-                    <p style="color: red ">*Correo campo requerido.</p>
-                </div>
-                <div *ngIf="forma.controls['correo'].errors?.maxlength && forma.controls['correo'].dirty " class="form-control-feedback ">
-                    <p style="color: red ">*Maximo 30 caracteres.</p>
-                </div>
-                <div *ngIf="forma.controls['correo'].errors?.pattern && forma.controls['correo'].dirty " class="form-control-feedback ">
-                    <p style="color: red ">*Correo no valido.</p>
-                </div>
-            </div>
-            <div class="form-group fadeIn fourth">
-                <input type="hidden" formControlName="rol_usuario" id="rol_usuario" name="rol_usuario" placeholder="Rol Usuario">
-            </div>
-            <div class="form-group fadeIn fifth">
-                <input type="password" [ngClass]="{'danger': !forma.controls['contrasena'].valid}" formControlName="contrasena" id="contrasena" name="contrasena" placeholder="Contraseña">
-                <div *ngIf="forma.controls['contrasena'].errors?.required && (forma.dirty && forma.touched) " class="form-control-feedback">
-                    <p style="color: red ">*Contraseña campo requerido.</p>
-                </div>
-                <div *ngIf="forma.controls['contrasena'].errors?.maxlength && forma.controls['contrasena'].dirty " class="form-control-feedback ">
-                    <p style="color: red ">*Maximo 20 caracteres.</p>
-                </div>
-                <div *ngIf="forma.controls['contrasena'].errors?.minlength && forma.controls['contrasena'].dirty " class="form-control-feedback ">
-                    <p style="color: red ">*Minimo 6 caracteres.</p>
-                </div>
-            </div>
-            <div class="form-group fadeIn sixth">
-                <input type="password" [ngClass]="{'danger': !forma.controls['contrasena2'].valid}" formControlName="contrasena2" id="contrasena2" name="contrasena2" placeholder="Repetir Contraseña">
-                <div *ngIf="forma.controls['contrasena2'].errors?.required && (forma.dirty && forma.touched)" class="form-control-feedback">
-                    <p style="color: red ">*Repetir Contraseña campo requerido.</p>
-                </div>
-                <div *ngIf="forma.controls['contrasena2'].errors?.maxlength && forma.controls['contrasena2'].dirty" class="form-control-feedback ">
-                    <p style="color: red ">*Maximo 20 caracteres.</p>
-                </div>
-                <div *ngIf="forma.controls['contrasena2'].errors?.noiguales && forma.controls['contrasena2'].dirty" class="form-control-feedback ">
-                    <p style="color: red ">*La contraseña debe ser igual a la anterior.</p>
-                </div>
-                <div *ngIf="forma.controls['contrasena2'].errors?.minlength && forma.controls['contrasena2'].dirty" class="form-control-feedback ">
-                    <p style="color: red ">*Minimo 6 caracteres.</p>
-                </div>
-            </div>
-            <button type="submit" [disabled]="!forma.valid" class="fadeIn seventh">Registrar</button>
-
-        </form>
-
-        <!-- Remind Passowrd -->
-        <!--<div id="formFooter">
-            <a class="underlineHover" href="#">Forgot Password?</a>
-        </div>-->
-
     </div>
 </div>

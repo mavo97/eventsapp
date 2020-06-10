@@ -1,22 +1,22 @@
 <div class="container main-container">
-    <div class="alert alert-success text-center" role="alert">
+    <div class="alert alert-secondary text-center" role="alert">
         <b><h2>Evento: {{event.nombre}}</h2></b> <br>
-        <button type="button" class="btn btn-danger btn-lg btn-block" data-toggle="modal" data-target="#watchEvent">
+        <button type="button" class="btn btn-primary btn-lg btn-block" data-toggle="modal" data-target="#watchEvent">
             Ver evento
         </button>
     </div>
     <div class="row mb-1">
         <div class="col text-center">
-            <button type="button" class="btn btn-info mr-3 m-2" (click)="return()">
+            <button type="button" class="btn btn-primary mr-3 m-2" (click)="return()">
                 Regresar a evento
             </button>
-            <button type="button" class="btn btn-info m-2" *ngIf="!edit" (click)="editar()">
+            <button type="button" class="btn btn-primary m-2" *ngIf="!edit" (click)="editar()">
                 Editar Evento
             </button>
             <button type="button" class="btn btn-danger m-2" *ngIf="edit" (click)="noeditar()">
                 Ocultar formulario de edición
             </button>
-            <button type="button" class="btn btn-info ml-3 m-2" data-toggle="modal" data-target="#crearActividad">
+            <button type="button" class="btn btn-primary ml-3 m-2" data-toggle="modal" data-target="#crearActividad">
                 Crear Actividad
             </button>
         </div>
@@ -71,9 +71,6 @@
                     <div *ngIf="forma.controls['costo'].errors?.pattern && forma.controls['costo'].dirty" class="form-control-feedback ">
                         <p style="color: red ">*Solo se permiten digitos.</p>
                     </div>
-                    <div *ngIf="forma.controls['costo'].errors?.noCeros && forma.controls['costo'].dirty" class="form-control-feedback ">
-                        <p style="color: red ">*No se puede poner 0 como valor.</p>
-                    </div>
                 </div>
                 <div class="col">
                     <p class="mb-0">Status</p>
@@ -93,7 +90,7 @@
                     <p style="color: red ">*Ubicación campo requerido.</p>
                 </div>
                 <div *ngIf="forma.controls['ubicacion'].errors?.maxlength && forma.controls['ubicacion'].dirty" class="form-control-feedback ">
-                    <p style="color: red ">*Maximo 30 caracteres.</p>
+                    <p style="color: red ">*Maximo 100 caracteres.</p>
                 </div>
             </div>
             <div class="form-group">
@@ -106,7 +103,20 @@
                     <p style="color: red ">*Maximo 200 caracteres.</p>
                 </div>
             </div>
-            <button type="submit" class="btn btn-primary" [disabled]="!forma.valid">Submit</button>
+            <div class="form-group ">
+                <label for="cupo"><i class="fas fa-users"></i> Cupo</label>
+                <input type="text" class="form-control" formControlName="cupo" id="cupo" aria-describedby="text" placeholder="Cupo">
+                <div *ngIf="forma.controls['cupo'].errors?.required && (forma.dirty && forma.touched) " class="form-control-feedback">
+                    <p style="color: red">*Cupo campo requerido.</p>
+                </div>
+                <div *ngIf="forma.controls['cupo'].errors?.maxlength && forma.controls['cupo'].dirty" class="form-control-feedback">
+                    <p style="color: red">*Maximo 4 digitos.</p>
+                </div>
+                <div *ngIf="forma.controls['cupo'].errors?.pattern && forma.controls['cupo'].dirty" class="form-control-feedback ">
+                    <p style="color: red ">*Solo se permiten digitos.</p>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary" [disabled]="!forma.valid">Guardar</button>
         </form>
 
     </div>
@@ -144,15 +154,25 @@
     <div class="alert alert-warning" *ngIf="!mostrarB" role="alert">
         Evento sin usuarios registrados.
     </div>
+    <div class="row" *ngIf="mostrarB">
+        <div class="col-6">
+            <h2>Usuarios registrados al evento.</h2>
+        </div>
+        <div class="col-6">
+            <a style="cursor: pointer;" class="text-success" (click)="exportexcel()">
+                <i class="fas fa-file-download fa-2x"></i> Descargar Lista
+            </a>
+        </div>
+    </div>
     <div class="table-responsive mt-2" *ngIf="mostrarB">
-        <h2>Usuarios registrados al evento.</h2>
-        <table class="table">
+        <table class="table" id="excel-table">
             <thead class="thead-dark">
                 <tr>
                     <th scope="col">#</th>
                     <th scope="col">Nombre</th>
                     <th scope="col">Apellidos</th>
                     <th scope="col">Email</th>
+                    <th scope="col">Tipo</th>
                     <th scope="col">Dar de baja</th>
                 </tr>
             </thead>
@@ -162,6 +182,17 @@
                     <td>{{ usev.nombreUsuario }}</td>
                     <td>{{ usev.apellidos }}</td>
                     <td>{{ usev.correo }}</td>
+                    <span [ngSwitch]="usev.rol_usuario">
+                        <p *ngSwitchCase="'U'">
+                            <td>Alumno</td>
+                        </p>
+                        <p *ngSwitchCase="'P'">
+                            <td>Personal</td>
+                        </p>
+                        <p *ngSwitchDefault>
+                            <td>Externo</td>
+                        </p>
+                    </span>
                     <td><a class="btn btn-danger text-light" (click)="baja(usev.id_usuario, usev.id_evento)"><i class="fas fa-arrow-down"></i></a></td>
                     <td></td>
                 </tr>
@@ -261,6 +292,7 @@
                 <p><b>Costo:</b> ${{ event.costo }}</p>
                 <p><b>Status:</b> {{ event.estado }}</p>
                 <p><b>Descripción:</b> {{ event.descripcion }}</p>
+                <p><b><i class="fas fa-users"></i> Cupo:</b> {{ event.cupo }}</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

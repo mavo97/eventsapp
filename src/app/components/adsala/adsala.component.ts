@@ -9,6 +9,7 @@ import { salaModel, verSalaModel2 } from '../../models/sala.model';
 import { userSala } from '../../models/usuario.model';
 // Alertas
 import Swal from 'sweetalert2';
+import * as XLSX from 'xlsx';
 
 @Component({
   selector: 'app-adsala',
@@ -35,7 +36,7 @@ export class AdsalaComponent implements OnInit {
   edit = false; // Variable para ocultar o mostrar formulario editar
   forma: FormGroup; // Formulario editar sala
   usuarios: verSalaModel2;
-  mostrarU;
+  mostrarU; fileName = 'SalaExcel.xlsx';
 
   ngOnInit() {
     this.route.params.subscribe(params => {
@@ -128,6 +129,21 @@ export class AdsalaComponent implements OnInit {
   return() {
     window.history.back();
   }
+
+   // Exportar archivo excel
+   exportexcel(): void {
+
+    /* table id is passed over here */
+    const element = document.getElementById('excel-table');
+    const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(element);
+
+    /* generate workbook and add the worksheet */
+    const wb: XLSX.WorkBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+
+    /* save to file */
+    XLSX.writeFile(wb, this.fileName);
+ }
 
   // Actualizar sala
   updateSala( form: NgForm ) {

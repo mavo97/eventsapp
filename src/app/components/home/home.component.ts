@@ -37,6 +37,7 @@ export class HomeComponent implements OnInit, DoCheck{
     this.authServices.messageCurrent.subscribe(message => this.ver = message);
   }
 
+
   // Funcion para llamar a los eventos
   llamarEventos() {
     this._eventoService.eventosDisponibles()
@@ -48,6 +49,9 @@ export class HomeComponent implements OnInit, DoCheck{
       this.mostrarA = false;
       // console.log(error);
     });
+  }
+  hola() {
+    console.log('ss');
   }
   buscarUsuario() {
     if ( this.token ) {
@@ -89,6 +93,7 @@ export class HomeComponent implements OnInit, DoCheck{
             text: 'Haz sido registrado al evento.',
             icon: 'success',
           });
+          this.llamarEventos();
         }
       }, (err) => {
         Swal.fire({

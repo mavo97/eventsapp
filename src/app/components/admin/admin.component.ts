@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 // Models
 import { verEventosModel } from '../../models/evento.model';
+import { EventoModel } from '../../models/evento2.model';
 // Services
 import { EventoService } from '../../services/evento.service';
 // Alertas
@@ -21,7 +22,8 @@ export class AdminComponent implements OnInit {
 
   forma: FormGroup; // Formulario para validar
   eventsarray: verEventosModel = new verEventosModel(); // Array de eventos
-  mostrarA;
+  eventsarray2: verEventosModel = new verEventosModel(); // Array de eventos
+  mostrarA; eventoR: EventoModel = new EventoModel(); mostrarC;
 
   // tslint:disable-next-line: variable-name
   constructor( private _eventoService: EventoService,
@@ -34,15 +36,15 @@ export class AdminComponent implements OnInit {
       ]),
       fecha_inicio: new FormControl('', [Validators.required, this.dateVaidator ]),
       fecha_fin: new FormControl('', [Validators.required, this.dateVaidator ]),
-      ubicacion: new FormControl('', [Validators.required, Validators.maxLength(30)]),
+      ubicacion: new FormControl('', [Validators.required, Validators.maxLength(100)]),
       costo: new FormControl(''),
       status: new FormControl('', [Validators.required, Validators.maxLength(5)]),
-      descripcion: new FormControl('', [Validators.required, Validators.maxLength(200)])
+      descripcion: new FormControl('', [Validators.required, Validators.maxLength(200)]),
+      cupo: new FormControl('', ([ Validators.required, Validators.maxLength(4), Validators.pattern('^[0-9]+')]))
     });
 
     this.forma.controls.costo.setValidators([
-      Validators.required, Validators.maxLength(5), Validators.pattern('^[0-9]+'),
-      this.noCero.bind(this.forma)
+      Validators.required, Validators.maxLength(5), Validators.pattern('^[0-9]+')
     ]);
   }
 
@@ -70,6 +72,21 @@ export class AdminComponent implements OnInit {
       // console.log(error);
     });
   }
+
+  // Funcion para llamar historial de eventos
+  historial() {
+    this._eventoService.verHistorial()
+    .subscribe((resp: verEventosModel) => {
+      this.eventsarray2.records = resp.records;
+      this.mostrarC = true;
+    }, (error) => {
+      this.mostrarC = 'e';
+      // console.log(error);
+    });
+  }
+
+  // Ocultar historial
+  ocultar() { this.mostrarC = false; this.mostrarC = ''; }
   // Editar evento
   editar(id: number) {
     // console.log(`id: ${id} del evento a editar`);
@@ -141,18 +158,19 @@ export class AdminComponent implements OnInit {
     // console.log(this.forma);
     // console.log(this.forma.value);
     // Objecto evento
-    const evento: object = {
-      nombre: this.forma.value.nombre,
-      fecha_inicio: this.forma.value.fecha_inicio,
-      fecha_fin: this.forma.value.fecha_fin,
-      ubicacion: this.forma.value.ubicacion,
-      costo: this.forma.value.costo,
-      estado: this.forma.value.status,
-      descripcion: this.forma.value.descripcion
-    };
+
+    this.eventoR.nombre = this.forma.value.nombre;
+    this.eventoR.fecha_inicio = this.forma.value.fecha_inicio;
+    this.eventoR.fecha_fin = this.forma.value.fecha_fin;
+    this.eventoR.ubicacion = this.forma.value.ubicacion;
+    this.eventoR.costo = this.forma.value.costo;
+    this.eventoR.estado = this.forma.value.status;
+    this.eventoR.descripcion = this.forma.value.descripcion;
+    this.eventoR.cupo = this.forma.value.cupo;
+
     // Convertir objeto evento a JSON
-    const evento2 = JSON.stringify(evento);
-    // console.log(evento2);
+    const evento2 = JSON.stringify(this.eventoR);
+    console.log(evento2);
 
     let peticion: Observable<any>;
     peticion = this._eventoService.crearEvento(evento2);

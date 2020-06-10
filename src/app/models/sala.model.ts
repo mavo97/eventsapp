@@ -25,6 +25,7 @@ export class salaModel2 {
     nombreActividad: string;
     fecha_inicio: string;
     fecha_fin: string;
+    rol_usuario: string;
 }
 
 export class verSalaModel2 {
