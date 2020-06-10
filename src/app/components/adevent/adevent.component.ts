@@ -12,6 +12,7 @@ import { ActividadModel, verActividadesModel } from '../../models/actividad.mode
 import Swal from 'sweetalert2';
 
 import * as moment from 'moment';
+import * as XLSX from 'xlsx'; 
 
 @Component({
   selector: 'app-adevent',
@@ -20,13 +21,13 @@ import * as moment from 'moment';
 })
 export class AdeventComponent implements OnInit {
 
-  id: number; // Id evento
+  id: number; // Id evento 
   event: EventModel = new EventModel(); // Evento que se esta editando
   forma: FormGroup; // Formulario editar evento
   edit = false; // Variable para ocultar o mostrar formulario editar
   forma2: FormGroup; // Formulario crear actividad
   actividades: verActividadesModel = new verActividadesModel();
-  mostrarA: boolean;
+  mostrarA: boolean; fileName = 'EventoExcel.xlsx';
   mostrarB: boolean;
   userEventos;
 
@@ -78,6 +79,21 @@ export class AdeventComponent implements OnInit {
     this.usuarioEventos();
 
   }
+
+  // Exportar archivo excel
+  exportexcel(): void {
+
+       /* table id is passed over here */
+       const element = document.getElementById('excel-table');
+       const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(element);
+
+       /* generate workbook and add the worksheet */
+       const wb: XLSX.WorkBook = XLSX.utils.book_new();
+       XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+
+       /* save to file */
+       XLSX.writeFile(wb, this.fileName);
+    }
 
   // Funcion para leer el evento actual
   readEvent() {

@@ -1,16 +1,16 @@
 <div class="container main-container">
-    <div class="alert alert-success text-center" role="alert">
+    <div class="alert alert-secondary text-center" role="alert">
         <h2>Sala: {{sala.nombre}}</h2><br>
-        <button type="button" class="btn btn-danger btn-lg btn-block" data-toggle="modal" data-target="#watchSala">
+        <button type="button" class="btn btn-primary btn-lg btn-block" data-toggle="modal" data-target="#watchSala">
             Ver sala
         </button>
     </div>
     <div class="row mb-1">
         <div class="col text-center">
-            <button type="button" class="btn btn-info mr-3 m-2" (click)="return()">
+            <button type="button" class="btn btn-primary mr-3 m-2" (click)="return()">
                 Regresar
             </button>
-            <button type="button" *ngIf="!edit" class="btn btn-info m-2" (click)="editar()">
+            <button type="button" *ngIf="!edit" class="btn btn-primary m-2" (click)="editar()">
                 Editar Sala
             </button>
             <button type="button" *ngIf="edit" class="btn btn-danger m-2" (click)="noeditar()">
@@ -62,8 +62,17 @@
     <div class="alert alert-warning" *ngIf="!mostrarU" role="alert">
         Esta sala no tiene usuarios registrados.
     </div>
-    <div class="table-responsive mt-2" *ngIf="mostrarU">
-        <h2>Usuarios registrados</h2>
+    <div class="row" *ngIf="mostrarU">
+        <div class="col-6">
+            <h2>Usuarios registrados.</h2>
+        </div>
+        <div class="col-6">
+            <a style="cursor: pointer;" class="text-success" (click)="exportexcel()">
+                <i class="fas fa-file-download fa-2x"></i> Descargar Lista
+            </a>
+        </div>
+    </div>
+    <div class="table-responsive mt-2" *ngIf="mostrarU" id="excel-table">
         <table class="table">
             <thead class="thead-dark">
                 <tr>

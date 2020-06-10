@@ -21,6 +21,7 @@
                     <th scope="col">Fecha Fin</th>
                     <th scope="col">Ubicación</th>
                     <th scope="col">Ver Actividades</th>
+                    <th scope="col">Baja</th>
                 </tr>
             </thead>
             <tbody class="thead-light">
@@ -31,6 +32,7 @@
                     <td>{{ evento.fecha_fin | date:"MMMM d, y" }}</td>
                     <td>{{ evento.ubicacion }}</td>
                     <td><a class="btn btn-info" (click)="verActividades(evento.id_evento)"><i class="far fa-eye"></i></a></td>
+                    <td><a class="btn btn-danger text-light" (click)="baja(usuario.id_usuario, evento.id_evento)"><i class="fas fa-arrow-down"></i></a></td>
                 </tr>
             </tbody>
         </table>
@@ -51,6 +53,7 @@
                     <th scope="col">Fecha Inicio</th>
                     <th scope="col">Fecha Fin</th>
                     <th scope="col">Ubicacion</th>
+                    <th scope="col">Baja</th>
                 </tr>
             </thead>
             <tbody>
@@ -62,6 +65,7 @@
                     <td>{{ usal.fecha_inicio | date:"MMMM d, y" }}</td>
                     <td>{{ usal.fecha_fin | date:"MMMM d, y" }}</td>
                     <td>{{ usal.ubicacion }}</td>
+                    <td><a class="btn btn-danger text-light" (click)="baja2(usuario.id_usuario, usal.id_sala)"><i class="fas fa-arrow-down"></i></a></td>
                 </tr>
             </tbody>
         </table>

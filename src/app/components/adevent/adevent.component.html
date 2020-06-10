@@ -1,22 +1,22 @@
 <div class="container main-container">
-    <div class="alert alert-success text-center" role="alert">
+    <div class="alert alert-secondary text-center" role="alert">
         <b><h2>Evento: {{event.nombre}}</h2></b> <br>
-        <button type="button" class="btn btn-danger btn-lg btn-block" data-toggle="modal" data-target="#watchEvent">
+        <button type="button" class="btn btn-primary btn-lg btn-block" data-toggle="modal" data-target="#watchEvent">
             Ver evento
         </button>
     </div>
     <div class="row mb-1">
         <div class="col text-center">
-            <button type="button" class="btn btn-info mr-3 m-2" (click)="return()">
+            <button type="button" class="btn btn-primary mr-3 m-2" (click)="return()">
                 Regresar a evento
             </button>
-            <button type="button" class="btn btn-info m-2" *ngIf="!edit" (click)="editar()">
+            <button type="button" class="btn btn-primary m-2" *ngIf="!edit" (click)="editar()">
                 Editar Evento
             </button>
             <button type="button" class="btn btn-danger m-2" *ngIf="edit" (click)="noeditar()">
                 Ocultar formulario de edición
             </button>
-            <button type="button" class="btn btn-info ml-3 m-2" data-toggle="modal" data-target="#crearActividad">
+            <button type="button" class="btn btn-primary ml-3 m-2" data-toggle="modal" data-target="#crearActividad">
                 Crear Actividad
             </button>
         </div>
@@ -154,9 +154,18 @@
     <div class="alert alert-warning" *ngIf="!mostrarB" role="alert">
         Evento sin usuarios registrados.
     </div>
+    <div class="row" *ngIf="mostrarB">
+        <div class="col-6">
+            <h2>Usuarios registrados al evento.</h2>
+        </div>
+        <div class="col-6">
+            <a style="cursor: pointer;" class="text-success" (click)="exportexcel()">
+                <i class="fas fa-file-download fa-2x"></i> Descargar Lista
+            </a>
+        </div>
+    </div>
     <div class="table-responsive mt-2" *ngIf="mostrarB">
-        <h2>Usuarios registrados al evento.</h2>
-        <table class="table">
+        <table class="table" id="excel-table">
             <thead class="thead-dark">
                 <tr>
                     <th scope="col">#</th>
@@ -283,6 +292,7 @@
                 <p><b>Costo:</b> ${{ event.costo }}</p>
                 <p><b>Status:</b> {{ event.estado }}</p>
                 <p><b>Descripción:</b> {{ event.descripcion }}</p>
+                <p><b><i class="fas fa-users"></i> Cupo:</b> {{ event.cupo }}</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
