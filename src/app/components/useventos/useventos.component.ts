@@ -2,14 +2,17 @@ import { Component, OnInit } from '@angular/core';
 // Services
 import { EventoService } from '../../services/evento.service';
 import { AuthService } from '../../services/auth/auth.service';
+import { UsuarioService } from '../../services/usuario.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SalaService } from '../../services/sala.service';
+import { FormGroup, FormControl, Validators, NgForm } from '@angular/forms';
 import { Observable } from 'rxjs';
 
 // Models
 import { verEventosModel, EventModel } from '../../models/evento.model';
 import { UsuarioModel, tokenModel, dataUserModel } from '../../models/usuario.model';
 import { verSalaModel, verSalaModel2 } from '../../models/sala.model';
+import { Alert } from '../../models/alerta.model';
 
 // Alertas
 import Swal from 'sweetalert2';
@@ -24,23 +27,42 @@ export class UseventosComponent implements OnInit {
   eventos: verEventosModel = new verEventosModel(); // Array de eventos
   usuario: UsuarioModel = new UsuarioModel();
   mostrarA: boolean;
-  ver: string;
+  ver: string; myGroup: FormGroup;
   token = localStorage.getItem('jwt');
   mostrarB: boolean;
   userSalas: verSalaModel2 = new verSalaModel2();
-
-
+  alerta: Alert = new Alert();
 
   constructor( private eventoService: EventoService,
                private authServices: AuthService,
                private router: Router,
                private salaService: SalaService,
                // tslint:disable-next-line: variable-name
-               private _eventoService: EventoService, ) { }
+               private _eventoService: EventoService,
+               private usuarioService: UsuarioService ) {
+
+                this.myGroup = new FormGroup({
+                  contrasena: new FormControl('', [ Validators.required ]),
+                  contrasena2: new FormControl()
+                });
+                this.myGroup.controls.contrasena2.setValidators(
+                  [ this.noIgual.bind(this.myGroup), Validators.required ]);
+               }
 
   ngOnInit() {
     this.buscarUsuario();
   }
+
+  noIgual(control: FormControl ): { [s: string]: boolean} {
+    const myGroup: any = this;
+    if (myGroup.controls.contrasena2.value !== myGroup.controls['contrasena'].value) {
+      return {
+        noiguales: true
+      };
+    }
+    return null;
+  }
+
   buscarUsuario() {
     if ( this.token ) {
       const token2: object = {
@@ -182,5 +204,28 @@ export class UseventosComponent implements OnInit {
         );
       }
     });
+  }
+
+  guardarContrasena( idUsuario ) {
+    let peticion: Observable<any>;
+    // tslint:disable-next-line: variable-name
+    const usuario_contrasena: Object  = {
+      id_usuario : idUsuario,
+      contrasena : this.myGroup.value.contrasena2
+    };
+    const idjson = JSON.stringify(usuario_contrasena);
+    peticion = this.usuarioService.cambiarContrasena(idjson);
+    peticion.subscribe( resp => {
+      if ( resp.message === 'Contrasena actualizada correctamente.' ) {
+
+        this.alerta.exito('Éxito', 'Contrasena actualizada correctamente.' );
+        this.myGroup.reset({ contrasena: '', contrasena2: '' });
+
+      } },
+      (err) => {
+
+        this.alerta.error('Intente más tarde.', 'Hubo un error al intentar actualizar su contraseña.');
+
+      } );
   }
 }

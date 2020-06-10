@@ -21,6 +21,14 @@ export class UsuarioService {
       }),
     );
   }
+  cambiarContrasena( contrasena ) {
+    return this.http.post(`${ this.url }/cambiarContrasena.php`, contrasena)
+    .pipe(
+      map( ( resp: any ) => {
+        return resp;
+      }),
+    );
+  }
   readUsers() {
     return this.http.get(`${ this.url }/readUsers.php`);
   }
