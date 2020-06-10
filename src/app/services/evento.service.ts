@@ -33,6 +33,9 @@ export class EventoService {
   verEventos() {
     return this.http.get(`${ this.url }/read.php`);
   }
+  verHistorial() {
+    return this.http.get(`${ this.url }/read2.php`);
+  }
   eventosDisponibles() {
     return this.http.get(`${ this.url }/availables.php`);
   }

@@ -22,7 +22,8 @@ export class AdminComponent implements OnInit {
 
   forma: FormGroup; // Formulario para validar
   eventsarray: verEventosModel = new verEventosModel(); // Array de eventos
-  mostrarA; eventoR: EventoModel = new EventoModel();
+  eventsarray2: verEventosModel = new verEventosModel(); // Array de eventos
+  mostrarA; eventoR: EventoModel = new EventoModel(); mostrarC;
 
   // tslint:disable-next-line: variable-name
   constructor( private _eventoService: EventoService,
@@ -71,6 +72,21 @@ export class AdminComponent implements OnInit {
       // console.log(error);
     });
   }
+
+  // Funcion para llamar historial de eventos
+  historial() {
+    this._eventoService.verHistorial()
+    .subscribe((resp: verEventosModel) => {
+      this.eventsarray2.records = resp.records;
+      this.mostrarC = true;
+    }, (error) => {
+      this.mostrarC = 'e';
+      // console.log(error);
+    });
+  }
+
+  // Ocultar historial
+  ocultar() { this.mostrarC = false; this.mostrarC = ''; }
   // Editar evento
   editar(id: number) {
     // console.log(`id: ${id} del evento a editar`);

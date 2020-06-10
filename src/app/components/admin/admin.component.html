@@ -5,6 +5,12 @@
             <button type="button" class="btn btn-primary m-2" data-toggle="modal" data-target="#crearEvento">
                 Crear Evento
             </button>
+            <button type="button" class="btn btn-primary m-2" *ngIf="!mostrarC" (click)="historial()">
+                <i class="fas fa-history"></i> Historial de eventos
+            </button>
+            <button type="button" class="btn btn-primary m-2" *ngIf="mostrarC" (click)="ocultar()">
+                <i class="fas fa-history"></i> Ocultar historial
+            </button>
         </div>
     </div>
 
@@ -13,6 +19,43 @@
         <div class="alert alert-warning text-center" role="alert">
             <h2>Sin eventos registrados.</h2>
         </div>
+    </div>
+    <div class="mt-2" *ngIf="mostrarC === 'e'">
+        <div class="alert alert-warning text-center" role="alert">
+            <h2>Sin historial de eventos.</h2>
+        </div>
+    </div>
+    <div class="table-responsive" *ngIf="mostrarC && mostrarC !== 'e'">
+        <h2><i class="fas fa-history"></i> Historial de eventos</h2>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Fecha Inicio</th>
+                    <th scope="col">Fecha Fin</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Editar</th>
+                    <th scope="col">Eliminar</th>
+                </tr>
+            </thead>
+            <tbody *ngFor="let evento of eventsarray2.records let i = index;">
+                <tr>
+                    <th scope="row ">{{i+1}}</th>
+                    <td>{{ evento.nombre }}</td>
+                    <td>{{ evento.fecha_inicio | date:"dd/MMMM/yy"}}</td>
+                    <td>{{ evento.fecha_fin | date:"dd/MMMM/yy"}}</td>
+                    <ng-container *ngIf="evento.estado === 'A'; else elseTemplate">
+                        <td><span class="badge badge-success">Activo</span></td>
+                    </ng-container>
+                    <ng-template #elseTemplate>
+                        <td><span class="badge badge-danger">Inactivo</span></td>
+                    </ng-template>
+                    <td><a class="btn btn-warning" (click)="editar(evento.id_evento)"><i class="fas fa-edit"></i></a></td>
+                    <td><a class="btn btn-danger" (click)="eliminar(evento.id_evento)"><i class="fas fa-trash"></i></a></td>
+                </tr>
+            </tbody>
+        </table>
     </div>
     <div class="table-responsive" *ngIf="mostrarA">
         <h2>Eventos</h2>
