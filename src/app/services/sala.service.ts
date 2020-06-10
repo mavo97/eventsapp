@@ -7,11 +7,11 @@ import { map, catchError } from 'rxjs/operators';
 })
 export class SalaService {
 
-  private url = 'http://localhost/api_eventos/salas';
-  private url2 = 'http://localhost/api_eventos/usuarios_sala';
+  // private url = 'http://localhost/api_eventos/salas';
+  // private url2 = 'http://localhost/api_eventos/usuarios_sala';
 
-  // private url = 'https://apeventos.herokuapp.com/salas';
-  // private url2 = 'https://apeventos.herokuapp.com/usuarios_sala';
+  private url = 'https://apeventos.herokuapp.com/salas';
+  private url2 = 'https://apeventos.herokuapp.com/usuarios_sala';
 
   constructor( private http: HttpClient ) { }
 
